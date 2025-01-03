@@ -1,0 +1,12 @@
+.mainnav{
+    width: 100%;
+}
+
+@media screen and (max-width:480px) {
+    .mainnav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+}

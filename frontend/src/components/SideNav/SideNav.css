@@ -1,5 +1,10 @@
 .sidenav{
     background: #62B2C0;
     height: 100%;
-    
+}
+
+@media screen and (max-width:480px) {
+    .sidenav{
+        display: none;
+    }
 }

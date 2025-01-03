@@ -1,10 +1,12 @@
+import "../SideNav/SideNav.css";
+
 const SideNav = () => {
     return(
         <div className="sidenav">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div>Nav elements</div>
+            <div>Nav elements</div>
+            <div>Nav elements</div>
+            <div>Nav elements</div>
         </div>
     )
 }
