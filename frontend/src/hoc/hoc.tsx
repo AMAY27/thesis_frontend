@@ -6,10 +6,12 @@ const hoc = (WrappedComponent: React.FC<any>) => {
     return(props: any) => {
         return (
             <div className="parent-container">
-                <MainNav/>
                 <div className="hoc-layer-one">
                     <SideNav/>
-                    <WrappedComponent {...props} />
+                    <>
+                        <MainNav/>
+                        <WrappedComponent {...props} />
+                    </>
                 </div>
             </div>
         )

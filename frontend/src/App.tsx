@@ -5,7 +5,6 @@ import AlertManagement from './pages/Alert-management/AlertManagement'
 function App() {
 
   return (
-    
       <AlertManagement />
   )
 }

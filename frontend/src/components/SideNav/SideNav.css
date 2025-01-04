@@ -1,7 +1,42 @@
 .sidenav{
     background: #62B2C0;
     height: 100%;
+    width: 7rem;
+    /* padding-top: 1rem; */
+    /* padding-inline: 0.3rem; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: "Inter", serif;
+    font-style: normal;
+    font-size: small;
 }
+
+.sidenav ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.sidenav ul li{
+    /* width: 100%; */
+    padding: 1rem .5rem;
+    color: white;
+    font-weight: bold;
+}
+
+.sidenav ul li.navitems:hover {
+    background: #166876;
+    cursor: pointer;
+}
+
+/* .navitems :hover::after {
+    background: #166876;
+    cursor: pointer;
+} */
 
 @media screen and (max-width:480px) {
     .sidenav{
