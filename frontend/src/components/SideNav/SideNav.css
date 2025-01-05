@@ -2,8 +2,6 @@
     background: #62B2C0;
     height: 100%;
     width: 7rem;
-    /* padding-top: 1rem; */
-    /* padding-inline: 0.3rem; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +20,6 @@
 }
 
 .sidenav ul li{
-    /* width: 100%; */
     padding: 1rem .5rem;
     color: white;
     font-weight: bold;
