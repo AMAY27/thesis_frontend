@@ -1,6 +1,6 @@
 import "../SideNav/SideNav.css";
 import { useNavContext } from "../../global-context/NavContext";
-import { useState } from "react";
+// import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
 const SideNav = () => {
