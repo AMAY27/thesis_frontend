@@ -1,8 +1,15 @@
 .mainnav{
     width: 100%;
-    padding-top: 1rem;
+    /* padding-top: .5rem; */
     padding-left: 4rem;
-    background: gray;
+    /* background: gray; */
+    font-family: "Inter", serif;
+    font-style: normal;
+    font-size: small;
+}
+
+.mainnav h1{
+    color: #62B2C0;
 }
 
 @media screen and (max-width:480px) {
