@@ -7,6 +7,11 @@
 
 .parent-container{
     /* background: blue; */
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+}
+
+.hoc-layer-two{
+    display: block;
+    width: 100%;
 }

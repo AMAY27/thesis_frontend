@@ -16,7 +16,7 @@ const MainNav = () => {
   return (
     <div className='mainnav'>
         {isMobile && <div>☰</div>}
-        <h3>Sound Secure</h3>
+        <h1>Sound Secure</h1>
     </div>
   )
 }
