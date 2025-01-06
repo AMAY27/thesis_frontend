@@ -1,4 +1,6 @@
 import React from 'react'
+import "./AlertCard.css"
+import { MdOutlineEditCalendar } from "react-icons/md";
 
 type timeRange = {
     start_time: string;
@@ -22,9 +24,10 @@ interface AlertCardProps {
 const AlertCard: React.FC<AlertCardProps> = ({title, timeRange, dateRange}) => {
   return (
     <div className='alertcard'>
-        <h3>{title}</h3>
-        <h4>{dateRange.start_date} - {dateRange.end_date}</h4>
-        <h4>{timeRange.start_time} - {timeRange.end_time}</h4>
+      <h3>{title}</h3>
+      <h4>{dateRange.start_date} - {dateRange.end_date}</h4>
+      <h4>{timeRange.start_time} - {timeRange.end_time}</h4>
+      <h4><MdOutlineEditCalendar/></h4>
     </div>
   )
 }

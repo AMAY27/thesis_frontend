@@ -10,11 +10,15 @@ const AlertManagement = () => {
     return null;
   }
   return (
-    <div>
+    <div
+      style={{
+        marginLeft: "4rem"
+      }}
+    >
       <AlertCard 
         title="Alert 1" 
-        timeRange={{start_time: "10:00", end_time: "11:00"}} 
-        dateRange={{start_date: "2021-01-01", end_date: "2021-01-02"}} 
+        timeRange={{start_time: "10:00 am", end_time: "11:00 am"}} 
+        dateRange={{start_date: "01 Jan 2021", end_date: "01 Feb 2021"}} 
         createdAt="2021-01-01" 
         classname="Ruhe" 
         alertType="active"

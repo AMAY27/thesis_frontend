@@ -1,5 +1,5 @@
 
-// import './App.css'
+import './index.css';
 import { NavContextProvider } from './global-context/NavContext';
 import AlertManagement from './pages/Alert-management/AlertManagement'
 import {BrowserRouter as Router , Routes, Route} from 'react-router-dom';
@@ -17,4 +17,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
