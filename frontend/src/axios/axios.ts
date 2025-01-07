@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_NEST_BACKEND_URL,
