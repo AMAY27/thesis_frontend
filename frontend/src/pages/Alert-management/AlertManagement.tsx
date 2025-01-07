@@ -2,9 +2,22 @@
 import hoc from "../../hoc/hoc"
 import { useNavContext } from "../../global-context/NavContext";
 import AlertCard from "./components/AlertCard";
+import { getAlerts } from "./api.services";
+import { useEffect, useState } from "react";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
+  const [alerts, setAlerts] = useState<any[]>([]);
+
+  const fetchAlerts = async() => {
+    const resp = await getAlerts("/alert/alerts");
+    console.log(resp);
+    // setAlerts(resp);
+  }
+
+  useEffect(() => {
+    fetchAlerts();
+  },[])
 
   if (clickedNavItem !== "alerts") {
     return null;
