@@ -1,6 +1,6 @@
 services:
-  mediline-frontend:
-    image: mediline-frontend
+  thesis-frontend:
+    image: thesis-frontend
     build:
       context: .
       dockerfile: ./Dockerfile
