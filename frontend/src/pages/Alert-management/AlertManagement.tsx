@@ -4,20 +4,26 @@ import { useNavContext } from "../../global-context/NavContext";
 import AlertCard from "./components/AlertCard";
 import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
+import AlertProps from "./types";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
-  const [alerts, setAlerts] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<AlertProps[]>([]);
 
   const fetchAlerts = async() => {
-    const resp = await getAlerts("/alert/alerts");
+    const resp = await getAlerts<AlertProps[]>("/alert/alerts");
     console.log(resp);
-    // setAlerts(resp);
+    setAlerts(resp);
+    console.log(alerts);
   }
 
   useEffect(() => {
     fetchAlerts();
   },[])
+
+  useEffect(() => {
+    console.log(alerts);
+  }, [alerts])
 
   if (clickedNavItem !== "alerts") {
     return null;
@@ -36,6 +42,19 @@ const AlertManagement = () => {
         classname="Ruhe" 
         alertType="active"
       />
+      {
+        alerts.map((alert, index) => (
+          <AlertCard 
+            key={index}
+            title={alert.title} 
+            timeRange={{start_time:alert.time_range.start_time, end_time:alert.time_range.end_time}} 
+            dateRange={{start_date:alert.date_range.start_date, end_date:alert.date_range.end_date}} 
+            createdAt={alert.createdAt} 
+            classname={alert.classname} 
+            alertType={alert.alertType}
+          />
+        ))
+      }
     </div>
   )
 }
