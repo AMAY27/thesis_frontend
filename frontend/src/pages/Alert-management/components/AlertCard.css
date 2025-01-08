@@ -6,6 +6,7 @@
     font-family: "Inter", serif;
     align-items: center;
     border: 1px solid #62B2C0;
+    margin-top: 1rem;
 }
 
 .alertcard h3, h4{
