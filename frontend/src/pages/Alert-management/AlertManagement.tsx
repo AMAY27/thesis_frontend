@@ -14,16 +14,11 @@ const AlertManagement = () => {
     const resp = await getAlerts<AlertProps[]>("/alert/alerts");
     console.log(resp);
     setAlerts(resp);
-    console.log(alerts);
   }
 
   useEffect(() => {
     fetchAlerts();
-  },[])
-
-  useEffect(() => {
-    console.log(alerts);
-  }, [alerts])
+  },[]);
 
   if (clickedNavItem !== "alerts") {
     return null;
@@ -36,22 +31,24 @@ const AlertManagement = () => {
     >
       <AlertCard 
         title="Alert 1" 
-        timeRange={{start_time: "10:00 am", end_time: "11:00 am"}} 
-        dateRange={{start_date: "01 Jan 2021", end_date: "01 Feb 2021"}} 
+        time_range={{start_time: "10:00 am", end_time: "11:00 am"}} 
+        date_range={{start_date: "01 Jan 2021", end_date: "01 Feb 2021"}} 
         createdAt="2021-01-01" 
         classname="Ruhe" 
         alertType="active"
+        status="active"
       />
       {
         alerts.map((alert, index) => (
           <AlertCard 
             key={index}
             title={alert.title} 
-            timeRange={{start_time:alert.time_range.start_time, end_time:alert.time_range.end_time}} 
-            dateRange={{start_date:alert.date_range.start_date, end_date:alert.date_range.end_date}} 
+            time_range={{start_time:alert.time_range.start_time, end_time:alert.time_range.end_time}} 
+            date_range={{start_date:alert.date_range.start_date, end_date:alert.date_range.end_date}} 
             createdAt={alert.createdAt} 
             classname={alert.classname} 
             alertType={alert.alertType}
+            status={alert.status}
           />
         ))
       }

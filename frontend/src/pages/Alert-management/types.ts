@@ -8,7 +8,6 @@ type dateRange = {
     end_date: string;
 }
 
-
 export default interface AlertProps {
     status: string;
     title: string;
