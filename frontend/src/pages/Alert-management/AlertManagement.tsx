@@ -4,7 +4,8 @@ import { useNavContext } from "../../global-context/NavContext";
 import AlertCard from "./components/AlertCard";
 import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
-import AlertProps from "./types";
+import {AlertProps} from "./types";
+import './AlertManagement.css'
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
@@ -29,7 +30,7 @@ const AlertManagement = () => {
         marginLeft: "4rem"
       }}
     >
-      <AlertCard 
+      {/* <AlertCard 
         title="Alert 1" 
         time_range={{start_time: "10:00 am", end_time: "11:00 am"}} 
         date_range={{start_date: "01 Jan 2021", end_date: "01 Feb 2021"}} 
@@ -37,17 +38,23 @@ const AlertManagement = () => {
         classname="Ruhe" 
         alertType="active"
         status="active"
-      />
+      /> */}
+      <div className="btn-div">
+        <button>Add Alert</button>
+      </div>
       {
         alerts.map((alert, index) => (
           <AlertCard 
             key={index}
+            user_id={alert.user_id}
             title={alert.title} 
-            time_range={{start_time:alert.time_range.start_time, end_time:alert.time_range.end_time}} 
-            date_range={{start_date:alert.date_range.start_date, end_date:alert.date_range.end_date}} 
+            classname={alert.classname}
+            alert_type={alert.alert_type}
+            start_date={alert.start_date}
+            end_date={alert.end_date}
+            start_time={alert.start_time}
+            end_time={alert.end_time}
             createdAt={alert.createdAt} 
-            classname={alert.classname} 
-            alertType={alert.alertType}
             status={alert.status}
           />
         ))
