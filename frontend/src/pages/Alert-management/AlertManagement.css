@@ -1,0 +1,23 @@
+.btn-div{
+    display: flex;
+    justify-content: end;
+    /* padding-inline: 2rem; */
+    padding-block: 1rem;
+}
+
+.btn-div button{
+    padding-inline: 0.5rem;
+    padding-block: 0.5rem;
+    border: solid 1px #62B2C0;
+    background: transparent;
+    color: #62B2C0;
+    font-weight: bold;
+    border-radius: 10px;
+    font-size: large;
+}
+
+.btn-div button:hover{
+    background-color: #62B2C0;
+    color: white;
+    cursor: pointer;
+}

@@ -4,7 +4,8 @@ import { useNavContext } from "../../global-context/NavContext";
 import AlertCard from "./components/AlertCard";
 import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
-import AlertProps from "./types";
+import {AlertProps} from "./types";
+import './AlertManagement.css'
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
@@ -38,6 +39,9 @@ const AlertManagement = () => {
         alertType="active"
         status="active"
       /> */}
+      <div className="btn-div">
+        <button>Add Alert</button>
+      </div>
       {
         alerts.map((alert, index) => (
           <AlertCard 

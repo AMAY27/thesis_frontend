@@ -1,7 +1,7 @@
 import React from 'react'
 import "./AlertCard.css"
 import { MdOutlineEditCalendar } from "react-icons/md";
-import AlertProps from '../types';
+import {AlertProps} from '../types';
 
 
 const AlertCard: React.FC<AlertProps> = ({title, start_date, end_date, start_time, end_time}) => {
