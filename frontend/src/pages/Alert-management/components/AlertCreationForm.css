@@ -1,0 +1,25 @@
+.alert-form-div{
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.input-row{
+    display: flex;
+    flex-direction: row;
+    padding: 0.3rem;
+}
+
+.input-div{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-right: 15px;
+}
+
+.alert-form{
+    background: gray;
+    width: 100;
+    padding: 3rem;
+    font-family: "Inter", serif;
+}

@@ -8,7 +8,7 @@ const hoc = (WrappedComponent: React.FC<any>) => {
             <div className="parent-container">
                 <div className="hoc-layer-one">
                     <SideNav/>
-                    <div className="">
+                    <div className="hoc-layer-two">
                         <MainNav/>
                         <WrappedComponent {...props} />
                     </div>

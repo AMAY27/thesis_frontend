@@ -31,12 +31,11 @@ const AlertManagement = () => {
     return null;
   }
   return (
+    <>
+    {addAlertClicked && <AlertCreationForm/>}
     <div
-      style={{
-        marginLeft: "4rem"
-      }}
+      className={`alert-manager ${addAlertClicked ? 'alert-manager-disabled' : ''}`}
     >
-      {addAlertClicked && <AlertCreationForm/>}
       {/* <AlertCard 
         title="Alert 1" 
         time_range={{start_time: "10:00 am", end_time: "11:00 am"}} 
@@ -69,6 +68,7 @@ const AlertManagement = () => {
         ))
       }
     </div>
+    </>
   )
 }
 
