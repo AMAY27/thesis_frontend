@@ -1,27 +1,29 @@
-
+import './AlertCreationForm.css'
 
 const AlertCreationForm = () => {
   return (
-    <div>
-        <form action="">
-            <div>
-                <label htmlFor="">Title</label>
-                <input type="text" name="" id="" />
+    <div className='alert-form-div'>
+        <form action="" className='alert-form'>
+            <div className="input-row">
+                <div className='input-div'>
+                    <label htmlFor="">Title</label>
+                    <input type="text" name="" id="" />
+                </div>
+                <div className='input-div'>
+                    <label htmlFor="">Class name</label>
+                    <select>
+                        <option value="Zerbrechen">Zerbrechen</option>
+                        <option value="Türklingel">Türklingel</option>
+                        <option value="Klingelton">Klingelton</option>
+                        <option value="Ruhe">Ruhe</option>
+                        <option value="ZwitscherndeVögel">ZwitscherndeVögel</option>
+                        <option value="Schnarchen">Schnarchen</option>
+                        <option value="Wind">Wind</option>
+                        <option value="Sirene">Sirene</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label htmlFor="">Class name</label>
-                <select>
-                    <option value="Zerbrechen">Zerbrechen</option>
-                    <option value="Türklingel">Türklingel</option>
-                    <option value="Klingelton">Klingelton</option>
-                    <option value="Ruhe">Ruhe</option>
-                    <option value="ZwitscherndeVögel">ZwitscherndeVögel</option>
-                    <option value="Schnarchen">Schnarchen</option>
-                    <option value="Wind">Wind</option>
-                    <option value="Sirene">Sirene</option>
-                </select>
-            </div>
-            <div>
+            <div className='input-div'>
                 <label htmlFor="">Alert Type</label>
                 <select name="" id="">
                     <option value="active">
@@ -34,21 +36,25 @@ const AlertCreationForm = () => {
                     </option>
                 </select>
             </div>
-            <div>
-                <label htmlFor="">Start Date</label>
-                <input type="date" name="start_date" id="" min="2018-01-01" max="2030-12-31" />
+            <div className="input-row">
+                <div className='input-div'>
+                    <label htmlFor="">Start Date</label>
+                    <input type="date" name="start_date" id="" min="2018-01-01" max="2030-12-31" />
+                </div>
+                <div className='input-div'>
+                    <label htmlFor="">End Date</label>
+                    <input type="date" name="end_date" id="" min="2018-01-01" max="2030-12-31" />
+                </div>
             </div>
-            <div>
-                <label htmlFor="">End Date</label>
-                <input type="date" name="end_date" id="" min="2018-01-01" max="2030-12-31" />
-            </div>
-            <div>
-                <label htmlFor="">Start Time</label>
-                <input type="time" name="start_time" required />
-            </div>
-            <div>
-                <label htmlFor="">End Time</label>
-                <input type="time" name="end_time" required />
+            <div className="input-row">
+                <div className='input-div'>
+                    <label htmlFor="">Start Time</label>
+                    <input type="time" name="start_time" required />
+                </div>
+                <div className='input-div'>
+                    <label htmlFor="">End Time</label>
+                    <input type="time" name="end_time" required />
+                </div>
             </div>
         </form>
     </div>

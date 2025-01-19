@@ -21,3 +21,13 @@
     color: white;
     cursor: pointer;
 }
+
+.alert-manager{
+    margin: 4rem;
+    width: 100;
+}
+
+.alert-manager-disabled{
+    opacity: 0.2;
+    z-index: 10;
+}

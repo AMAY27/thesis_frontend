@@ -1,7 +1,7 @@
 .hoc-layer-one{
     display: flex;
     height: 100%;
-    /* width: 100%; */
+    width: 100;
     /* background: greenyellow; */
     overflow-y: hidden;
     overflow-x: hidden;
@@ -19,5 +19,5 @@
 .hoc-layer-two{
     display: block;
     width: 93%;
-    background: yellow;
+    /* background: yellow; */
 }
