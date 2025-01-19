@@ -6,15 +6,21 @@ import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
 import {AlertProps} from "./types";
 import './AlertManagement.css'
+import AlertCreationForm from "./components/AlertCreationForm";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
   const [alerts, setAlerts] = useState<AlertProps[]>([]);
+  const [addAlertClicked, setAddAlertClicked] = useState<Boolean>(false);
 
   const fetchAlerts = async() => {
     const resp = await getAlerts<AlertProps[]>("/alert/alerts");
     console.log(resp);
     setAlerts(resp);
+  }
+
+  const handleAddAlertClicked = () => {
+    setAddAlertClicked(!addAlertClicked);
   }
 
   useEffect(() => {
@@ -30,6 +36,7 @@ const AlertManagement = () => {
         marginLeft: "4rem"
       }}
     >
+      {addAlertClicked && <AlertCreationForm/>}
       {/* <AlertCard 
         title="Alert 1" 
         time_range={{start_time: "10:00 am", end_time: "11:00 am"}} 
@@ -40,7 +47,9 @@ const AlertManagement = () => {
         status="active"
       /> */}
       <div className="btn-div">
-        <button>Add Alert</button>
+        <button
+          onClick={handleAddAlertClicked}
+        >Add Alert</button>
       </div>
       {
         alerts.map((alert, index) => (
