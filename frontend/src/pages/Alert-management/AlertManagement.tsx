@@ -30,25 +30,15 @@ const AlertManagement = () => {
   if (clickedNavItem !== "alerts") {
     return null;
   }
+
+  if (addAlertClicked) {
+    return <AlertCreationForm />;
+  }
+
   return (
-    <>
-    {addAlertClicked && <AlertCreationForm/>}
-    <div
-      className={`alert-manager ${addAlertClicked ? 'alert-manager-disabled' : ''}`}
-    >
-      {/* <AlertCard 
-        title="Alert 1" 
-        time_range={{start_time: "10:00 am", end_time: "11:00 am"}} 
-        date_range={{start_date: "01 Jan 2021", end_date: "01 Feb 2021"}} 
-        createdAt="2021-01-01" 
-        classname="Ruhe" 
-        alertType="active"
-        status="active"
-      /> */}
+    <div className={`alert-manager ${addAlertClicked ? 'alert-manager-disabled' : ''}`}>
       <div className="btn-div">
-        <button
-          onClick={handleAddAlertClicked}
-        >Add Alert</button>
+        <button onClick={handleAddAlertClicked}>Add Alert</button>
       </div>
       {
         alerts.map((alert, index) => (
@@ -68,7 +58,6 @@ const AlertManagement = () => {
         ))
       }
     </div>
-    </>
   )
 }
 
