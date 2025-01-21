@@ -20,4 +20,18 @@
     display: block;
     width: 93%;
     /* background: yellow; */
+    padding-inline: 4rem;
+    padding-block: 0.5rem;
+}
+
+@media screen and (max-width:1000px) {
+    .hoc-layer-two{
+        padding-inline: 1rem;
+    }  
+}
+
+@media screen and (max-width:720px) {
+    .hoc-layer-two{
+        padding-inline: 1rem;
+    }  
 }

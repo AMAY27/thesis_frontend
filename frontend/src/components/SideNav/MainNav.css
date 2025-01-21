@@ -1,21 +1,38 @@
 .mainnav{
     width: 100%;
     /* padding-top: .5rem; */
-    padding-left: 4rem;
     /* background: gray; */
     font-family: "Inter", serif;
     font-style: normal;
     font-size: small;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* background: gray; */
 }
 
 .mainnav h1{
     color: #62B2C0;
 }
 
-@media screen and (max-width:480px) {
+.profile-icon{
+    color: gray;
+}
+
+@media screen and (max-width:720px) {
     .mainnav{
         display: flex;
         align-items: center;
         justify-content: space-between;
+        /* padding: 1rem; */
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .mainnav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* padding-left: 2rem; */
     }
 }
