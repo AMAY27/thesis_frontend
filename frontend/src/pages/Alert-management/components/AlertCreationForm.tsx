@@ -1,6 +1,11 @@
+import React from 'react';
 import './AlertCreationForm.css'
 
-const AlertCreationForm = () => {
+interface AlertCreationFormProps {
+    handleCloseAlertCLicked: () => void;
+}
+
+const AlertCreationForm:React.FC<AlertCreationFormProps> = ({handleCloseAlertCLicked}) => {
   return (
     <div className='alert-form-div'>
         <form action="" className='alert-form'>
@@ -56,6 +61,9 @@ const AlertCreationForm = () => {
                     <input type="time" name="end_time" required />
                 </div>
             </div>
+            <button onClick={handleCloseAlertCLicked}>
+                Close
+            </button>
         </form>
     </div>
   )

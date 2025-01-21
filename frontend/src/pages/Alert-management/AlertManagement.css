@@ -1,3 +1,26 @@
+.alert-manager{
+    margin: 4rem;
+    width: 100;
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+.alert-manager-disabled{
+    opacity: 0.2;
+    z-index: 10;
+}
+
+.left-container{
+    /* background: gray; */
+    width: 55%;
+}
+
+.right-container{
+    /* background: yellow; */
+    width: 45%;
+}
+
 .btn-div{
     display: flex;
     justify-content: end;
@@ -22,12 +45,13 @@
     cursor: pointer;
 }
 
-.alert-manager{
-    margin: 4rem;
-    width: 100;
-}
-
-.alert-manager-disabled{
-    opacity: 0.2;
-    z-index: 10;
+.notification-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 1rem;
+    border: 1px solid #62B2C0;
+    border-radius: 10px;
+    font-family: "Inter", serif;
 }
