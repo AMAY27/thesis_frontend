@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import "./MainNav.css";
+import { CgProfile } from "react-icons/cg";
 
 const MainNav = () => {
     const [isMobile, setIsMobile] = useState<Boolean>(false);
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 486);
+            setIsMobile(window.innerWidth <= 720);
         };
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -15,8 +16,9 @@ const MainNav = () => {
     }, [])
   return (
     <div className='mainnav'>
-        {isMobile && <div>☰</div>}
+        {isMobile && <h1>☰</h1>}
         <h1>Sound Secure</h1>
+        <CgProfile className='profile-icon' size="2em"/>
     </div>
   )
 }

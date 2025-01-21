@@ -1,10 +1,25 @@
 .alert-manager{
-    margin: 4rem;
     width: 100;
     display: flex;
     flex-direction: row;
     gap: 4rem;
 }
+
+@media screen and (max-width:1000px) {
+    .alert-manager{
+        display: block;
+        background: wheat;
+    }
+
+    .left-container{
+        width: 100;
+    }
+
+    .right-container{
+        width: 100;
+    }
+}
+
 
 .alert-manager-disabled{
     opacity: 0.2;
