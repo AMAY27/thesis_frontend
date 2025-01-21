@@ -32,31 +32,41 @@ const AlertManagement = () => {
   }
 
   if (addAlertClicked) {
-    return <AlertCreationForm />;
+    return <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>;
   }
 
   return (
     <div className={`alert-manager ${addAlertClicked ? 'alert-manager-disabled' : ''}`}>
-      <div className="btn-div">
-        <button onClick={handleAddAlertClicked}>Add Alert</button>
+      <div className="left-container">
+        {
+          alerts.map((alert, index) => (
+            <AlertCard 
+              key={index}
+              user_id={alert.user_id}
+              title={alert.title} 
+              classname={alert.classname}
+              alert_type={alert.alert_type}
+              start_date={alert.start_date}
+              end_date={alert.end_date}
+              start_time={alert.start_time}
+              end_time={alert.end_time}
+              createdAt={alert.createdAt} 
+              status={alert.status}
+            />
+          ))
+        }
       </div>
-      {
-        alerts.map((alert, index) => (
-          <AlertCard 
-            key={index}
-            user_id={alert.user_id}
-            title={alert.title} 
-            classname={alert.classname}
-            alert_type={alert.alert_type}
-            start_date={alert.start_date}
-            end_date={alert.end_date}
-            start_time={alert.start_time}
-            end_time={alert.end_time}
-            createdAt={alert.createdAt} 
-            status={alert.status}
-          />
-        ))
-      }
+      <div className="right-container">
+        <div className="btn-div">
+          <button onClick={handleAddAlertClicked}>Add Alert</button>
+        </div>
+        <div className="notification-div">
+          <h2 style={{color: "#62B2C0"}}>
+            Alert Notifications
+          </h2>
+          <p>There are no notifications at the moment</p>
+        </div>
+      </div>
     </div>
   )
 }
