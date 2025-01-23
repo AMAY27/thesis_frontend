@@ -1,15 +1,15 @@
 import "../SideNav/SideNav.css";
 import { useNavContext } from "../../global-context/NavContext";
 // import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SideNav = () => {
     const { clickedNavItem, setClickedNavItem } = useNavContext();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     
     const handleNavigation = (navItem: string) => {
         setClickedNavItem(navItem);
-        // navigate(`/${navItem}`);
+        navigate(`/${navItem}`);
     }
 
     const navItems = [
