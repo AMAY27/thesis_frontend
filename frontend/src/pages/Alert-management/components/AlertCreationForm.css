@@ -2,7 +2,7 @@
     /* align-items: center; */
     justify-content: center;
     /* justify-items: center; */
-    background: gray;
+    /* background: gray; */
 }
 
 .input-row{
@@ -24,6 +24,7 @@
     /* width: 100%; */
     padding: 2rem;
     font-family: "Inter", serif;
+    border-radius: 15px;
 }
 
 .alert-form input, select{
