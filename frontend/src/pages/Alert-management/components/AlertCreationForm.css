@@ -1,25 +1,53 @@
 .alert-form-div{
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
-    justify-items: center;
+    /* justify-items: center; */
+    background: gray;
 }
 
 .input-row{
     display: flex;
     flex-direction: row;
-    padding: 0.3rem;
+    /* padding: 0.3rem; */
 }
 
 .input-div{
     display: flex;
     flex-direction: column;
     width: 50%;
-    margin-right: 15px;
+    margin-right: 0.3rem;
+    margin-block: 0.5rem;
 }
 
 .alert-form{
-    background: gray;
-    width: 100;
-    padding: 3rem;
+    background: #62B2C0;
+    /* width: 100%; */
+    padding: 2rem;
     font-family: "Inter", serif;
+}
+
+.alert-form input, select{
+    padding: 0.5rem;
+    border: 1px solid #62B2C0;
+    border-radius: 10px;
+    font-family: "Inter", serif;
+}
+
+.alert-form label{
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.btn-row button{
+    padding: 0.5rem;
+    border: solid 1px #62B2C0;
+    background: white;
+    color: #62B2C0;
+    font-weight: bold;
+    border-radius: 10px;
+    font-size: large;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
 }
