@@ -31,12 +31,12 @@ const AlertManagement = () => {
     return null;
   }
 
-  if (addAlertClicked) {
-    return <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>;
-  }
+  // if (addAlertClicked) {
+  //   return <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>;
+  // }
 
   return (
-    <div className={`alert-manager ${addAlertClicked ? 'alert-manager-disabled' : ''}`}>
+    <div className={`alert-manager`}>
       <div className="left-container">
         {
           alerts.map((alert, index) => (
@@ -60,6 +60,7 @@ const AlertManagement = () => {
         <div className="btn-div">
           <button onClick={handleAddAlertClicked}>Add Alert</button>
         </div>
+        {addAlertClicked && <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>}
         <div className="notification-div">
           <h2 style={{color: "#62B2C0"}}>
             Alert Notifications

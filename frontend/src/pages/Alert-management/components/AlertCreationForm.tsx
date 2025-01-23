@@ -61,9 +61,14 @@ const AlertCreationForm:React.FC<AlertCreationFormProps> = ({handleCloseAlertCLi
                     <input type="time" name="end_time" required />
                 </div>
             </div>
-            <button onClick={handleCloseAlertCLicked}>
-                Close
-            </button>
+            <div className="btn-row">
+                <button onClick={handleCloseAlertCLicked}>
+                    Submit
+                </button>
+                <button>
+                    Cancel
+                </button>
+            </div>
         </form>
     </div>
   )

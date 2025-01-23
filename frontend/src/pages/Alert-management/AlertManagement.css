@@ -1,5 +1,5 @@
 .alert-manager{
-    width: 100;
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 4rem;
@@ -7,19 +7,22 @@
 
 @media screen and (max-width:1000px) {
     .alert-manager{
-        display: block;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         background: wheat;
     }
 
-    .left-container{
-        width: 100;
+    .alert-manager .left-container{
+        width: 100%;
+        background: blue;
+        flex-grow: 1;
     }
 
     .right-container{
-        width: 100;
+        display: none;
     }
 }
-
 
 .alert-manager-disabled{
     opacity: 0.2;
@@ -29,6 +32,7 @@
 .left-container{
     /* background: gray; */
     width: 55%;
+    flex-grow: 1;
 }
 
 .right-container{
@@ -69,4 +73,5 @@
     border: 1px solid #62B2C0;
     border-radius: 10px;
     font-family: "Inter", serif;
+    margin-top: 2rem;
 }
