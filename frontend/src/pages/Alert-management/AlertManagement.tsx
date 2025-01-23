@@ -60,7 +60,7 @@ const AlertManagement = () => {
         <div className="btn-div">
           <button onClick={handleAddAlertClicked}>Add Alert</button>
         </div>
-        {addAlertClicked && <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>}
+        {addAlertClicked && <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked} refetchAlerts={fetchAlerts}/>}
         <div className="notification-div">
           <h2 style={{color: "#62B2C0"}}>
             Alert Notifications
