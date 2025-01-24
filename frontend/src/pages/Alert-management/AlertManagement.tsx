@@ -38,23 +38,25 @@ const AlertManagement = () => {
   return (
     <div className={`alert-manager`}>
       <div className="left-container">
-        {
-          alerts.map((alert, index) => (
-            <AlertCard 
-              key={index}
-              user_id={alert.user_id}
-              title={alert.title} 
-              classname={alert.classname}
-              alert_type={alert.alert_type}
-              start_date={alert.start_date}
-              end_date={alert.end_date}
-              start_time={alert.start_time}
-              end_time={alert.end_time}
-              createdAt={alert.createdAt} 
-              status={alert.status}
-            />
-          ))
-        }
+        <table className="alert-table">
+        <colgroup>
+          <col style={{ width: '20%', fontWeight: 'bolder' }} />
+          <col style={{ width: '40%' }} />
+          <col style={{ width: '25%' }} />
+          <col style={{ width: '15%' }} />
+        </colgroup>
+          <tbody>
+          {
+              alerts.map((alert, index) => (
+                <AlertCard 
+                  key={index}
+                  {...alert}
+                />
+              ))
+          }
+          </tbody>
+        </table>
+
       </div>
       <div className="right-container">
         <div className="btn-div">

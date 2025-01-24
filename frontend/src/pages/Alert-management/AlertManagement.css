@@ -75,3 +75,16 @@
     font-family: "Inter", serif;
     margin-top: 2rem;
 }
+
+.alert-table {
+    width: 100%;
+    table-layout: fixed; /* Ensures fixed table layout */
+    border-collapse: separate;
+    border-spacing: 0 1rem;
+}
+
+.alert-table tr {
+    border: 1px solid #62B2C0;
+    border-radius: 1rem;
+}
+
