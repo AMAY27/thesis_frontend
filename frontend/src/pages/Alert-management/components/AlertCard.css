@@ -1,24 +1,12 @@
 .alertcard{
-    display: flex;
-    flex-direction: row;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
     border-radius: 1rem;
     font-family: "Inter", serif;
-    align-items: center;
+    /* align-items: center; */
     border: 1px solid #62B2C0;
-    margin-top: 1rem;
 }
 
-.alertcard h3, h4{
-    margin-inline: 1rem;
-}
-
-.alertcard h4{
-    font-weight: normal;
-    font-size : 1rem;
-}
-
-.alertcard h3{
-    font-weight: bold;
-    font-size: 1.2rem;
+.alertcard td{
+    padding: 1rem;
+    text-align: left; /* or center, right, depending on your requirement */
 }
