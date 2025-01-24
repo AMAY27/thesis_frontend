@@ -24,8 +24,6 @@ export const addAlert = async <TResponse> (
 ): Promise<TResponse> => {
     try {
         const resp = await axiosInstance.post<TResponse>(url, body, config);
-        console.log(resp);
-        
         return resp.data;
     } catch (error) {
         const message = (error as AxiosError<{message: string}>).response?.data?.message;

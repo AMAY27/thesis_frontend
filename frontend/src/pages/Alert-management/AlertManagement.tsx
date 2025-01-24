@@ -12,6 +12,8 @@ const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
   const [alerts, setAlerts] = useState<AlertProps[]>([]);
   const [addAlertClicked, setAddAlertClicked] = useState<Boolean>(false);
+  const [mobileAlertClicked, setMobileAlertClicked] = useState<Boolean>(false);
+  const [isMobile, setIsMobile] = useState<Boolean>(false);
 
   const fetchAlerts = async() => {
     const resp = await getAlerts<AlertProps[]>("/alert/alerts");
@@ -21,11 +23,30 @@ const AlertManagement = () => {
 
   const handleAddAlertClicked = () => {
     setAddAlertClicked(!addAlertClicked);
+    setMobileAlertClicked(false);
+  }
+
+  const handleMobileAlertCLicked = () => {
+    setMobileAlertClicked(!mobileAlertClicked);
   }
 
   useEffect(() => {
     fetchAlerts();
   },[]);
+
+  
+  useEffect(() => {
+      const handleResize = () => {
+          setIsMobile(window.innerWidth <= 1000);
+          setMobileAlertClicked(window.innerWidth <= 1000 ? mobileAlertClicked : false);
+      };
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => {
+          window.removeEventListener('resize', handleResize);
+      };
+  }, [])
+  
 
   if (clickedNavItem !== "alerts") {
     return null;
@@ -37,6 +58,7 @@ const AlertManagement = () => {
 
   return (
     <div className={`alert-manager`}>
+      {mobileAlertClicked ? <AlertCreationForm handleCloseAlertCLicked={handleMobileAlertCLicked} refetchAlerts={fetchAlerts}/> : 
       <div className="left-container">
         <table className="alert-table">
         <colgroup>
@@ -57,7 +79,7 @@ const AlertManagement = () => {
           </tbody>
         </table>
 
-      </div>
+      </div>}
       <div className="right-container">
         <div className="btn-div">
           <button onClick={handleAddAlertClicked}>Add Alert</button>
@@ -70,6 +92,7 @@ const AlertManagement = () => {
           <p>There are no notifications at the moment</p>
         </div>
       </div>
+      {isMobile && <button className={`alert-add-btn ${mobileAlertClicked ? 'alert-btn-disabled' : ''}` } onClick={handleMobileAlertCLicked}>+</button>}
     </div>
   )
 }
