@@ -1,4 +1,6 @@
 // import React from 'react'
+import './AlertCalendar.css'
+import hoc from '../../../hoc/hoc';
 
 const AlertCalendar = () => {
 
@@ -11,7 +13,7 @@ const AlertCalendar = () => {
     if(nav !== 0){
         dt.setMonth(new Date().getMonth() + nav);
     }
-    const day = dt.getDate();
+    const today = dt.getDate();
     const month = dt.getMonth();
     const year = dt.getFullYear();
     const firstDayOfMonth = new Date(year, month, 1);
@@ -44,9 +46,12 @@ const AlertCalendar = () => {
             <div id="calendar">
                 { [...Array(paddingDays + daysInMonth).keys()].map((day) => {
                     if(day > paddingDays){
+                        if (day - paddingDays === today && nav === 0){ 
+                            return <div className="day" id="currentDay">1</div>
+                        }
                         return <div className="day">{day - paddingDays}</div>
                     } else {
-                        return <div></div>
+                        return <div className="padding"></div>
                     }
                 })}
             </div>
@@ -55,4 +60,4 @@ const AlertCalendar = () => {
   )
 }
 
-export default AlertCalendar
+export default hoc(AlertCalendar)
