@@ -36,7 +36,7 @@ const AlertCreationForm:React.FC<AlertCreationFormProps> = ({handleCloseAlertCLi
         setIsLoading(true);
         e.preventDefault();
         try {
-            const response = await addAlert("/alert/create", alertDetails);
+            await addAlert("/alert/create", alertDetails);
             notification("Alert added successfully!", "success");
             refetchAlerts();
             setAlertDetails({
