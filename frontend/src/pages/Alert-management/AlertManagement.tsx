@@ -4,21 +4,27 @@ import { useNavContext } from "../../global-context/NavContext";
 import AlertCard from "./components/AlertCard";
 import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
-import {AlertProps} from "./types";
+import { useNavigate } from "react-router-dom";
+import {AlertCalendarProps} from "./types";
 import './AlertManagement.css'
 import AlertCreationForm from "./components/AlertCreationForm";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
-  const [alerts, setAlerts] = useState<AlertProps[]>([]);
+  const navigate = useNavigate();
+  const [alerts, setAlerts] = useState<AlertCalendarProps[]>([]);
   const [addAlertClicked, setAddAlertClicked] = useState<Boolean>(false);
   const [mobileAlertClicked, setMobileAlertClicked] = useState<Boolean>(false);
   const [isMobile, setIsMobile] = useState<Boolean>(false);
 
   const fetchAlerts = async() => {
-    const resp = await getAlerts<AlertProps[]>("/alert/alerts");
+    const resp = await getAlerts<AlertCalendarProps[]>("/alert/alerts");
     console.log(resp);
-    setAlerts(resp);
+    const alertsWithHandler = resp.map(alert => ({
+      ...alert,
+      handleAlertCalendarClicked: handleAlertCalendarClicked
+    }));
+    setAlerts(alertsWithHandler);
   }
 
   const handleAddAlertClicked = () => {
@@ -28,6 +34,10 @@ const AlertManagement = () => {
 
   const handleMobileAlertCLicked = () => {
     setMobileAlertClicked(!mobileAlertClicked);
+  }
+
+  const handleAlertCalendarClicked = () => {
+    navigate("/alert/calendar");
   }
 
   useEffect(() => {
