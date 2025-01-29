@@ -5,19 +5,13 @@ import { useEffect, useState } from 'react';
 
 const AlertCalendar = () => {
     const [nav, setNav] = useState(0);
-    const [currentDate, setCurrentDate] = useState(new Date());
-
-    useEffect(() => {
-        const dt = new Date();
-        dt.setMonth(dt.getMonth() + nav);
-        setCurrentDate(dt);
-    }, [nav]);
 
     const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const dt = currentDate
+    const dt = new Date();
+    const currentMonth = new Date(dt.getFullYear(), dt.getMonth() + nav, 1);
     const today = new Date().getDate();
-    const month = dt.getMonth();
-    const year = dt.getFullYear();
+    const month = currentMonth.getMonth();
+    const year = currentMonth.getFullYear();
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const dateString = firstDayOfMonth.toLocaleDateString('en-us', {
@@ -31,27 +25,27 @@ const AlertCalendar = () => {
   return (
     <div id="container">
         <div id="header">
-            <div id="month-display">{dt.toLocaleDateString('en-US', {month : 'long'})} ${year}</div>
+            <div id="month-display">{currentMonth.toLocaleDateString('en-US', {month : 'long'})} {year}</div>
             <div>
                 <button id="prevButton" onClick={() => setNav(nav - 1)}>Prev</button>
                 <button id="nextButton" onClick={() => setNav(nav + 1)}>Next</button>
             </div>
         </div>
         <div id="weekdays">
-            <div>Sunday</div>
-            <div>Monday</div>
-            <div>Tueday</div>
-            <div>Wednesday</div>
-            <div>Thursday</div>
-            <div>Friday</div>
-            <div>Saturday</div>
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
         </div>
         <div id="calendar">
             { [...Array(paddingDays + daysInMonth).keys()].map((day) => {
                 const dayNumber = day - paddingDays + 1;
                 if(day >= paddingDays){
                     if (dayNumber === today && nav === 0){ 
-                        return <div key={day} className="day" id="currentDay">{day - paddingDays}</div>
+                        return <div key={day} className="day" id="currentDay">{dayNumber}</div>
                     }
                     else {
                         return <div key={day} className="day">{dayNumber}</div>;

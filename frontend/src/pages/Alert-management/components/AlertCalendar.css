@@ -1,72 +1,72 @@
 button {
-    width: 75px;
-    cursor: pointer;
-    box-shadow: 0px 0px 2px gray;
-    border: none;
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
-  }
+  width: 75px;
+  cursor: pointer;
+  box-shadow: 0px 0px 2px gray;
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
   
-  #header {
-    padding: 10px;
-    color: #d36c6c;
-    font-size: 26px;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: space-between;
-  }
-  #header button {
-    background-color:#92a1d1;
-  }
-  #container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    justify-content: center;
-    background-color: #FFFCFF;
-    width: 770px;
-  }
+#header {
+  padding: 10px;
+  color: #d36c6c;
+  font-size: 26px;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+#header button {
+  background-color:#62B2C0;
+  margin-right: 5px;
+}
+#container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  justify-content: center;
+  background-color: #FFFCFF;
+  width: 420px;
+}
 #weekdays {
     width: 100%;
     display: flex;
     color: #247BA0;
 }
-  #weekdays div {
-    width: 100px;
-    padding: 10px;
-  }
+#weekdays div {
+  width: 100px;
+  padding: 10px;
+}
+.padding {
+  cursor: default !important;
+  background-color: #FFFCFF !important;
+  box-shadow: none !important;
+}
+#calendar {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.day {
+  width: 50px;
+  padding: 10px;
+  height: 50px;
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: white;
+  margin: 5px;
+  box-shadow: 0px 0px 3px #CBD4C2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+.day:hover {
+  background-color: #e8faed;
+}
 
-  .padding {
-    cursor: default !important;
-    background-color: #FFFCFF !important;
-    box-shadow: none !important;
-  }
-
-  #calendar {
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .day {
-    width: 100px;
-    padding: 10px;
-    height: 100px;
-    cursor: pointer;
-    box-sizing: border-box;
-    background-color: white;
-    margin: 5px;
-    box-shadow: 0px 0px 3px #CBD4C2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .day:hover {
-    background-color: #e8faed;
-  }
-  
-  .day + #currentDay {
-    background-color:#e8f4fa;
-  }
+.day + #currentDay {
+  background-color:#e8f4fa;
+}
