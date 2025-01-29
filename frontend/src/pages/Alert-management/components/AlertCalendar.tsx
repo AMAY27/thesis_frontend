@@ -2,6 +2,7 @@
 import './AlertCalendar.css'
 import hoc from '../../../hoc/hoc';
 import { useEffect, useState } from 'react';
+import { Tooltip } from 'react-tooltip'
 
 const AlertCalendar = () => {
     const [nav, setNav] = useState(0);
@@ -43,12 +44,23 @@ const AlertCalendar = () => {
         <div id="calendar">
             { [...Array(paddingDays + daysInMonth).keys()].map((day) => {
                 const dayNumber = day - paddingDays + 1;
+                const dayString = `${year}-${month + 1}-${dayNumber}`;
                 if(day >= paddingDays){
                     if (dayNumber === today && nav === 0){ 
-                        return <div key={day} className="day" id="currentDay">{dayNumber}</div>
+                        return( 
+                            <>
+                                <div key={day} className="day" id="currentDay">{dayNumber}</div>
+                                <Tooltip id="tooltip" anchorSelect='.day' content={dayString} place="top"/>
+                            </>
+                        )
                     }
                     else {
-                        return <div key={day} className="day">{dayNumber}</div>;
+                        return( 
+                            <>
+                                <div key={day} className="day">{dayNumber}</div>
+                                <Tooltip id="tooltip" anchorSelect='.day' content={dayString} place="top"/>
+                            </>
+                        )
                     }
                 } else {
                     return <div className="padding"></div>
