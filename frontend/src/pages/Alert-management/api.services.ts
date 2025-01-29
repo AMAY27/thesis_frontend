@@ -31,3 +31,5 @@ export const addAlert = async <TResponse> (
         throw error;
     }
 }
+
+// export const getAlertLogs = async <TResponse> ()
