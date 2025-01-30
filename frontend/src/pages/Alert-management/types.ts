@@ -37,3 +37,12 @@ export interface AddAlertProps {
     end_time: string;
     status: string;
 }
+
+export interface AlertLogsProps {
+    _id: string;
+    alertId: string;
+    userId: string;
+    triggerDate: string;
+    alertTitle: string;
+    alertClass: string
+}
