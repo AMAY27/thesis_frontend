@@ -32,4 +32,17 @@ export const addAlert = async <TResponse> (
     }
 }
 
-// export const getAlertLogs = async <TResponse> ()
+export const getAlertLogs = async <TResponse> (
+    url: string,
+    alertId: string,
+    config?: AxiosRequestConfig
+): Promise<TResponse> => {
+    try {
+        const resp = await axiosInstance.get<TResponse>(`${url}?alertId=${alertId}`, config);
+        return resp.data;
+    } catch (error) {
+        const message = (error as AxiosError<{message: string}>).response?.data?.message;
+        notification(`Error while fetching logs for alert ${alertId}. ${message ?? ''}`, 'error');
+        throw error;
+    }
+}

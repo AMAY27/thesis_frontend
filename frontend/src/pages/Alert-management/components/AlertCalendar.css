@@ -63,6 +63,11 @@ button {
   justify-content: space-between;
   border-radius: 10px;
 }
+
+.highlight {
+  background-color: #62B2C0;
+  color: white;
+}
 .day:hover {
   background-color: #e8faed;
 }
