@@ -26,8 +26,10 @@ button {
   flex-direction: column;
   margin-top: 10px;
   justify-content: center;
-  background-color: #FFFCFF;
+  background-color: #DCE7E9;
+  padding: 0.5rem;
   width: 420px;
+  border-radius: 1rem;
 }
 #weekdays {
     width: 100%;
@@ -68,9 +70,9 @@ button {
   background-color: #62B2C0;
   color: white;
 }
-.day:hover {
+/* .day:hover {
   background-color: #e8faed;
-}
+} */
 
 .day + #currentDay {
   background-color:#e8f4fa;

@@ -50,6 +50,7 @@ const AlertCalendar = () => {
   return (
     <div id="container">
         <div id="header">
+            {/* <div>Calendar Timeline</div> */}
             <div id="month-display">{currentMonth.toLocaleDateString('en-US', {month : 'long'})} {year}</div>
             <div>
                 <button id="prevButton" onClick={() => setNav(nav - 1)}>Prev</button>
