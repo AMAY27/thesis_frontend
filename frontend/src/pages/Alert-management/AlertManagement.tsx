@@ -5,9 +5,13 @@ import AlertCard from "./components/AlertCard";
 import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {AlertCalendarProps} from "./types";
+import {AddAlertProps, AlertCalendarProps} from "./types";
+import GlobalForm from "../../components/Forms/GlobalForm";
 import './AlertManagement.css'
-import AlertCreationForm from "./components/AlertCreationForm";
+// import AlertCreationForm from "./components/AlertCreationForm";
+import { addAlert } from "./api.services";
+import notification from "../../axios/notification";
+import { BaseEventProps } from "../../components/Forms/GlobalForm";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
@@ -16,6 +20,7 @@ const AlertManagement = () => {
   const [addAlertClicked, setAddAlertClicked] = useState<Boolean>(false);
   const [mobileAlertClicked, setMobileAlertClicked] = useState<Boolean>(false);
   const [isMobile, setIsMobile] = useState<Boolean>(false);
+  const [alertType, setAlertType] = useState<string>("active");
 
   const fetchAlerts = async() => {
     const resp = await getAlerts<AlertCalendarProps[]>("/alert/alerts");
@@ -25,6 +30,11 @@ const AlertManagement = () => {
       handleAlertCalendarClicked: handleAlertCalendarClicked
     }));
     setAlerts(alertsWithHandler);
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setAlertType(value);
   }
 
   const handleAddAlertClicked = () => {
@@ -62,13 +72,43 @@ const AlertManagement = () => {
     return null;
   }
 
+  const handleSubmit = async (alertDetails: BaseEventProps) => {
+    try {
+        const alertData: AddAlertProps = {
+          ...alertDetails,
+          alert_type: alertType,
+        }
+        await addAlert("/alert/create", alertData);
+        notification("Alert added successfully!", "success");
+        fetchAlerts();
+    } catch (error) {
+        // Error handling is already done in addAlert
+    } 
+    
+  }
+
   // if (addAlertClicked) {
   //   return <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>;
   // }
 
   return (
     <div className={`alert-manager`}>
-      {mobileAlertClicked ? <AlertCreationForm handleCloseAlertCLicked={handleMobileAlertCLicked} refetchAlerts={fetchAlerts}/> : 
+      {mobileAlertClicked ? 
+        <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleAddAlertClicked}>
+          <div className='input-div'>
+              <label htmlFor="alert_type">Alert Type</label>
+              <select name="alert_type" onChange={handleChange} value={alertType} required>
+                  <option value="active">
+                      {/* <h5>On Detection</h5> */}
+                      Triggered when event is detected
+                  </option>
+                  <option value="inactive">
+                      {/* <h5>On Non-detection</h5> */}
+                      Triggered when event is not detected
+                  </option>
+              </select>
+          </div>
+      </GlobalForm> : 
       <div className="left-container">
         <table className="alert-table">
         <colgroup>
@@ -94,7 +134,24 @@ const AlertManagement = () => {
         <div className="btn-div">
           <button onClick={handleAddAlertClicked}>Add Alert</button>
         </div>
-        {addAlertClicked && <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked} refetchAlerts={fetchAlerts}/>}
+        {addAlertClicked && 
+          // <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked} refetchAlerts={fetchAlerts}/>
+          <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleAddAlertClicked}>
+            <div className='input-div'>
+                <label htmlFor="alert_type">Alert Type</label>
+                <select name="alert_type" onChange={handleChange} value={alertType} required>
+                    <option value="active">
+                        {/* <h5>On Detection</h5> */}
+                        Triggered when event is detected
+                    </option>
+                    <option value="inactive">
+                        {/* <h5>On Non-detection</h5> */}
+                        Triggered when event is not detected
+                    </option>
+                </select>
+            </div>
+          </GlobalForm>
+        }
         <div className="notification-div">
           <h2 style={{color: "#62B2C0"}}>
             Alert Notifications
