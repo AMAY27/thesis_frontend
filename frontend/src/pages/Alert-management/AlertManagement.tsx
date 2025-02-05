@@ -94,7 +94,7 @@ const AlertManagement = () => {
   return (
     <div className={`alert-manager`}>
       {mobileAlertClicked ? 
-        <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleAddAlertClicked}>
+        <GlobalForm onSubmit={handleSubmit}>
           <div className='input-div'>
               <label htmlFor="alert_type">Alert Type</label>
               <select name="alert_type" onChange={handleChange} value={alertType} required>
@@ -136,7 +136,7 @@ const AlertManagement = () => {
         </div>
         {addAlertClicked && 
           // <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked} refetchAlerts={fetchAlerts}/>
-          <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleAddAlertClicked}>
+          <GlobalForm onSubmit={handleSubmit}>
             <div className='input-div'>
                 <label htmlFor="alert_type">Alert Type</label>
                 <select name="alert_type" onChange={handleChange} value={alertType} required>
