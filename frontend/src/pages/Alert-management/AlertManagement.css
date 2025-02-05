@@ -27,14 +27,13 @@
         bottom: 1rem;
         right: 1rem;
         background: #62B2C0;
-        border-radius: 100%;
+        border-radius: 9999px;
         z-index: 0.2;
         /* border-radius: 10px; */
         color: white;
         font-size: 2rem;
         font-weight: bolder;
-        padding-inline: 1rem;
-        padding-block: 0.5rem;
+        padding: 5px;
     }
 
     .alert-btn-disabled{

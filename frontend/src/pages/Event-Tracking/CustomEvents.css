@@ -1,0 +1,17 @@
+.custom-events{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+.custom-events-left-container{
+    /* background: gray; */
+    width: 75%;
+    flex-grow: 1;
+}
+
+.custom-events-right-container{
+    /* background: yellow; */
+    width: 25%;
+}
