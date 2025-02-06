@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: row;
     gap: 4rem;
+    font-family: "Inter", serif;
 }
 
 .custom-events-left-container{
@@ -14,4 +15,36 @@
 .custom-events-right-container{
     /* background: yellow; */
     width: 25%;
+}
+
+.custom-events-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.graph-format-selector{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #DCE7E9;
+}
+
+.graph-format-selector div{
+    justify-self: start;
+    padding-left: 10px;
+    padding-right: 50px;
+    padding-block: 10px;
+    font-size: medium;
+}
+
+.graph-format-selector div:hover{
+    cursor: pointer;
+    background: #DCE7E9;
+}
+
+.format-active{
+    /* background: #DCE7E9; */
+    border-bottom: 4px solid #62B2C0;
+    color: #62B2C0;
+    font-weight: bold;
 }
