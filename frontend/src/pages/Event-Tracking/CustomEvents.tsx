@@ -13,6 +13,7 @@ const CustomEvents = () => {
     const [isMobile, setIsMobile] = React.useState<Boolean>(false);
     const [customEvents, setCustomEvents] = React.useState<CustomEventProps[]>([]);
     const [customEventAnalytics, setCustomEventAnalytics] = React.useState<CustomEventAnalyticsProps>();
+    const [graphFormat, setGraphFormat] = React.useState<string>("monthly");
 
     useEffect(() => {
       const handleResize = () => {
@@ -53,8 +54,9 @@ const CustomEvents = () => {
   return (
     <div className='custom-events'>
       <div className='custom-events-left-container'>
-        <div>
-          <label htmlFor="select-custom-event">Select Custom Event</label>
+        <div className='custom-events-header'>
+          <h4>{customEventAnalytics?.customEventTitle}</h4>
+          {/* <label htmlFor="select-custom-event">Select Custom Event</label> */}
           <select name="select-custom-event" id="" onChange={handleEventSelect}>
             <option value={""} >Select</option>
             {customEvents.map((event) => (
@@ -63,8 +65,8 @@ const CustomEvents = () => {
           </select>
         </div>
         <div className='graph-format-selector'>
-          <div>Monthly</div>
-          <div>Daily</div>
+          <div className={`${graphFormat  === 'monthly' ? 'format-active': ''}`} onClick={() => setGraphFormat("monthly")}>Monthly</div>
+          <div className={`${graphFormat  === 'daily' ? 'format-active': ''}`} onClick={() => setGraphFormat("daily")}>Daily</div>
         </div>
       </div>
       <div className='custom-events-right-container'>
