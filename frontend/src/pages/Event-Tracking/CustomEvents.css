@@ -48,3 +48,13 @@
     color: #62B2C0;
     font-weight: bold;
 }
+
+.custom-events-graph{
+    margin-top: 25px;
+}
+
+.day-selector {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
