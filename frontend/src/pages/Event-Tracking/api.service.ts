@@ -1,6 +1,7 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 import { axiosInstance } from '../../axios/axios';
 import notification from '../../axios/notification';
+import { createCustomEventProps } from './types';
 
 export const getCustomEvents = async <TResponse> (
     url: string,
@@ -29,6 +30,21 @@ export const getCustomEventAnalytics = async <TResponse> (
     } catch (error) {
         const message = (error as AxiosError<{message: string}>).response?.data?.message;
         notification(`Error while fetching custom event analytics. ${message ?? ''}`, 'error');
+        throw error;
+    }
+}
+
+export const postCustomEvents = async <TResponse> (
+    url: string,
+    body: createCustomEventProps,
+    config?: AxiosRequestConfig
+) => {
+    try {
+        const resp = await axiosInstance.post<TResponse>(url, body, config);
+        return resp.data;
+    } catch (error) {
+        const message = (error as AxiosError<{message: string}>).response?.data?.message;
+        notification(`Error while creating custom event. ${message ?? ''}`, 'error');
         throw error;
     }
 }
