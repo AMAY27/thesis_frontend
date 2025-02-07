@@ -13,6 +13,7 @@ import notification from '../../axios/notification';
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
     const [mobileAlertClicked, setMobileAlertClicked] = React.useState<Boolean>(false);
+    const [isLoading, setIsLoading] = React.useState<Boolean>(false);
     const [isMobile, setIsMobile] = React.useState<Boolean>(false);
     const [customEvents, setCustomEvents] = React.useState<CustomEventProps[]>([]);
     const [customEventAnalytics, setCustomEventAnalytics] = React.useState<CustomEventAnalyticsProps>();
@@ -53,6 +54,7 @@ const CustomEvents = () => {
     }
 
     const handleEventSelect = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setIsLoading(true);
       if(e.target.value) {
         const resp:CustomEventAnalyticsProps = await getCustomEventAnalytics(
           "/custom-events/getEventAnalytics", 
@@ -66,6 +68,7 @@ const CustomEvents = () => {
         }
         console.log(customEventAnalytics)
       }
+      setIsLoading(false);
     }
 
     const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -101,7 +104,7 @@ const CustomEvents = () => {
           <div className={`${graphFormat  === 'daily' ? 'format-active': ''}`} onClick={handleDailyClicked}>Daily</div>
         </div>
         <div className='custom-events-graph'>
-          {graphFormat === 'monthly' && customEventAnalytics?.frequencies && (
+          {graphFormat === 'monthly' && customEventAnalytics?.frequencies ? (
             <ResponsiveContainer width="100%" height={400}>
               <BarChart width={730} height={250} 
               data={customEventAnalytics.frequencies.map((freq) => ({
@@ -114,8 +117,8 @@ const CustomEvents = () => {
                 <Bar dataKey="count" fill="#62B2C0" />
                 </BarChart>
               </ResponsiveContainer>
-            )}
-          {graphFormat === 'daily' && customEventAnalytics?.frequencies && (
+            ) :
+            graphFormat === 'daily' && customEventAnalytics?.frequencies ? (
             <>
               <div className='day-selector'>
                 <select name="" id="" value={monthForDailyAnalytics} onChange={handleMonthChange}>
@@ -136,7 +139,13 @@ const CustomEvents = () => {
                   </BarChart>
                 </ResponsiveContainer>
               )}
-            </>
+            </>) : isLoading ? (
+              <div className="loading-overlay">
+                <div className="spinner"></div>
+              </div>
+            ) :
+            (
+            <div className='no-data'>Please Select the Custom Event</div>
           )}
         </div>
       </div>
