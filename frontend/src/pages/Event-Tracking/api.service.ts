@@ -1,7 +1,8 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 import { axiosInstance } from '../../axios/axios';
 import notification from '../../axios/notification';
-import { createCustomEventProps } from './types';
+// import { createCustomEventProps } from './types';
+import { BaseEventProps } from '../../components/Forms/GlobalForm';
 
 export const getCustomEvents = async <TResponse> (
     url: string,
@@ -36,7 +37,7 @@ export const getCustomEventAnalytics = async <TResponse> (
 
 export const postCustomEvents = async <TResponse> (
     url: string,
-    body: createCustomEventProps,
+    body: BaseEventProps,
     config?: AxiosRequestConfig
 ) => {
     try {

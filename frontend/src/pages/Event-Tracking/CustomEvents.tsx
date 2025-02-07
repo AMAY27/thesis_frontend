@@ -4,10 +4,11 @@ import { useNavContext } from "../../global-context/NavContext";
 import GlobalForm from "../../components/Forms/GlobalForm";
 import { BaseEventProps } from "../../components/Forms/GlobalForm";
 import { CustomEventProps, CustomEventAnalyticsProps } from './types';
-import { getCustomEvents, getCustomEventAnalytics } from './api.service';
+import { getCustomEvents, getCustomEventAnalytics, postCustomEvents } from './api.service';
 import {Bar, BarChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'recharts';
 import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
+import notification from '../../axios/notification';
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
@@ -40,7 +41,14 @@ const CustomEvents = () => {
       fetchCustomEvents();
     },[]);
 
-    const handleSubmit = (data: BaseEventProps) => {
+    const handleSubmit = async (data: BaseEventProps) => {
+      try {
+        await postCustomEvents("/custom-events/create", data);
+        notification("Custom Event created successfully", "success");
+        fetchCustomEvents();
+      } catch (error) {
+        // error already handled in api.service.ts
+      }
       console.log(data);
     }
 
