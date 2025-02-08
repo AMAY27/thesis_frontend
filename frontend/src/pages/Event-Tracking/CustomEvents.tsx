@@ -10,6 +10,7 @@ import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
 import notification from '../../axios/notification';
 import CustomEventsGraph from './components/CustomEventsGraph';
+import CustomEventsDetailsAndUpdateCard from './components/CustomEventsDetailsAndUpdateCard';
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
@@ -91,7 +92,7 @@ const CustomEvents = () => {
     <div className='custom-events'>
       <div className='custom-events-left-container'>
         <div className='custom-events-header'>
-          <h4>{customEventAnalytics?.customEventTitle}</h4>
+          <h4>{customEventAnalytics?.customEventDetails.title}</h4>
           {/* <label htmlFor="select-custom-event">Select Custom Event</label> */}
           <select name="select-custom-event" id="" onChange={handleEventSelect}>
             <option value={""} >Select</option>
@@ -150,7 +151,16 @@ const CustomEvents = () => {
         </div>
       </div>
       <div className='custom-events-right-container'>
-        <GlobalForm onSubmit={handleSubmit}/>
+        <CustomEventsDetailsAndUpdateCard
+          id={customEventAnalytics?.customEventDetails.id || ''}
+          title={customEventAnalytics?.customEventDetails.title || ''}
+          classname={customEventAnalytics?.customEventDetails.classname || ''}
+          start_date={customEventAnalytics?.customEventDetails.start_date || ''}
+          end_date={customEventAnalytics?.customEventDetails.end_date || ''}
+          start_time={customEventAnalytics?.customEventDetails.start_time || ''}
+          end_time={customEventAnalytics?.customEventDetails.end_time || ''}
+          status={customEventAnalytics?.customEventDetails.status || ''}
+        />
       </div>
     </div>
     
