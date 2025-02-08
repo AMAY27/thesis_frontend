@@ -21,7 +21,7 @@ export interface CustomEventProps{
 }
 
 export interface CustomEventAnalyticsProps {
-    customEventTitle: string;
+    customEventDetails: CustomEventProps;
     frequencies: FrequenciesDto[];
 }
 
