@@ -9,6 +9,7 @@ import {Bar, BarChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'rechart
 import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
 import notification from '../../axios/notification';
+import CustomEventsGraph from './components/CustomEventsGraph';
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
@@ -104,49 +105,48 @@ const CustomEvents = () => {
           <div className={`${graphFormat  === 'daily' ? 'format-active': ''}`} onClick={handleDailyClicked}>Daily</div>
         </div>
         <div className='custom-events-graph'>
-          {graphFormat === 'monthly' && customEventAnalytics?.frequencies ? (
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart width={730} height={250} 
-              data={customEventAnalytics.frequencies.map((freq) => ({
-                  month: freq.month,
-                  count: freq.freq
-              }))}>
-                <XAxis dataKey="month" />
-                <YAxis dataKey="count"/>
-                <Tooltip />
-                <Bar dataKey="count" fill="#62B2C0" />
-                </BarChart>
-              </ResponsiveContainer>
-            ) :
-            graphFormat === 'daily' && customEventAnalytics?.frequencies ? (
-            <>
-              <div className='day-selector'>
-                <select name="" id="" value={monthForDailyAnalytics} onChange={handleMonthChange}>
-                  {customEventAnalytics?.frequencies?.map((freq) => {
-                    return (
-                      <option value={freq.month} key={freq.month}>{freq.month}</option>
-                    )
-                  })}
-                </select>
-              </div>
-              {dailyFrequency && dailyFrequency.length > 0 && (
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart width={730} height={250} data={dailyFrequency}>
-                    <XAxis dataKey="date" />
-                    <YAxis dataKey="count"/>
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#62B2C0" />
-                  </BarChart>
-                </ResponsiveContainer>
-              )}
-            </>) : isLoading ? (
+          {
+            isLoading ? 
+              
+            (
               <div className="loading-overlay">
                 <div className="spinner"></div>
               </div>
             ) :
+          
+            graphFormat === 'monthly' && customEventAnalytics?.frequencies ? 
+          
             (
-            <div className='no-data'>Please Select the Custom Event</div>
-          )}
+              <CustomEventsGraph 
+                data={customEventAnalytics.frequencies.map((freq) => ({
+                  month: freq.month,
+                  count: freq.freq
+                }))} 
+                graphType="monthly"
+              />
+            ) :
+            graphFormat === 'daily' && customEventAnalytics?.frequencies ? 
+            
+            (
+              <>
+                <div className='day-selector'>
+                  <select name="" id="" value={monthForDailyAnalytics} onChange={handleMonthChange}>
+                    {customEventAnalytics?.frequencies?.map((freq) => {
+                      return (
+                        <option value={freq.month} key={freq.month}>{freq.month}</option>
+                      )
+                    })}
+                  </select>
+                </div>
+                {dailyFrequency && dailyFrequency.length > 0 && (
+                  <CustomEventsGraph data={dailyFrequency} graphType='daily'/>
+                )}
+              </>
+            ) : 
+            (
+              <div className='no-data'>Please Select the Custom Event</div>
+            )
+          }
         </div>
       </div>
       <div className='custom-events-right-container'>
