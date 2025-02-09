@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react'
 import hoc from "../../hoc/hoc"
 import { useNavContext } from "../../global-context/NavContext";
-import GlobalForm from "../../components/Forms/GlobalForm";
 import { BaseEventProps } from "../../components/Forms/GlobalForm";
 import { CustomEventProps, CustomEventAnalyticsProps } from './types';
 import { getCustomEvents, getCustomEventAnalytics, postCustomEvents } from './api.service';
-import {Bar, BarChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'recharts';
 import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
 import notification from '../../axios/notification';
@@ -90,9 +88,23 @@ const CustomEvents = () => {
     }
   return (
     <div className='custom-events'>
+      {isMobile && 
+        <div className='custom-events-mobile-container'>
+          <CustomEventsDetailsAndUpdateCard
+            id={customEventAnalytics?.customEventDetails.id || ''}
+            title={customEventAnalytics?.customEventDetails.title || ''}
+            classname={customEventAnalytics?.customEventDetails.classname || ''}
+            start_date={customEventAnalytics?.customEventDetails.start_date || ''}
+            end_date={customEventAnalytics?.customEventDetails.end_date || ''}
+            start_time={customEventAnalytics?.customEventDetails.start_time || ''}
+            end_time={customEventAnalytics?.customEventDetails.end_time || ''}
+            status={customEventAnalytics?.customEventDetails.status || ''}
+          />
+        </div>
+      }
       <div className='custom-events-left-container'>
         <div className='custom-events-header'>
-          <h4>{customEventAnalytics?.customEventDetails.title}</h4>
+          {/* <h4>{customEventAnalytics?.customEventDetails.title}</h4> */}
           {/* <label htmlFor="select-custom-event">Select Custom Event</label> */}
           <select name="select-custom-event" id="" onChange={handleEventSelect}>
             <option value={""} >Select</option>
