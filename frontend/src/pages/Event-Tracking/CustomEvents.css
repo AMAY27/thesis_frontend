@@ -15,11 +15,28 @@
 .custom-events-right-container{
     /* background: yellow; */
     width: 25%;
+    background: #DCE7E9;
+    padding: 10px;
+    border: 1px solid #62B2C0;
+    border-radius: 20px;
+}
+
+@media only screen and (max-width: 1000px){
+    .custom-events{
+        flex-direction: column;
+    }
+
+    .custom-events-right-container{
+        display: none;
+    }
+    .custom-events-left-container{
+        width: 100%;
+    }
 }
 
 .custom-events-header{
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
 }
 

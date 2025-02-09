@@ -1,34 +1,68 @@
-.hoc-layer-one{
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100;
-    /* background: greenyellow; */
-    overflow-y: hidden;
-    overflow-x: hidden;
-
-}
-
-.parent-container{
-    /* background: blue; */
+.parent-container {
     width: 100%;
-    height: 100%;
-    margin: 0;
-    position: absolute;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.hoc-layer-two{
-    display: block;
-    width: 93%;
-    /* background: yellow; */
+.hoc-layer-one {
+    display: flex;
+    height: 100%;
+}
+
+.hoc-fixed-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+}
+
+.hoc-layer-two {
+    flex: 1;
+    margin-left: 70px; 
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     padding-inline: 4rem;
     padding-block: 0.5rem;
 }
 
+.nav-fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 100px; /* Should match margin-left of hoc-layer-two */
+    z-index: 99;
+    background-color: white; /* Or your nav background color */
+    padding-inline: 4rem;
+}
+
+.content-scrollable {
+    margin-top: 60px; /* Adjust based on your MainNav height */
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    padding: 20px;
+}
+
 @media screen and (max-width:1000px) {
+    .parent-container{
+        overflow: hidden;
+    }
+    .hoc-layer-one{
+        margin: 0;
+    }
     .hoc-layer-two{
+        /* padding-inline: 1rem; */
+        margin: 0;
+        /* background: yellow; */
+    } 
+    .nav-fixed{
         padding-inline: 1rem;
-    }  
+        margin: 0;
+    } 
+    .hoc-fixed-layer{
+        display: none;
+    }
 }
 
 @media screen and (max-width:720px) {
