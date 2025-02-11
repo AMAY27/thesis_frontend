@@ -25,7 +25,8 @@ const AlertManagement = () => {
   const fetchAlerts = async() => {
     const resp = await getAlerts<AlertCalendarProps[]>("/alert/alerts");
     console.log(resp);
-    const alertsWithHandler = resp.map(alert => ({
+    const alertsWithHandler = resp.map((alert) => ({
+      
       ...alert,
       handleAlertCalendarClicked: handleAlertCalendarClicked
     }));
@@ -38,6 +39,7 @@ const AlertManagement = () => {
   }
 
   const handleAddAlertClicked = () => {
+    // localStorage.setItem("alert_details", )
     setAddAlertClicked(!addAlertClicked);
     setMobileAlertClicked(false);
   }

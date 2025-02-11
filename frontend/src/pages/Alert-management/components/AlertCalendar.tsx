@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { getAlertLogs } from '../api.services';
 import { AlertLogsProps } from '../types';
+import AlertUpdateCard from './AlertUpdateCard';
 
 const AlertCalendar = () => {
 
@@ -48,6 +49,7 @@ const AlertCalendar = () => {
     };
 
   return (
+    <div>
     <div id="container">
         <div id="header">
             {/* <div>Calendar Timeline</div> */}
@@ -95,6 +97,9 @@ const AlertCalendar = () => {
                 }
             })}
         </div>
+    </div>
+    <div>
+    </div>
     </div>
   )
 }
