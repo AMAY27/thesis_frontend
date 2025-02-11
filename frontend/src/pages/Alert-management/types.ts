@@ -12,6 +12,10 @@ export interface AlertProps {
     createdAt: string;
 }
 
+export interface AlertUpdateProps extends AlertProps {
+    _id: string
+}
+
 export interface AlertCalendarProps {
     user_id: string;
     title: string;

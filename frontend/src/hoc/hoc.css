@@ -59,9 +59,23 @@
     .nav-fixed{
         padding-inline: 1rem;
         margin: 0;
+        left: 0;
     } 
     .hoc-fixed-layer{
         display: none;
+    }
+    .content-scrollable{
+        overflow-y: auto;
+        height: calc(100vh - 60px);
+        -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+        overscroll-behavior: contain;
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
 
