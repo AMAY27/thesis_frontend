@@ -4,17 +4,29 @@ import hoc from '../../../hoc/hoc';
 import { useEffect, useState } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { getAlertLogs } from '../api.services';
-import { AlertLogsProps } from '../types';
-import AlertUpdateCard from './AlertUpdateCard';
+import { AlertLogsProps, CalendarProps, AlertProps } from '../types';
 
 const AlertCalendar = () => {
 
     const [alertLogs, setAlertLogs] = useState<AlertLogsProps[]>([]);
+    const [alertDetails, setAlertDetails] = useState<AlertProps>()
 
     useEffect(() => {
         const fetchAlertLogs = async() => {
-            const resp:AlertLogsProps[] = await getAlertLogs("/alert/alert-logs", "677fc94ae64c5fb4d0273895");
-            setAlertLogs(resp);
+            const resp:CalendarProps = await getAlertLogs("/alert/alert-logs", "677fc94ae64c5fb4d0273895");
+            setAlertLogs(resp.alertLogs);
+            setAlertDetails({
+                user_id: resp.user_id,
+                title: resp.title,
+                classname: resp.classname,
+                alert_type: resp.alert_type,
+                start_date: resp.start_date,
+                end_date: resp.end_date,
+                start_time: resp.start_time,
+                end_time: resp.end_time,
+                status: resp.status,
+                createdAt: resp.createdAt,
+            })
         }
         fetchAlertLogs();
     },[]);
@@ -50,6 +62,8 @@ const AlertCalendar = () => {
 
   return (
     <div>
+        <h2>{alertDetails?.title}</h2>
+        <p>{alertDetails?.start_date}</p>
     <div id="container">
         <div id="header">
             {/* <div>Calendar Timeline</div> */}
