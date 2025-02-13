@@ -48,5 +48,9 @@ export interface AlertLogsProps {
     userId: string;
     triggerDate: string;
     alertTitle: string;
-    alertClass: string
+    alertClass: string;
+}
+
+export interface CalendarProps extends AlertProps {
+    alertLogs: AlertLogsProps[];
 }
