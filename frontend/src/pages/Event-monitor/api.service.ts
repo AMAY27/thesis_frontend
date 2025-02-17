@@ -1,7 +1,7 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 import { axiosInstance } from '../../axios/axios';
 import notification from '../../axios/notification';
-import { EventsMonitorData } from './types';
+// import { EventsMonitorData } from './types';
 
 export const getEventsMonitorData = async <TResponse> (
     url: string,
