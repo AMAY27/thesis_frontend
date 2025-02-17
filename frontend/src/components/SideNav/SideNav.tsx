@@ -16,7 +16,7 @@ const SideNav = () => {
         {item:"alerts", title:"Alerts"}, 
         {item: "livestream", title:"Live Stream"}, 
         {item: "customevents", title:"Custom Events"}, 
-        {item: "historical", title:"Historical Events"}
+        {item: "eventsmonitor", title:"Events Monitor"}
     ];
 
     return(

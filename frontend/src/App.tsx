@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomEvents from './pages/Event-Tracking/CustomEvents';
 import AlertCalendar from './pages/Alert-management/components/AlertCalendar';
+import EventMonitor from './pages/Event-monitor/EventMonitor';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/alerts" element={<AlertManagement />} />
             <Route path="/customevents" element={<CustomEvents/> } />
+            <Route path='/eventsmonitor' element={<EventMonitor/>} />
             <Route path="/alert/calendar" element={<AlertCalendar />} />
           </Routes>
           <ToastContainer />
