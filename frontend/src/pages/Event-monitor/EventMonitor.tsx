@@ -25,7 +25,7 @@ const EventMonitor = () => {
         return null;
     }
   return (
-    <div>
+    <div className="events-monitor">
         <h2>Events Monitor</h2>
         {eventsMonitorData && (
             <ResponsiveHeatmap 

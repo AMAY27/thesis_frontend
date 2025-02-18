@@ -6,32 +6,25 @@ interface HeatmapData {
     time: string;
     sound: string;
     count: number;
-  }
+}
 
 const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, sixHour, twelveHour, twentyFourHour }) => {
     
     const containerRef = useRef<HTMLDivElement | null>(null);
     const svgRef = useRef<SVGSVGElement | null>(null);
-    const [dimensions, setDimensions] = useState({ width: 600, height: 800 });
+    // const dimensions = { width: 600, height: 800 };
+    const [isMobile, setIsMobile] = useState(false);
 
-  // Listen for container size changes
-    // useEffect(() => {
-    //     console.log(oneHour);
-    //     const container = containerRef.current;
-    //     if (!container) return;
-    //     const observer = new ResizeObserver(entries => {
-    //       for (let entry of entries) {
-    //         if (entry.target === container) {
-    //           setDimensions({
-    //             width: entry.contentRect.width,
-    //             height: entry.contentRect.height,
-    //           });
-    //         }
-    //       }
-    //     });
-    //     observer.observe(container);
-    //     return () => observer.disconnect();
-    // }, []);
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 480);
+      }
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      }
+    },[])
 
     // Transform the rawData into a flat array: { time, sound, count }
     const data: HeatmapData[] = useMemo(() => {
@@ -43,7 +36,12 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           if (counts) {
             counts.forEach((d: SoundCount) => {
               flatData.push({
-                time: time === 'oneHour' ? "1 Hr" : time === 'threeHour' ? "3 Hrs" : time === 'sixHour' ? "6 Hrs" : time === 'twelveHour' ? "12 Hrs" : "24 Hrs",
+                time: 
+                  time === 'oneHour' ? `${isMobile ? '1H' : '1 Hr'}` : 
+                  time === 'threeHour' ? `${isMobile ? '3H' : '3 Hrs'}` : 
+                  time === 'sixHour' ? `${isMobile ? '6H' : '6 Hrs'}` : 
+                  time === 'twelveHour' ? `${isMobile ? '12H' : '12 Hrs'}` : 
+                  `${isMobile ? '24H' : '24 Hrs'}`,
                 sound: d._id,
                 count: d.count,
               });
@@ -51,7 +49,7 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           }
         });
         return flatData;
-    }, [oneHour, threeHour, sixHour, twelveHour, twentyFourHour]);
+    }, [oneHour, threeHour, sixHour, twelveHour, twentyFourHour, isMobile]);
 
     // D3 rendering: redraw whenever dimensions or data change
     useEffect(() => {
@@ -63,9 +61,14 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
         svg.selectAll("*").remove();
     
         // Set responsive margins based on dimensions
-        const margin = { top: 50, right: 30, bottom: 50, left: 100 };
-        const width = dimensions.width;
-        const height = dimensions.height;
+        const margin = { 
+          top: isMobile ? 30 : 50, 
+          right: isMobile ? 1: 30, 
+          bottom: isMobile ? 20 : 50, 
+          left: isMobile ?1: 100 
+        };
+        const width = isMobile ? 220 : 600;
+        const height = 800;
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
     
@@ -87,7 +90,7 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
         const maxCount = d3.max(data, d => d.count) || 0;
         const colorScale = d3.scaleQuantize<string>()
             .domain([0, maxCount])
-            .range(["#E8EAEE", "#A1DEE9", "#0C4D58", "#166876", "#02252C"]);
+            .range(["#E8EAEE", "#A1DEE9","#166876", "#0C4D58" , "#02252C"]);
     
         // Create a group container for the chart and apply margins
         const g = svg
@@ -125,7 +128,7 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           .call(d3.axisLeft(yScale))
           .selectAll("text")
           .style("font-size", "18px");
-    }, [dimensions, data]);
+    }, [isMobile, data]);
 
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
