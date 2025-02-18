@@ -14,12 +14,12 @@ export interface BaseEventProps {
 
 interface BaseEventFormProps {
     onSubmit: (data: BaseEventProps) => void;
-    // handleCancelClicked: () => void;
+    handleCancelClicked: () => void;
     initialValues?: Partial<BaseEventProps>;
     children?: React.ReactNode;
 }
 
-const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, children}) => {
+const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, children, handleCancelClicked}) => {
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [formData, setFormData] = React.useState<BaseEventProps>({
@@ -106,9 +106,9 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
                 <button type='submit' disabled={isLoading}>
                     Submit
                 </button>
-                {/* <button onClick={handleCancelClicked} disabled={isLoading}>
+                <button onClick={handleCancelClicked} disabled={isLoading}>
                     Cancel
-                </button> */}
+                </button>
             </div>
         </form>
     </div>
