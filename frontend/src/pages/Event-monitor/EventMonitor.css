@@ -1,0 +1,11 @@
+.events-monitor{
+    display: flex;
+    flex-direction: row; 
+}
+
+.left-container{
+    background: #ebebd1;
+    display: flex;
+    width: 55%;
+    flex-grow: 1;
+}
