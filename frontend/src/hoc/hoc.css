@@ -52,7 +52,7 @@
         margin: 0;
     }
     .hoc-layer-two{
-        /* padding-inline: 1rem; */
+        padding-inline: 0.1rem;
         margin: 0;
         /* background: yellow; */
     } 
@@ -79,8 +79,8 @@
     }
 }
 
-@media screen and (max-width:720px) {
+/* @media screen and (max-width:720px) {
     .hoc-layer-two{
         padding-inline: 1rem;
     }  
-}
+} */

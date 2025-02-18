@@ -67,7 +67,7 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           bottom: isMobile ? 20 : 50, 
           left: isMobile ?1: 100 
         };
-        const width = isMobile ? 220 : 600;
+        const width = isMobile ? 220 : 500;
         const height = 800;
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
@@ -127,11 +127,32 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           .attr("transform", `translate(-5, 0)`)
           .call(d3.axisLeft(yScale))
           .selectAll("text")
-          .style("font-size", "18px");
+          .style("font-size", `${isMobile  ? '5px':'14px'}`);
+
+        if (isMobile) {
+          g.selectAll(".cell-text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "cell-text")
+            .attr("x", d => (xScale(d.time) ?? 0) + xScale.bandwidth() / 2)
+            .attr("y", d => (yScale(d.sound) ?? 0) + yScale.bandwidth() / 2)
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .style("font-size", "10px")
+            .text(d => d.count)
+            .style("fill", d => {
+              const fillColor = colorScale(d.count);
+              // Convert the fill color to HSL
+              const hslColor = d3.hsl(fillColor);
+              // If lightness is below 0.5, use white text; otherwise use black text.
+              return hslColor.l < 0.5 ? "#fff" : "#000";
+            });
+        }
     }, [isMobile, data]);
 
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
+    <div ref={containerRef} style={{ width: '100%', height: '100%'}}>
       <svg ref={svgRef} />
     </div>
   );
