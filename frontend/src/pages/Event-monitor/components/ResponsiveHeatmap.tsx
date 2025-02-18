@@ -63,9 +63,9 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
         // Set responsive margins based on dimensions
         const margin = { 
           top: isMobile ? 30 : 50, 
-          right: isMobile ? 1: 30, 
+          right: isMobile ? 1: 0, 
           bottom: isMobile ? 20 : 50, 
-          left: isMobile ?1: 100 
+          left: isMobile ?1: 150 
         };
         const width = isMobile ? 220 : 500;
         const height = 800;

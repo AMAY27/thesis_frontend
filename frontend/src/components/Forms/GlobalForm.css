@@ -45,7 +45,14 @@
 
     .input-row .input-div{
         width: 100%;  
+        margin-block: 0.2rem;
+        margin-right: 0;
+
     }  
+
+    .alert-form{
+        padding: 0;
+    }
 }
 
 .input-div{

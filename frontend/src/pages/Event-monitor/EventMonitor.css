@@ -3,9 +3,34 @@
     flex-direction: row; 
 }
 
-.left-container{
-    background: #ebebd1;
+.em-left-container{
+    /* background: #ebebd1; */
     display: flex;
     width: 55%;
-    flex-grow: 1;
+}
+
+.em-right-container{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    /* background: blue; */
+    width: 45%;
+    border-left: 1px solid #62B2C0;
+}
+
+.em-right-container .em-btn-div button{
+    background: transparent;
+    color: #62B2C0;
+    border: 1px solid #62B2C0;
+    margin-right: 10px;
+}
+
+.em-right-container .em-btn-div button:hover{
+    background: #62B2C0;
+    color: white;
+}
+
+.em-right-container .em-btn-div .em-btn-div-active{
+    background: #62B2C0;
+    color: white;
 }
