@@ -7,18 +7,25 @@ interface NavContextProviderProps {
 interface NavContextProps {
     clickedNavItem: string;
     setClickedNavItem: (clickedNavItem: string) => void;
+    isMobileNavClicked: boolean;
+    setIsMobileNavClicked: (isMobileNavClicked: boolean) => void;
 }
 
 const NavContext = createContext<NavContextProps >({
     clickedNavItem: "alerts",
     setClickedNavItem: () => {},
+    isMobileNavClicked: false,
+    setIsMobileNavClicked: () => {},
 });
 
 export const NavContextProvider = ({ children }: NavContextProviderProps) => {
     const [clickedNavItem, setClickedNavItem] = useState<string>("alerts");
+    const [isMobileNavClicked, setIsMobileNavClicked] = useState<boolean>(false);
     const contextData = {
         clickedNavItem,
         setClickedNavItem,
+        isMobileNavClicked,
+        setIsMobileNavClicked,
     };
     return (
         <NavContext.Provider value={contextData}>{children}</NavContext.Provider>
