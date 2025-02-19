@@ -11,7 +11,8 @@
 
 .em-right-container{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
     padding: 1rem;
     /* background: blue; */
     width: 45%;
@@ -33,4 +34,22 @@
 .em-right-container .em-btn-div .em-btn-div-active{
     background: #62B2C0;
     color: white;
+}
+
+.em-data-div{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.em-data-card{
+    flex: 0 0 45%;      /* Each card takes 50% of the container */
+    box-sizing: border-box;
+    background: #E8EAEE;
+    padding-left: 1rem;
+    padding-block: 0.1rem;
+    border-radius: 10px;
+    margin-block: 5px;
+    margin-inline: 5px;
 }

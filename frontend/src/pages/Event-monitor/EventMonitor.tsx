@@ -11,7 +11,7 @@ import './EventMonitor.css'
 const EventMonitor = () => {
     const { clickedNavItem } = useNavContext();
     const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
-    const [activeHourforData, setActiveHourforData] = useState("oneHour");
+    const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("oneHour");
     useEffect(() => {
         const fetchData = async () => {
             const resp:EventsMonitorData[] = await getEventsMonitorData("/custom-events/getEventsMonitorData")
@@ -67,11 +67,25 @@ const EventMonitor = () => {
                     12 Hrs
                 </button>
                 <button 
-                    className={`${activeHourforData === "twentyfourHour" ? 'em-btn-div-active' : ''}`}
-                    onClick={() => setActiveHourforData("twentyfourHour")}
+                    className={`${activeHourforData === "twentyFourHour" ? 'em-btn-div-active' : ''}`}
+                    onClick={() => setActiveHourforData("twentyFourHour")}
                 >
                     24 Hrs
                 </button>
+            </div>
+            <div className="em-data-div">
+                {eventsMonitorData && eventsMonitorData[0] && (
+                    (eventsMonitorData[0][activeHourforData] ? eventsMonitorData[0][activeHourforData].map((item: any) => (
+                        <div key={item._id} className="em-data-card">
+                            <h3>{item._id}</h3>
+                            <p>{item.count}</p>
+                        </div>
+                    )) : 
+                        <div>
+                            <h2>No data for last twelve hours</h2>
+                        </div>
+                    )
+                )}
             </div>
         </div>
     </div>
