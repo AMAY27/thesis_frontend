@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import "./MainNav.css";
 import { CgProfile } from "react-icons/cg";
+import { useNavContext } from '../../global-context/NavContext';
 
 const MainNav = () => {
+    const { setIsMobileNavClicked } = useNavContext();
     const [isMobile, setIsMobile] = useState<Boolean>(false);
     useEffect(() => {
         const handleResize = () => {
@@ -16,7 +18,7 @@ const MainNav = () => {
     }, [])
   return (
     <div className='mainnav'>
-        {isMobile && <h1>☰</h1>}
+        {isMobile && <h1 onClick={() => setIsMobileNavClicked(true)}>☰</h1>}
         <h1>Sound Secure</h1>
         <CgProfile className='profile-icon' size="2em"/>
     </div>
