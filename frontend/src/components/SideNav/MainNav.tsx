@@ -18,7 +18,14 @@ const MainNav = () => {
     }, [])
   return (
     <div className='mainnav'>
-        {isMobile && <h1 onClick={() => setIsMobileNavClicked(true)}>☰</h1>}
+        {isMobile && 
+            <h1 
+                onClick={() => setIsMobileNavClicked(true)}
+                style={{cursor: 'pointer'}}
+            >
+                    ☰
+            </h1>
+        }
         <h1>Sound Secure</h1>
         <CgProfile className='profile-icon' size="2em"/>
     </div>

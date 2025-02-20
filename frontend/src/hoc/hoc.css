@@ -59,7 +59,7 @@
         padding-inline: 0;
         padding-block: 0;
         margin-left: 0;
-        background: yellow;
+        /* background: yellow; */
         align-items: center;
     } 
     .nav-fixed{

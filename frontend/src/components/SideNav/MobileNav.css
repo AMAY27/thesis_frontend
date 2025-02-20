@@ -7,4 +7,40 @@
     color: white;
     font-family: "Inter", serif;
     padding-inline: 1rem;
+    width: 100%;
+}
+
+.mobnav .mobnav-head{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    /* padding-block: 1rem; */
+    /* padding-inline: 1rem; */
+    border-bottom: 1px solid white;
+}
+
+.mobnav .mobnav-head h4{
+    cursor: pointer;
+}
+
+.mobnavlist{
+    padding: 1rem;
+}
+
+.mobnavlist div{
+    padding-block: 0.5rem;
+    padding-inline: 0.5rem;
+    border-bottom: 1px solid #62B2C0;
+    cursor: pointer;
+}
+
+.mobnavlist div:hover{
+    background: #0C4D58;
+}
+
+.mobnav-head h2 {
+    /* Prevent headings from taking full width */
+    display: inline-block;
+    width: auto;
 }

@@ -106,6 +106,7 @@ const CustomEvents = () => {
         <div className='custom-events-header'>
           {/* <h4>{customEventAnalytics?.customEventDetails.title}</h4> */}
           {/* <label htmlFor="select-custom-event">Select Custom Event</label> */}
+          <button>Add</button>
           <select name="select-custom-event" id="" onChange={handleEventSelect}>
             <option value={""} >Select</option>
             {customEvents.map((event) => (
