@@ -14,7 +14,7 @@ export interface BaseEventProps {
 
 interface BaseEventFormProps {
     onSubmit: (data: BaseEventProps) => void;
-    handleCancelClicked: () => void;
+    handleCancelClicked: () => void | undefined;
     initialValues?: Partial<BaseEventProps>;
     children?: React.ReactNode;
 }

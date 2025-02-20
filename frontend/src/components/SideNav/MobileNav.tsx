@@ -8,6 +8,7 @@ const MobileNav = () => {
 
     const handleNavigation = (navItem: string) => {
         setClickedNavItem(navItem);
+        setIsMobileNavClicked(false);
         navigate(`/${navItem}`);
     }
 
@@ -19,21 +20,27 @@ const MobileNav = () => {
     ];
   return (
     <div className="mobnav">
-        <h2>Sound Secure</h2>
-        <p onClick={() => setIsMobileNavClicked(false)}>X</p>
-        <ul className="mobnavlist">
+        <div className="mobnav-head">
+            <>
+                <h2>Sound Secure</h2>
+            </>
+            <>
+                <h4 onClick={() => setIsMobileNavClicked(false)}>X</h4>
+            </>
+        </div>
+        <div className="mobnavlist">
             {navItems.map((navItem) => {
                 return (
-                    <li
+                    <div
                         key={navItem.item}
                         className="mobnavitems"
                         onClick={() => handleNavigation(navItem.item)}
                     >
                         {navItem.title}
-                    </li>
+                    </div>
                 )
             })}
-        </ul>
+        </div>
     </div>
   )
 }
