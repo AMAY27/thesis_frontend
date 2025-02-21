@@ -9,7 +9,8 @@ import { AlertLogsProps, CalendarProps, AlertProps } from '../types';
 const AlertCalendar = () => {
 
     const [alertLogs, setAlertLogs] = useState<AlertLogsProps[]>([]);
-    const [alertDetails, setAlertDetails] = useState<AlertProps>()
+    const [alertDetails, setAlertDetails] = useState<AlertProps>();
+    const [isMobile, setIsMobile] = useState<Boolean>(false);
 
     useEffect(() => {
         const fetchAlertLogs = async() => {
@@ -32,8 +33,13 @@ const AlertCalendar = () => {
     },[]);
 
     useEffect(() => {
-        console.log(alertLogs);
-    }, [alertLogs]);
+        const handleResize = () => { 
+            setIsMobile(window.innerWidth <= 480);
+        }
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const [nav, setNav] = useState(0);
 
@@ -61,59 +67,79 @@ const AlertCalendar = () => {
     };
 
   return (
-    <div>
-        <h2>{alertDetails?.title}</h2>
-        <p>{alertDetails?.start_date}</p>
-    <div id="container">
-        <div id="header">
-            {/* <div>Calendar Timeline</div> */}
-            <div id="month-display">{currentMonth.toLocaleDateString('en-US', {month : 'long'})} {year}</div>
+    <div className='alert-calendar'>
+        <h3>Alert Calendar</h3>
+        <div className='alert-details-container'>
+            <div className='custom-event-details-header'>
+                <h2>{alertDetails?.title}</h2>
+                <button 
+                    // onClick={() => setIsEditing(true)}
+                    style={{backgroundColor: '#62B2C0', color: 'white', padding: '5px 10px', borderRadius: '5px'}}
+                >Edit</button>
+            </div>
             <div>
-                <button id="prevButton" onClick={() => setNav(nav - 1)}>Prev</button>
-                <button id="nextButton" onClick={() => setNav(nav + 1)}>Next</button>
+                <div>
+                    <label htmlFor='class'>Class:</label> 
+                    <p className='class'>{alertDetails?.classname}</p>
+                </div>
+                <div>
+                    <label htmlFor='class'>Date Range:</label> 
+                    <p className='class'>{alertDetails?.start_date.split('T')[0]} to {alertDetails?.end_date.split('T')[0]}</p>
+                </div>
+                <div>
+                    <label htmlFor='class'>Time Range:</label> 
+                    <p className='class'>{alertDetails?.start_time} - {alertDetails?.end_time}</p>
+                </div>
             </div>
         </div>
-        <div id="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-        </div>
-        <div id="calendar">
-            { [...Array(paddingDays + daysInMonth).keys()].map((day) => {
-                const dayNumber = day - paddingDays + 1;
-                const dayString = formatDateString(new Date(year, month, dayNumber));
-                const isTriggeredDay = alertLogs.some(alertLog => alertLog.triggerDate.split('T')[0] === dayString);
-                const tooltipId = `tooltip-${dayString}`;
+        <div id="container">
+            <div id="header">
+                {/* <div>Calendar Timeline</div> */}
+                <div id="month-display">{currentMonth.toLocaleDateString('en-US', {month : 'long'})} {year}</div>
+                <div>
+                    <button id="prevButton" onClick={() => setNav(nav - 1)}>{isMobile ? "<" : "Prev"}</button>
+                    <button id="nextButton" onClick={() => setNav(nav + 1)}>{isMobile ? ">" : "Next"}</button>
+                </div>
+            </div>
+            <div id="weekdays">
+                <div>{isMobile ? "S" : "Sun"}</div>
+                <div>{isMobile ? "M" : "Mon"}</div>
+                <div>{isMobile ? "T" : "Tue"}</div>
+                <div>{isMobile ? "W" : "Wed"}</div>
+                <div>{isMobile ? "T" : "Thu"}</div>
+                <div>{isMobile ? "F" : "Fri"}</div>
+                <div>{isMobile ? "S" : "Sat"}</div>
+            </div>
+            <div id="calendar">
+                { [...Array(paddingDays + daysInMonth).keys()].map((day) => {
+                    const dayNumber = day - paddingDays + 1;
+                    const dayString = formatDateString(new Date(year, month, dayNumber));
+                    const isTriggeredDay = alertLogs.some(alertLog => alertLog.triggerDate.split('T')[0] === dayString);
+                    const tooltipId = `tooltip-${dayString}`;
 
-                if(day >= paddingDays){
-                    if (dayNumber === today && nav === 0){ 
-                        return( 
-                            <div key={day} className={`day ${isTriggeredDay ? 'highlight' : ''}`} id="currentDay" data-tooltip-id={tooltipId}>
-                                {dayNumber}
-                                <Tooltip id={tooltipId} content={dayString} place="top"/>
-                            </div>
-                        )
+                    if(day >= paddingDays){
+                        if (dayNumber === today && nav === 0){ 
+                            return( 
+                                <div key={day} className={`day ${isTriggeredDay ? 'highlight' : ''}`} id="currentDay" data-tooltip-id={tooltipId}>
+                                    {dayNumber}
+                                    <Tooltip id={tooltipId} content={dayString} place="top"/>
+                                </div>
+                            )
+                        }
+                        else {
+                            return( 
+                              <div key={day} className={`day ${isTriggeredDay ? 'highlight' : ''}`} data-tooltip-id={tooltipId}>
+                                  {dayNumber}
+                                  <Tooltip id={tooltipId} content={dayString} place="top" />
+                              </div>
+                            )
+                        }
+                    } else {
+                        return <div className="padding"></div>
                     }
-                    else {
-                        return( 
-                          <div key={day} className={`day ${isTriggeredDay ? 'highlight' : ''}`} data-tooltip-id={tooltipId}>
-                              {dayNumber}
-                              <Tooltip id={tooltipId} content={dayString} place="top" />
-                          </div>
-                        )
-                    }
-                } else {
-                    return <div className="padding"></div>
-                }
-            })}
+                })}
+            </div>
         </div>
-    </div>
-    <div>
-    </div>
     </div>
   )
 }

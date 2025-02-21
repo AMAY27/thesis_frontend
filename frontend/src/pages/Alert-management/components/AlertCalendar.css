@@ -1,3 +1,26 @@
+.alert-calendar{
+  background-color: #DCE7E9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", serif;
+  /* height: 100%; */
+}
+
+.alert-details-container{
+  /* width: 100%; */
+}
+
+.custom-event-details-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 1rem; */
+  background-color: #DCE7E9;
+  /* border-bottom: 1px solid #62B2C0; */
+}
+
 button {
   width: 75px;
   cursor: pointer;
@@ -26,10 +49,66 @@ button {
   flex-direction: column;
   margin-top: 10px;
   justify-content: center;
-  background-color: #DCE7E9;
+  /* background-color: #DCE7E9; */
   padding: 0.5rem;
   width: 420px;
   border-radius: 1rem;
+}
+
+@media screen and (max-width:480px){
+  #container{
+    padding: 0;
+    width: 265px;
+  }
+  #container #weekdays div {
+    display: flex;
+    justify-content: center;
+    width: 25px;
+    height: 15px;
+    padding: 5px;
+    font-size: small;
+  }
+  #calendar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+  }
+  #calendar .day {
+    width: 25px;
+    padding: 5px;
+    height: 25px;
+    font-size: small;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin: 5px;
+    box-shadow: 0px 0px 3px #CBD4C2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  #calendar .highlight {
+    background-color: #62B2C0;
+    color: white;
+  }
+
+  #header{
+    font-size: larger;
+    /* width: 100%; */
+    background-color: aquamarine;
+  }
+
+  #header div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #header div button{
+    padding-inline: 4px;
+  }
 }
 #weekdays {
     width: 100%;
@@ -39,6 +118,7 @@ button {
 #weekdays div {
   width: 100px;
   padding: 10px;
+  /* background-color: aqua; */
 }
 .padding {
   cursor: default !important;
