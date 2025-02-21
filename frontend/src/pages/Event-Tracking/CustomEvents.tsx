@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import hoc from "../../hoc/hoc"
 import { useNavContext } from "../../global-context/NavContext";
-import { BaseEventProps } from "../../components/Forms/GlobalForm";
-import { CustomEventProps, CustomEventAnalyticsProps } from './types';
-import { getCustomEvents, getCustomEventAnalytics, postCustomEvents } from './api.service';
+import GlobalForm, { BaseEventProps } from "../../components/Forms/GlobalForm";
+import { CustomEventAnalyticsProps } from './types';
+import { getCustomEventAnalytics, postCustomEvents } from './api.service';
 import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
 import notification from '../../axios/notification';
@@ -15,11 +15,12 @@ const CustomEvents = () => {
     const [mobileAlertClicked, setMobileAlertClicked] = React.useState<Boolean>(false);
     const [isLoading, setIsLoading] = React.useState<Boolean>(false);
     const [isMobile, setIsMobile] = React.useState<Boolean>(false);
-    const [customEvents, setCustomEvents] = React.useState<CustomEventProps[]>([]);
+    const [customEvents, setCustomEvents] = React.useState<CustomEventAnalyticsProps[]>([]);
     const [customEventAnalytics, setCustomEventAnalytics] = React.useState<CustomEventAnalyticsProps>();
     const [graphFormat, setGraphFormat] = React.useState<string>("monthly");
     const [monthForDailyAnalytics, setMonthForDailyAnalytics] = React.useState<string>("");
     const [dailyFrequency, setDailyFrequency] = React.useState<DailyFrequencyDto[]>([]);
+    const [addEventsClicked, setAddEventsClicked] = React.useState<Boolean>(false);
 
     useEffect(() => {
       const handleResize = () => {
@@ -34,8 +35,11 @@ const CustomEvents = () => {
     },[]);
 
     const fetchCustomEvents = async () => {
-      const resp:CustomEventProps[] = await getCustomEvents<CustomEventProps[]>("/custom-events/getCustomEvents", "676bdb353db50d80a5c8a82a");
+      setIsLoading(true);
+      const resp:CustomEventAnalyticsProps[] = await getCustomEventAnalytics<CustomEventAnalyticsProps[]>("/custom-events/getEventAnalytics", "676bdb353db50d80a5c8a82a");
       setCustomEvents(resp);
+      setCustomEventAnalytics(resp[0]);
+      setIsLoading(false);
     }
 
     useEffect(() => {
@@ -53,18 +57,16 @@ const CustomEvents = () => {
       console.log(data);
     }
 
-    const handleEventSelect = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleEventSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setIsLoading(true);
       if(e.target.value) {
-        const resp:CustomEventAnalyticsProps = await getCustomEventAnalytics(
-          "/custom-events/getEventAnalytics", 
-          "676bdb353db50d80a5c8a82a", 
-          e.target.value
-        );
-        setCustomEventAnalytics(resp);
-        if (resp.frequencies && resp.frequencies.length > 0) {
-          setMonthForDailyAnalytics(resp.frequencies[0].month);
-          setDailyFrequency(resp.frequencies[0].dailyFrequency);
+        const resp = customEvents.find((event) => event.customEventDetails.id === e.target.value);
+        if(resp){
+          setCustomEventAnalytics(resp);
+          if (resp.frequencies && resp.frequencies.length > 0) {
+            setMonthForDailyAnalytics(resp.frequencies[0].month);
+            setDailyFrequency(resp.frequencies[0].dailyFrequency);
+          }
         }
         console.log(customEventAnalytics)
       }
@@ -72,6 +74,7 @@ const CustomEvents = () => {
     }
 
     const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      e.preventDefault();
       setMonthForDailyAnalytics(e.target.value);
       setDailyFrequency(customEventAnalytics?.frequencies?.find((freq) => freq.month === e.target.value)?.dailyFrequency ?? []);
       console.log(dailyFrequency);
@@ -88,8 +91,24 @@ const CustomEvents = () => {
     }
   return (
     <div className='custom-events'>
+      {isLoading &&
+          <div className="loading-overlay">
+            <div className="spinner"></div>
+          </div>
+      }   
+      {addEventsClicked && 
+        <div className='form-overlay'>
+          <GlobalForm handleCancelClicked={() => setAddEventsClicked(false)} onSubmit={handleSubmit}/>
+        </div>
+      }
       {isMobile && 
         <div className='custom-events-mobile-container'>
+          <button 
+            className='mobile-add-custom-events-button'
+            onClick={() => setAddEventsClicked(true)}
+          > 
+            Add Custom Events
+          </button>
           <CustomEventsDetailsAndUpdateCard
             id={customEventAnalytics?.customEventDetails.id || ''}
             title={customEventAnalytics?.customEventDetails.title || ''}
@@ -104,13 +123,10 @@ const CustomEvents = () => {
       }
       <div className='custom-events-left-container'>
         <div className='custom-events-header'>
-          {/* <h4>{customEventAnalytics?.customEventDetails.title}</h4> */}
-          {/* <label htmlFor="select-custom-event">Select Custom Event</label> */}
-          <button>Add</button>
+          {!isMobile &&<button onClick={() => setAddEventsClicked(true)}>Add</button>}
           <select name="select-custom-event" id="" onChange={handleEventSelect}>
-            <option value={""} >Select</option>
             {customEvents.map((event) => (
-              <option value={event.id} key={event.id}>{event.title}</option>
+              <option value={event.customEventDetails?.id} key={event.customEventDetails?.id}>{event.customEventDetails?.title}</option>
             ))}
           </select>
         </div>
@@ -120,13 +136,6 @@ const CustomEvents = () => {
         </div>
         <div className='custom-events-graph'>
           {
-            isLoading ? 
-              
-            (
-              <div className="loading-overlay">
-                <div className="spinner"></div>
-              </div>
-            ) :
           
             graphFormat === 'monthly' && customEventAnalytics?.frequencies ? 
           

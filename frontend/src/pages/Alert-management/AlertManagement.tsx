@@ -100,7 +100,7 @@ const AlertManagement = () => {
 
   return (
     <div className={`alert-manager`}>
-      {addAlertClicked && (
+      {addAlertClicked && 
         <div className="form-overlay">
           <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleCancelClicked}>
             <div className="input-div">
@@ -116,7 +116,7 @@ const AlertManagement = () => {
             </div>
           </GlobalForm>
         </div>
-      )}
+      }
       {mobileAlertClicked ? 
         <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleCancelClicked}>
           <div className='input-div'>
