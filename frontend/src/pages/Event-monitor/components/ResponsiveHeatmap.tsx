@@ -90,7 +90,7 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
         const maxCount = d3.max(data, d => d.count) || 0;
         const colorScale = d3.scaleQuantize<string>()
             .domain([0, maxCount])
-            .range(["#E8EAEE", "#A1DEE9","#166876", "#0C4D58" , "#02252C"]);
+            .range(["#E8EAEE", "#A1DEE9","#166876", "#0C4D58" ]);
     
         // Create a group container for the chart and apply margins
         const g = svg
