@@ -67,7 +67,7 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           bottom: isMobile ? 20 : 50, 
           left: isMobile ?1: 150 
         };
-        const width = isMobile ? 220 : 500;
+        const width = isMobile ? 220 : 600;
         const height = 800;
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
@@ -86,11 +86,11 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           .domain(sounds)
           .range([0, innerHeight])
           .padding(0.05);
-    
+        
         const maxCount = d3.max(data, d => d.count) || 0;
-        const colorScale = d3.scaleQuantize<string>()
-            .domain([0, maxCount])
-            .range(["#E8EAEE", "#A1DEE9","#166876", "#0C4D58" ]);
+        const colorScale = d3.scaleSequential<string>()
+            .domain([0, Math.log(maxCount)])
+            .interpolator(d3.interpolateBlues);
     
         // Create a group container for the chart and apply margins
         const g = svg

@@ -77,7 +77,7 @@ const EventMonitor = () => {
                 {eventsMonitorData && eventsMonitorData[0] && (
                     (eventsMonitorData[0][activeHourforData] ? eventsMonitorData[0][activeHourforData].map((item: any) => (
                         <div key={item._id} className="em-data-card">
-                            <h3>{item._id}</h3>
+                            <p>{item._id}</p>
                             <p>{item.count}</p>
                         </div>
                     )) : 
