@@ -1,22 +1,49 @@
 .events-monitor{
     display: flex;
     flex-direction: row; 
+    font-family: "Inter", serif;
 }
 
 .em-left-container{
     /* background: #ebebd1; */
     display: flex;
-    width: 55%;
+    width: 60%;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .em-right-container{
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    padding: 1rem;
+    align-items: center;
+    padding: 1.5rem;
     /* background: blue; */
-    width: 45%;
-    border-left: 1px solid #62B2C0;
+    width: 40%;
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid #62B2C0;
+    /* position: relative; */
+    /* border-radius: 10px; */
+}
+
+.em-right-container::-webkit-scrollbar {
+    width: 8px; /* adjust width as needed */
+}
+
+.em-right-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* color of the track */
+    /* border-radius: 10px; */
+}
+
+.em-right-container::-webkit-scrollbar-thumb {
+    background: #62B2C0; /* color of the scroll thumb */
+    /* border-radius: 10px; */
+}
+
+.em-right-container::-webkit-scrollbar-thumb:hover {
+    background: #4f8aa8;
 }
 
 .em-right-container .em-btn-div button{
@@ -40,16 +67,61 @@
     margin-top: 1rem;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
+    /* background: yellow; */
+}
+
+.em-btn-div{
+    /* background: green; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* z-index: 100; */
+    /* right: 0; */
+
 }
 
 .em-data-card{
-    flex: 0 0 45%;      /* Each card takes 50% of the container */
+    width: 100%;      /* Each card takes 50% of the container */
     box-sizing: border-box;
-    background: #E8EAEE;
-    padding-left: 1rem;
-    padding-block: 0.1rem;
-    border-radius: 10px;
+    /* background: #E8EAEE; */
+    padding: 0.2rem;
+    /* border-radius: 10px; */
     margin-block: 5px;
     margin-inline: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E8EAEE;
+}
+
+@media screen and (max-width: 480px){
+    .events-monitor{
+        flex-direction: column;
+    }
+
+    .em-left-container{
+        width: 100%;
+    }
+
+    .em-right-container{
+        width: 100%;
+        border-left: none;
+        padding: 0;
+        margin-top: 2rem;
+        position: fixed;
+        top: 0;
+    }
+
+    .em-data-card{
+        display: flex;
+        flex-direction: row;
+        flex: 0 0 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
 }
