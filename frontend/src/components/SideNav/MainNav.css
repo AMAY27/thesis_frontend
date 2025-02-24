@@ -36,3 +36,24 @@
         /* padding-left: 2rem; */
     }
 }
+
+.notification-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 1rem;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #62B2C0;
+    color: white;
+    z-index: 10;            /* z-10 */
+    width: auto;            /* w-auto */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-full (custom shadow) */
+    padding: 1rem 0;        /* py-4 */
+    margin: 0.25rem 0;  
+}
+
+.notification-icon{
+    position: relative;
+}
