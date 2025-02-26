@@ -80,12 +80,12 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
         const xScale = d3.scaleBand<string>()
           .domain(times)
           .range([0, innerWidth])
-          .padding(0.05);
+          .padding(0);
     
         const yScale = d3.scaleBand<string>()
           .domain(sounds)
           .range([0, innerHeight])
-          .padding(0.05);
+          .padding(0);
         
         const maxCount = d3.max(data, d => d.count) || 0;
         const colorScale = d3.scaleSequential<string>()
@@ -119,7 +119,9 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           .attr("transform", `translate(0, -5)`)
           .call(d3.axisTop(xScale))
           .selectAll("text")
-          .style("font-size", "16px");
+          .style("font-size", "12px")
+          .style("margin-bottom", "20px")
+          .style("text-color", "gray");
     
         // Add Y axis on the left
         g.append("g")
@@ -127,7 +129,25 @@ const ResponsiveHeatmap:React.FC<EventsMonitorData> = ({ oneHour, threeHour, six
           .attr("transform", `translate(-5, 0)`)
           .call(d3.axisLeft(yScale))
           .selectAll("text")
-          .style("font-size", `${isMobile  ? '5px':'14px'}`);
+          .style("font-size", `${isMobile  ? '5px':'12px'}`)
+          .style("text-color", "gray")
+          
+
+        g.append("text")
+          .attr("x", innerWidth / 2)
+          .attr("y", -margin.top / 2)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text("Time");
+        
+        // Add Y axis label rotated and centered along the left side
+        g.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("x", -innerHeight / 2)
+          .attr("y", -margin.left + 20)  // adjust 20 as needed for spacing
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text("Sound");
 
         if (isMobile) {
           g.selectAll(".cell-text")

@@ -12,6 +12,8 @@ const EventMonitor = () => {
     const { clickedNavItem } = useNavContext();
     const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
     const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("oneHour");
+    const [selectedClass, setSelectedClass] = useState<string[]>(["Zerbrechen"]);
+
     useEffect(() => {
         const fetchData = async () => {
             const resp:EventsMonitorData[] = await getEventsMonitorData("/custom-events/getEventsMonitorData")
@@ -23,13 +25,48 @@ const EventMonitor = () => {
         console.log(eventsMonitorData);
     },[eventsMonitorData])
 
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedClass((prev) => {
+            if(!prev.includes(e.target.value)) {
+                return [...prev, e.target.value];
+            }
+            return prev;
+        })
+    }
+
+    const handleSelectedClassDelete = (classname:string) => {
+        setSelectedClass((prev) => {
+            return prev.filter((item) => item !== classname);
+        })
+    } 
+
     if (clickedNavItem !== "eventsmonitor") {
         return null;
     }
   return (
     <div className="events-monitor">
+        <div className="events-class-selector">
+            <select name='classname' onChange={handleChange} required>
+                <option value="Zerbrechen">Zerbrechen</option>
+                <option value="Türklingel">Türklingel</option>
+                <option value="Klingelton">Klingelton</option>
+                <option value="Ruhe">Ruhe</option>
+                <option value="ZwitscherndeVögel">ZwitscherndeVögel</option>
+                <option value="Schnarchen">Schnarchen</option>
+                <option value="Wind">Wind</option>
+                <option value="Sirene">Sirene</option>
+            </select>
+            <div className="selected-class-list">
+                {selectedClass.map((item) => (
+                    <div key={item} className="selected-class-item">
+                        <p>{item}</p>
+                        <p onClick={() => handleSelectedClassDelete(item)}>x</p>
+                    </div>
+                ))}
+            </div>
+        </div>
         {/* <h2>Events Monitor</h2> */}
-        <div className="em-left-container">
+        {/* <div className="em-left-container">
             {eventsMonitorData && (
                 <ResponsiveHeatmap 
                     oneHour={eventsMonitorData[0].oneHour || []}
@@ -87,7 +124,7 @@ const EventMonitor = () => {
                     )
                 )}
             </div>
-        </div>
+        </div> */}
     </div>
   )
 }

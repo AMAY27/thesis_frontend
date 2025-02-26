@@ -8,8 +8,8 @@
   /* height: 100%; */
 }
 
-.alert-details-container{
-  /* width: 100%; */
+.alert-details-div{
+  margin-top: 0.5rem;
 }
 
 .custom-event-details-header{
