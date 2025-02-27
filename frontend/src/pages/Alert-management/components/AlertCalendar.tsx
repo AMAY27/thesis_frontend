@@ -69,27 +69,25 @@ const AlertCalendar = () => {
   return (
     <div className='alert-calendar'>
         <h3>Alert Calendar</h3>
-        <div className='alert-details-container'>
-            <div className='custom-event-details-header'>
+        <div>
+            <div className='custom-event-details-header' style={{display: 'flex', justifyContent: 'space-between',alignItems: 'center'}}>
                 <h2>{alertDetails?.title}</h2>
                 <button 
                     // onClick={() => setIsEditing(true)}
                     style={{backgroundColor: '#62B2C0', color: 'white', padding: '5px 10px', borderRadius: '5px'}}
                 >Edit</button>
             </div>
-            <div>
-                <div>
-                    <label htmlFor='class'>Class:</label> 
-                    <p className='class'>{alertDetails?.classname}</p>
-                </div>
-                <div>
-                    <label htmlFor='class'>Date Range:</label> 
-                    <p className='class'>{alertDetails?.start_date.split('T')[0]} to {alertDetails?.end_date.split('T')[0]}</p>
-                </div>
-                <div>
-                    <label htmlFor='class'>Time Range:</label> 
-                    <p className='class'>{alertDetails?.start_time} - {alertDetails?.end_time}</p>
-                </div>
+            <div style={{marginBottom: '10px'}}>
+                <label htmlFor='class' style={{color:'#62B2C0', fontWeight:'bold'}}>Class:</label> 
+                <p style={{ margin:'5px'}} className='class'>{alertDetails?.classname}</p>
+            </div>
+            <div style={{marginBottom: '10px'}}>
+                <label htmlFor='class' style={{color:'#62B2C0', fontWeight:'bold'}}>Date Range:</label> 
+                <p style={{ margin:'5px'}} className='class'>{alertDetails?.start_date.split('T')[0]} to {alertDetails?.end_date.split('T')[0]}</p>
+            </div>
+            <div style={{marginBottom: '10px'}}>
+                <label htmlFor='class' style={{color:'#62B2C0', fontWeight:'bold'}}>Time Range:</label> 
+                <p style={{ margin:'5px'}} className='class'>{alertDetails?.start_time} - {alertDetails?.end_time}</p>
             </div>
         </div>
         <div id="container">
