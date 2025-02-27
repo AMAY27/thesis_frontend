@@ -65,6 +65,68 @@ const EventMonitor = () => {
                 ))}
             </div>
         </div>
+        <div className="em-btn-div">
+            <button 
+                className={`${activeHourforData === "fiveMinutes" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("fiveMinutes")}
+            >
+                5 Mins
+            </button>
+            <button 
+                className={`${activeHourforData === "fifteenMinutes" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("fifteenMinutes")}
+            >
+                15 Mins
+            </button>
+            <button 
+                className={`${activeHourforData === "thirtyMinutes" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("thirtyMinutes")}
+            >
+                30 Mins
+            </button>
+            <button 
+                className={`${activeHourforData === "oneHour" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("oneHour")}
+            >
+                1 Hr
+            </button>
+            <button 
+                className={`${activeHourforData === "threeHour" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("threeHour")}
+            >
+                3 Hrs
+            </button>
+            <button 
+                className={`${activeHourforData === "sixHour" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("sixHour")}
+            >
+                6 Hrs
+            </button>
+            <button 
+                className={`${activeHourforData === "twelveHour" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("twelveHour")}
+            >
+                12 Hrs
+            </button>
+            <button 
+                className={`${activeHourforData === "twentyFourHour" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("twentyFourHour")}
+            >
+                24 Hrs
+            </button>
+            <button 
+                className={`${activeHourforData === "yesterday" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("yesterday")}
+            >
+                Yesterday
+            </button>
+            <button 
+                className={`${activeHourforData === "dayBeforeYesterday" ? 'em-btn-div-active' : ''}`}
+                onClick={() => setActiveHourforData("dayBeforeYesterday")}
+            >
+                Day Before Yesterday
+            </button>
+        </div>
         {/* <h2>Events Monitor</h2> */}
         {/* <div className="em-left-container">
             {eventsMonitorData && (
