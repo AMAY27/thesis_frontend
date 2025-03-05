@@ -1,19 +1,12 @@
 import React from 'react'
 import {Bar, BarChart, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'recharts';
+import { EventMonitorBarChartProps } from '../types';
 
-interface ChartData {
-    _id: string;
-    count: number;
-}
-interface EventMonitorBarChartProps {
-    data: ChartData[];
-    xAxisKey: string;
-}
-const EventMonitorBarChart:React.FC<EventMonitorBarChartProps> = ({data, xAxisKey}) => {
+const EventMonitorBarChart:React.FC<EventMonitorBarChartProps> = ({data}) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
         <BarChart data={data}>
-          <XAxis dataKey={xAxisKey} />
+          <XAxis dataKey="_id" />
           <YAxis dataKey="count"/>
           <Tooltip />
           <Bar dataKey="count" fill="#62B2C0" />

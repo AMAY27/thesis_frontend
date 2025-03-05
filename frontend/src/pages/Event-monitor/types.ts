@@ -15,3 +15,11 @@ export interface EventsMonitorData {
     yesterday: SoundCount[];
     dayBeforeYesterday: SoundCount[];
 }
+
+export interface ChartData {
+    _id: string;
+    count: number;
+}
+export interface EventMonitorBarChartProps {
+    data: SoundCount[];
+}
