@@ -5,7 +5,9 @@ import { EventsMonitorData } from "./types"
 import { getEventsMonitorData } from "./api.service";
 import { useNavContext } from "../../global-context/NavContext";
 import hoc from "../../hoc/hoc";
-import ResponsiveHeatmap from "./components/ResponsiveHeatmap";
+// import ResponsiveHeatmap from "./components/ResponsiveHeatmap";
+import EventMonitorBarChart from "./components/EventMonitorBarChart";
+import { EventMonitorBarChartProps, SoundCount } from "./types";
 import './EventMonitor.css'
 
 const EventMonitor = () => {
@@ -13,6 +15,7 @@ const EventMonitor = () => {
     const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
     const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("oneHour");
     const [selectedClass, setSelectedClass] = useState<string[]>(["Zerbrechen"]);
+    const [barChartData, setBarChartData] = useState<SoundCount[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,10 +23,19 @@ const EventMonitor = () => {
             setEventsMonitorData(resp);
         }
         fetchData();
+        if (eventsMonitorData && eventsMonitorData.length > 0) {
+            // Get the raw data for the active hour (e.g., oneHour, threeHour, etc.)
+            const rawData = eventsMonitorData[0][activeHourforData] || [];
+            // Filter data based on selectedClass if necessary
+            const filteredData = rawData.filter((item: any) =>
+              selectedClass.includes(item._id)
+            );
+            setBarChartData(filteredData);
+        }
     },[])
     useEffect(() => {
-        console.log(eventsMonitorData);
-    },[eventsMonitorData])
+        console.log(barChartData);
+    },[barChartData])
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedClass((prev) => {
@@ -40,6 +52,16 @@ const EventMonitor = () => {
         })
     } 
 
+    useEffect(() => {
+        const rawData = eventsMonitorData && eventsMonitorData[0] ? eventsMonitorData[0][activeHourforData] || [] : [];
+            // Filter data based on selectedClass if necessary
+        const filteredData = rawData.filter((item: any) =>
+          selectedClass.includes(item._id)
+        );
+        setBarChartData(filteredData);
+    }, [activeHourforData, selectedClass])
+
+    
     if (clickedNavItem !== "eventsmonitor") {
         return null;
     }
@@ -126,6 +148,9 @@ const EventMonitor = () => {
             >
                 Day Before Yesterday
             </button>
+        </div>
+        <div>
+            <EventMonitorBarChart data={barChartData} />
         </div>
         {/* <h2>Events Monitor</h2> */}
         {/* <div className="em-left-container">
