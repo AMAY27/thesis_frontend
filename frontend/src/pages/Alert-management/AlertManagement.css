@@ -16,6 +16,7 @@
     .alert-manager .left-container{
         width: 100%;
         flex-grow: 1;
+        /* background: wheat; */
     }
 
     .right-container{

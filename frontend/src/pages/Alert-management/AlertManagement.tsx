@@ -135,12 +135,12 @@ const AlertManagement = () => {
       </GlobalForm> : 
       <div className="left-container">
         <table className="alert-table">
-        <colgroup>
+        {!isMobile && <colgroup>
           <col style={{ width: '20%', fontWeight: 'bolder' }} />
           <col style={{ width: '40%' }} />
           <col style={{ width: '25%' }} />
           <col style={{ width: '15%' }} />
-        </colgroup>
+        </colgroup>}
           <tbody>
           {
               alerts.map((alert, index) => (
