@@ -25,7 +25,7 @@ const CustomEvents = () => {
     useEffect(() => {
       const handleResize = () => {
         setIsMobile(window.innerWidth <= 1000);
-        setMobileAlertClicked(window.innerWidth <= 1000 ? mobileAlertClicked : false);
+        setMobileAlertClicked(window.innerWidth <= 1000);
       };
       handleResize();
       window.addEventListener('resize', handleResize);
@@ -109,6 +109,11 @@ const CustomEvents = () => {
           > 
             Add Custom Events
           </button>
+          <select name="select-custom-event" id="" onChange={handleEventSelect} style={{width: '100%', marginTop: '10px'}}>
+            {customEvents.map((event) => (
+              <option value={event.customEventDetails?.id} key={event.customEventDetails?.id}>{event.customEventDetails?.title}</option>
+            ))}
+          </select>
           <CustomEventsDetailsAndUpdateCard
             id={customEventAnalytics?.customEventDetails.id || ''}
             title={customEventAnalytics?.customEventDetails.title || ''}
@@ -124,11 +129,11 @@ const CustomEvents = () => {
       <div className='custom-events-left-container'>
         <div className='custom-events-header'>
           {!isMobile &&<button onClick={() => setAddEventsClicked(true)}>Add</button>}
-          <select name="select-custom-event" id="" onChange={handleEventSelect}>
+          {!isMobile && <select name="select-custom-event" id="" onChange={handleEventSelect}>
             {customEvents.map((event) => (
               <option value={event.customEventDetails?.id} key={event.customEventDetails?.id}>{event.customEventDetails?.title}</option>
             ))}
-          </select>
+          </select>}
         </div>
         <div className='graph-format-selector'>
           <div className={`${graphFormat  === 'monthly' ? 'format-active': ''}`} onClick={() => setGraphFormat("monthly")}>Monthly</div>
