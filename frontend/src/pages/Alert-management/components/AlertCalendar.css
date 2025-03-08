@@ -1,15 +1,16 @@
 .alert-calendar{
-  background-color: #DCE7E9;
+  /* background-color: #DCE7E9; */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   font-family: "Inter", serif;
   /* height: 100%; */
 }
 
-.alert-details-div{
-  margin-top: 0.5rem;
+.alert-details{
+  margin: 1.5rem;
+  /* background: #CBD4C2; */
 }
 
 .custom-event-details-header{
@@ -17,8 +18,6 @@
   justify-content: space-between;
   align-items: center;
   /* padding: 1rem; */
-  background-color: #DCE7E9;
-  /* border-bottom: 1px solid #62B2C0; */
 }
 
 button {
@@ -56,6 +55,12 @@ button {
 }
 
 @media screen and (max-width:480px){
+  .alert-calendar{
+    flex-direction: column;
+  }
+  .alert-details{
+    margin: 0.5rem;
+  }
   #container{
     padding: 0;
     width: 265px;
@@ -97,7 +102,6 @@ button {
   #header{
     font-size: larger;
     /* width: 100%; */
-    background-color: aquamarine;
   }
 
   #header div{
