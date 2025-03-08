@@ -27,6 +27,7 @@
     height: 100vh;
     padding-inline: 4rem;
     padding-block: 0.5rem;
+    /* background: yellow; */
     /* position: relative; */
 }
 
@@ -45,6 +46,7 @@
     height: calc(100vh - 60px);
     overflow-y: auto;
     padding: 20px;
+    /* background: red; */
 }
 
 @media screen and (max-width:1000px) {
@@ -72,6 +74,7 @@
     }
     .content-scrollable{
         overflow-y: auto;
+        padding: 0;
         height: calc(100vh - 60px);
         -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
         overscroll-behavior: contain;

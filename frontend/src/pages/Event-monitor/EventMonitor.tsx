@@ -7,7 +7,7 @@ import { useNavContext } from "../../global-context/NavContext";
 import hoc from "../../hoc/hoc";
 // import ResponsiveHeatmap from "./components/ResponsiveHeatmap";
 import EventMonitorBarChart from "./components/EventMonitorBarChart";
-import { EventMonitorBarChartProps, SoundCount } from "./types";
+import { SoundCount } from "./types";
 import './EventMonitor.css'
 
 const EventMonitor = () => {
