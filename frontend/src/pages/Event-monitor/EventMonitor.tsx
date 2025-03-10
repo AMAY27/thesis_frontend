@@ -8,7 +8,8 @@ import hoc from "../../hoc/hoc";
 // import ResponsiveHeatmap from "./components/ResponsiveHeatmap";
 import EventMonitorBarChart from "./components/EventMonitorBarChart";
 import { SoundCount } from "./types";
-import './EventMonitor.css'
+import './EventMonitor.css';
+import MobileFilter from "../Event-Tracking/components/MobileFilter";
 
 const EventMonitor = () => {
     const { clickedNavItem } = useNavContext();
@@ -16,6 +17,8 @@ const EventMonitor = () => {
     const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("oneHour");
     const [selectedClass, setSelectedClass] = useState<string[]>(["Zerbrechen"]);
     const [barChartData, setBarChartData] = useState<SoundCount[]>([]);
+    const [isMobile, setIsMobile] = useState<Boolean>(false);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -61,13 +64,24 @@ const EventMonitor = () => {
         setBarChartData(filteredData);
     }, [activeHourforData, selectedClass])
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 480);
+        }
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    },[])
+
     
     if (clickedNavItem !== "eventsmonitor") {
         return null;
     }
   return (
     <div className="events-monitor">
-        <div className="events-class-selector">
+        {/* <div className="events-class-selector">
             <select name='classname' onChange={handleChange} required>
                 <option value="Zerbrechen">Zerbrechen</option>
                 <option value="Türklingel">Türklingel</option>
@@ -148,7 +162,14 @@ const EventMonitor = () => {
             >
                 Day Before Yesterday
             </button>
-        </div>
+        </div> */}
+        <MobileFilter
+            activeHourforData={activeHourforData}
+            setActiveHourforData={setActiveHourforData}
+            selectedClass={selectedClass}
+            handleChange={handleChange}
+            handleSelectedClassDelete={handleSelectedClassDelete}
+        />
         <div>
             <EventMonitorBarChart data={barChartData} />
         </div>
