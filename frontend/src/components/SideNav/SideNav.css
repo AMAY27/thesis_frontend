@@ -21,9 +21,14 @@
 }
 
 .sidenav ul li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 1rem .5rem;
     color: white;
     font-weight: bold;
+    gap: 5px;
 }
 
 .sidenav ul li.navitems:hover {
