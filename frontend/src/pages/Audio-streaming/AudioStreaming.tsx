@@ -1,9 +1,14 @@
 import { useState, useRef } from 'react';
 import hoc from '../../hoc/hoc';
+import './AudioStreaming.css';
+import { FaPlay } from "react-icons/fa6";
+import { BsRecordCircle } from "react-icons/bs";
+
 
 const AudioRecorder = () => {
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+  const [fileName, setFileName] = useState('');
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -67,23 +72,44 @@ const AudioRecorder = () => {
   };
 
   return (
-    <div>
-      <h2>Audio Recorder</h2>
-      {!recording ? (
-        <button onClick={startRecording}>Start Recording</button>
-      ) : (
-        <button onClick={stopRecording}>Stop Recording</button>
-      )}
-      {/* If recording has been stopped and audio chunks are available, provide options to send and playback */}
-      {audioChunks.length > 0 && !recording && (
-        <div>
-          <button onClick={handleSend}>Send Recording</button>
-          <audio
-            controls
-            src={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/wav' }))}
-          />
+    <div className='streaming-parent'>
+        <div className='audio-recorder'>
+            <h3>Audio Recorder</h3>
+            <div className='record-buttons-div'>
+                <div className='filename-div'>
+                    <label>
+                      Filename:
+                      <input
+                        type="text"
+                        value={fileName}
+                        onChange={(e) => setFileName(e.target.value)}
+                      />
+                    </label>
+                </div>
+                {!recording ? (
+                  <button onClick={startRecording}>
+                    <span style={{marginRight:"4px"}}><FaPlay/></span> 
+                    Start Recording
+                  </button>
+                ) : (
+                  <button style={{backgroundColor:"red", color:"white"}} onClick={stopRecording}>
+                    <span style={{marginRight:"4px"}}><BsRecordCircle/></span> 
+                    Stop Recording
+                  </button>
+                )}
+            </div>
+            {/* If recording has been stopped and audio chunks are available, provide options to send and playback */}
+            {audioChunks.length > 0 && !recording && (
+              <div className='audio-player-div'>
+                <audio
+                  className='audio-player'
+                  controls
+                  src={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/wav' }))}
+                />
+              </div>
+            )}
+            <button onClick={handleSend}>Send Recording</button>
         </div>
-      )}
     </div>
   );
 };
