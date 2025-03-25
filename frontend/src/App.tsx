@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CustomEvents from './pages/Event-Tracking/CustomEvents';
 import AlertCalendar from './pages/Alert-management/components/AlertCalendar';
 import EventMonitor from './pages/Event-monitor/EventMonitor';
+import AudioStreaming from './pages/Audio-streaming/AudioStreaming';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/customevents" element={<CustomEvents/> } />
             <Route path='/eventsmonitor' element={<EventMonitor/>} />
             <Route path="/alert/calendar" element={<AlertCalendar />} />
+            <Route path="/livestream" element={<AudioStreaming/>} />
           </Routes>
           <ToastContainer />
         </Router>
