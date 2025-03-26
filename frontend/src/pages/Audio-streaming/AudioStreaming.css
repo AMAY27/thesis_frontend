@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     font-family: "Inter", serif;
-    background: whitesmoke;
+    /* background: whitesmoke; */
 }
 
 .audio-recorder{
@@ -10,16 +10,6 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-}
-
-@media screen and (max-width: 768px){
-    .streaming-parent{
-        flex-direction: column;
-    }
-    .audio-recorder{
-        width: 100%;
-    }
-    
 }
 
 .record-buttons-div{
@@ -68,13 +58,41 @@
     margin-left: 10px;  
 }
 
-.audio-player-div{
-    width: 100%;
-    /* background: #62B2C0; */
-}
 
 .audio-player{
-    width: 100%;
-    padding: 10px;
+    width:100%;
+    padding: 5px;
     color: white;
+    /* background: #62B2C0; */
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 1000px){
+    .streaming-parent{
+        flex-direction: column;
+        padding: 5px;
+    }
+    .audio-recorder{
+        width: 100%;
+    }
+    .record-buttons-div{
+        flex-direction: column;
+        align-items: center;
+        background: yellow;
+    }
+    .record-buttons-div button{
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .filename-div input{
+        margin-left: 0;
+        width: 100%;
+    }
+    .audio-player{
+        background: yellowgreen;
+    }
+    
+    /* .filename-div{
+        width: 100%;
+    } */
 }

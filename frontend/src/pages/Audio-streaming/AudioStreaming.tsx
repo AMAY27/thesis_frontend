@@ -100,13 +100,11 @@ const AudioRecorder = () => {
             </div>
             {/* If recording has been stopped and audio chunks are available, provide options to send and playback */}
             {audioChunks.length > 0 && !recording && (
-              <div className='audio-player-div'>
                 <audio
                   className='audio-player'
                   controls
                   src={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/wav' }))}
                 />
-              </div>
             )}
             <button onClick={handleSend}>Send Recording</button>
         </div>
