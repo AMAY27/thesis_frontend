@@ -3,6 +3,7 @@ import hoc from '../../hoc/hoc';
 import './AudioStreaming.css';
 import { FaPlay } from "react-icons/fa6";
 import { BsRecordCircle } from "react-icons/bs";
+import { ApiResponse, sendRecordingForAnalysis } from './api.service';
 
 
 const AudioRecorder = () => {
@@ -53,22 +54,10 @@ const AudioRecorder = () => {
 
     // Prepare the FormData payload
     const formData = new FormData();
-    formData.append('file', audioBlob, 'recording.wav');
+    formData.append('wavfile', audioBlob, fileName);
 
-    try {
-      // Send the audio file to the backend
-      const response = await fetch('http://your-backend-endpoint/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      if (response.ok) {
-        console.log('Audio uploaded successfully.');
-      } else {
-        console.error('Audio upload failed.');
-      }
-    } catch (err) {
-      console.error('Error sending audio to backend:', err);
-    }
+    const analyzeStreamAndGetAnalytics = await sendRecordingForAnalysis("/api/sound_analysis", formData);
+    console.log(analyzeStreamAndGetAnalytics);
   };
 
   return (
