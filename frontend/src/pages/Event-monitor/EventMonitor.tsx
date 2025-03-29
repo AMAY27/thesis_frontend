@@ -10,6 +10,7 @@ import EventMonitorBarChart from "./components/EventMonitorBarChart";
 import { SoundCount } from "./types";
 import './EventMonitor.css';
 import MobileFilter from "../Event-Tracking/components/MobileFilter";
+import { sendRecordingForAnalysis } from "../Audio-streaming/api.service";
 
 const EventMonitor = () => {
     const { clickedNavItem } = useNavContext();

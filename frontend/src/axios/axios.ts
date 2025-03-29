@@ -4,6 +4,11 @@ export const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_NEST_BACKEND_URL,
 });
 
+// Separate variable for Flask URL
+export const axiosInstanceFlask = axios.create({
+    baseURL: import.meta.env.VITE_NEST_FLASK_URL,
+});
+
 axiosInstance.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
