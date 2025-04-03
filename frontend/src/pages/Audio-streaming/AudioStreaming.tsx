@@ -26,6 +26,7 @@ const AudioRecorder = () => {
 
       // Event listener to collect audio data chunks as they become available
       mediaRecorder.addEventListener('dataavailable', (event) => {
+        console.log('Chunk received:', event.data.size, event.data.type);
         if (event.data && event.data.size > 0) {
           setAudioChunks(prev => [...prev, event.data]);
         }
@@ -50,11 +51,13 @@ const AudioRecorder = () => {
 
   const handleSend = async () => {
     // Combine the audio chunks into a single Blob with WAV MIME type
-    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    const audioBlob = new Blob(audioChunks);
+
+    let finalFileName = fileName;
 
     // Prepare the FormData payload
     const formData = new FormData();
-    formData.append('wavfile', audioBlob, fileName);
+    formData.append('wavfile', audioBlob, finalFileName);
 
     const analyzeStreamAndGetAnalytics = await sendRecordingForAnalysis("/api/sound_analysis", formData);
     console.log(analyzeStreamAndGetAnalytics);
@@ -92,7 +95,7 @@ const AudioRecorder = () => {
                 <audio
                   className='audio-player'
                   controls
-                  src={URL.createObjectURL(new Blob(audioChunks, { type: 'audio/wav' }))}
+                  src={URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm; codecs=opus" }))}
                 />
             )}
             <button onClick={handleSend}>Send Recording</button>
