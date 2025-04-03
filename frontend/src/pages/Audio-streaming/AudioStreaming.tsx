@@ -1,4 +1,11 @@
 import { useState, useRef } from 'react';
+
+// Extend the Window interface to include showSaveFilePicker
+declare global {
+  interface Window {
+    showSaveFilePicker?: (options?: any) => Promise<any>;
+  }
+}
 import hoc from '../../hoc/hoc';
 import './AudioStreaming.css';
 import { FaPlay } from "react-icons/fa6";
@@ -52,8 +59,28 @@ const AudioRecorder = () => {
   const handleSend = async () => {
     // Combine the audio chunks into a single Blob with WAV MIME type
     const audioBlob = new Blob(audioChunks);
+    const options = {
+      types: [
+        {
+          description: 'Audio file',
+          accept: { 'audio/webm': ['.webm'] },
+        },
+      ],
+    };
+    // Show the save file picker to the user.
+    if (!window.showSaveFilePicker) {
+      throw new Error('The showSaveFilePicker API is not supported in this browser.');
+    }
+    const fileHandle = await window.showSaveFilePicker(options);
+    
+    // Create a writable stream and save the file
+    const writableStream = await fileHandle.createWritable();
+    await writableStream.write(audioBlob);
+    await writableStream.close();
 
-    let finalFileName = fileName;
+    // Use the file name from the handle (full path is not available)
+    let localFileName = fileHandle.name;
+    let finalFileName = localFileName;
 
     // Prepare the FormData payload
     const formData = new FormData();
