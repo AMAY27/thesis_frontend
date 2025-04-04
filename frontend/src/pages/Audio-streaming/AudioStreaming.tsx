@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // Extend the Window interface to include showSaveFilePicker
 declare global {
@@ -10,7 +10,8 @@ import hoc from '../../hoc/hoc';
 import './AudioStreaming.css';
 import { FaPlay } from "react-icons/fa6";
 import { BsRecordCircle } from "react-icons/bs";
-import { ApiResponse, sendRecordingForAnalysis } from './api.service';
+import { sendRecordingForAnalysis } from './api.service';
+import { saveAudioFile, getAllAudioFiles } from './indexDBServices';
 
 
 const AudioRecorder = () => {
@@ -19,6 +20,7 @@ const AudioRecorder = () => {
   const [fileName, setFileName] = useState('');
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const [audioFiles, setAudioFiles] = useState<any[]>([]);
 
   const startRecording = async () => {
     try {
@@ -68,27 +70,46 @@ const AudioRecorder = () => {
       ],
     };
     // Show the save file picker to the user.
-    if (!window.showSaveFilePicker) {
-      throw new Error('The showSaveFilePicker API is not supported in this browser.');
-    }
-    const fileHandle = await window.showSaveFilePicker(options);
-    
-    // Create a writable stream and save the file
-    const writableStream = await fileHandle.createWritable();
-    await writableStream.write(audioBlob);
-    await writableStream.close();
+    //if (!window.showSaveFilePicker) {
+    //  throw new Error('The showSaveFilePicker API is not supported in this browser.');
+    //}
+    //const fileHandle = await window.showSaveFilePicker(options);
+    //
+    //// Create a writable stream and save the file
+    //const writableStream = await fileHandle.createWritable();
+    //await writableStream.write(audioBlob);
+    //await writableStream.close();
 
     // Use the file name from the handle (full path is not available)
-    let localFileName = fileHandle.name;
-    let finalFileName = localFileName;
+    //let localFileName = fileHandle.name;
+    let finalFileName = fileName || 'recording.webm';
 
     // Prepare the FormData payload
     const formData = new FormData();
     formData.append('wavfile', audioBlob, finalFileName);
 
-    const analyzeStreamAndGetAnalytics = await sendRecordingForAnalysis("/api/sound_analysis", formData);
-    console.log(analyzeStreamAndGetAnalytics);
+    const analysisResult = await sendRecordingForAnalysis("/api/sound_analysis", formData);
+    console.log(analysisResult);
+    try {
+      await saveAudioFile(finalFileName, audioBlob, analysisResult);
+      console.log("Audio file and metadata saved in IndexedDB for", finalFileName);
+    } catch (err) {
+      console.error("Error saving audio file in IndexedDB", err);
+    }
   };
+  const handleReadStoredFiles = async () => {
+    try {
+      const allFiles = await getAllAudioFiles();
+      setAudioFiles(allFiles);
+      console.log("All stored audio files:", allFiles);
+    } catch (err) {
+      console.error("Error reading stored audio files", err);
+    }
+  };
+
+  useEffect(() => {
+    handleReadStoredFiles();
+  },[])
 
   return (
     <div className='streaming-parent'>
@@ -128,6 +149,23 @@ const AudioRecorder = () => {
                 </div>
             )}
             <button onClick={handleSend}>Send Recording</button>
+        </div>
+        <div>
+          {audioFiles.length > 0 && (
+            <div className='audio-files-list'>
+              <h3>Stored Audio Files</h3>
+              {audioFiles.map((file, index) => (
+                <div key={index} className='audio-file-item'>
+                  <span>{file.fileName}</span>
+                  <div>
+                    <span>Metadata:</span>
+                    <pre>{JSON.stringify(file.metadata, null, 2)}</pre>
+                  </div>
+                  <audio controls src={URL.createObjectURL(file.audioBlob)} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
     </div>
   );
