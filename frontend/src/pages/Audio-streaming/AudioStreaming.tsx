@@ -95,16 +95,6 @@ const AudioRecorder = () => {
         <div className='audio-recorder'>
             <h3>Audio Recorder</h3>
             <div className='record-buttons-div'>
-                <div className='filename-div'>
-                    <label>
-                      Filename:
-                      <input
-                        type="text"
-                        value={fileName}
-                        onChange={(e) => setFileName(e.target.value)}
-                      />
-                    </label>
-                </div>
                 {!recording ? (
                   <button onClick={startRecording}>
                     <span style={{marginRight:"4px"}}><FaPlay/></span> 
@@ -119,11 +109,23 @@ const AudioRecorder = () => {
             </div>
             {/* If recording has been stopped and audio chunks are available, provide options to send and playback */}
             {audioChunks.length > 0 && !recording && (
-                <audio
-                  className='audio-player'
-                  controls
-                  src={URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm; codecs=opus" }))}
-                />
+                <div>
+                  <div className='filename-div'>
+                    <label>
+                      Filename:
+                      <input
+                        type="text"
+                        value={fileName}
+                        onChange={(e) => setFileName(e.target.value)}
+                      />
+                    </label>
+                  </div>
+                  <audio
+                    className='audio-player'
+                    controls
+                    src={URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm; codecs=opus" }))}
+                  />
+                </div>
             )}
             <button onClick={handleSend}>Send Recording</button>
         </div>
