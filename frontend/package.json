@@ -18,7 +18,8 @@
     "react-router-dom": "^7.1.1",
     "react-toastify": "^11.0.2",
     "react-tooltip": "^5.28.0",
-    "recharts": "^2.15.1"
+    "recharts": "^2.15.1",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
