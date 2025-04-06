@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import LiveAudioStreamer from './components/LiveAudioStreamer';
 
 // Extend the Window interface to include showSaveFilePicker
 declare global {
@@ -149,6 +150,7 @@ const AudioRecorder = () => {
                 </div>
             )}
             <button onClick={handleSend}>Send Recording</button>
+            <LiveAudioStreamer />
         </div>
         <div>
           {audioFiles.length > 0 && (
