@@ -37,11 +37,13 @@ export const sendRecordingForAnalysis = async <TResponse> (
 class LiveStreamService {
   private socket: Socket;
   constructor() {
-    this.socket = io("http://127.0.0.1:5001", {
-      transports: ["websocket"],
-    });
+    this.socket = io("http://127.0.0.1:5000");
+
     this.socket.on("connect", () => {
       console.log("Connected to live streaming backend via WebSocket");
+    });
+    this.socket.on("connect_error", (err) => {
+      console.error("Connection error:", err);
     });
     this.socket.on("disconnect", () => {
       console.log("Disconnected from live streaming backend");

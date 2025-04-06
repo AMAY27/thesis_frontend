@@ -2,7 +2,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { liveStreamService } from '../api.service'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
-import './LiveAudioStreamer.css';
 
 const LiveAudioStreamer = () => {
   const [streaming, setStreaming] = useState(false);
@@ -28,7 +27,7 @@ const LiveAudioStreamer = () => {
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
       // Start recording with a timeslice (e.g. every 3000ms a chunk is produced)
-      mediaRecorder.start(3000);
+      mediaRecorder.start(8000);
       mediaRecorder.ondataavailable = (event) => {
         if (event.data && event.data.size > 0) {
           console.log("Streaming chunk:", event.data.size);
