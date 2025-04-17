@@ -29,8 +29,9 @@ const AlertUpdateCard:React.FC<AlertUpdateProps> = ({user_id, title, classname, 
                             end_time: end_time,
                             start_date: start_date,
                             end_date: end_date,
-                            status: status
+                            status: status,
                         }}
+                        handleCancelClicked={() => setIsEditing(false)}
                     >
                         <div className='input-div'>
                             <label htmlFor="alert_type">Alert Type</label>
