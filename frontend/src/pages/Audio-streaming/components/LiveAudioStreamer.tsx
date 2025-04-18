@@ -1,14 +1,16 @@
 // LiveAudioStreamer.tsx
-import { useState, useRef, useEffect } from 'react';
-import { liveStreamService } from '../liveStreamingService'; // Socket.IO client service
+import { useEffect, useState, useRef } from 'react';
+import { liveStreamService, LiveEvent } from '../liveStreamingService'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
 
 const LiveAudioStreamer = () => {
+  
   const audioCtxRef = useRef<AudioContext | null>(null);
   const workletRef = useRef<AudioWorkletNode | null>(null);
 
   const startStreaming = async () => {
     // 1) Get mic
+    liveStreamService.startStreaming();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const ctx = new AudioContext();
     audioCtxRef.current = ctx;
