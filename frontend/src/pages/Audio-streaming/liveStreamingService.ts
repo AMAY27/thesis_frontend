@@ -1,45 +1,53 @@
+// 
 // src/services/liveStreamService.ts
 import { io, Socket } from "socket.io-client";
 
-export interface LiveEvent { 
-    ClassName: string;
-    ClassName_German: string;
-    filename: string;
-    timepoint: string;
- }
+export type LiveEvent = {
+  ClassName: string;
+  ClassName_German: string;
+  filename?: string;
+  timepoint?: string;
+};
+
 
 class LiveStreamService {
-  private socket: Socket;
+  private socket!: Socket;
 
   constructor() {
     this.socket = io("http://localhost:5001", {
-        transports: ["polling", "websocket"],
-        path: "/socket.io",
+      transports: ["websocket"],
     });
 
-    this.socket.on("connect", () =>
-      console.log("🟢 WS connected", this.socket.id)
-    );
-
-    this.socket.on("connected", (msg) =>
-      console.log("server ready:", msg)
-    );
-
-    this.socket.on("live_events", (data: { events?: LiveEvent[]; error?: string }) => {
-      if (data.error) {
-        console.error("Detection error:", data.error);
-      } else {
-        console.log("Detected events:", data.events);
+    this.socket.on("connect", () => {
+      console.log("✅ WS connected:", this.socket.id);
+    });
+    this.socket.on(
+      "live_events",
+      (payload: { events?: LiveEvent[]; error?: string }) => {
+        if (payload.error) {
+          console.error("Detection error:", payload.error);
+        } else {
+          console.log("Detected events:", payload.events);
+        }
       }
-    });
-
-    this.socket.on("disconnect", () =>
-      console.log("🔴 WS disconnected")
     );
+    this.socket.on("disconnect", () => {
+      console.log("❌ WS disconnected");
+    });
+  }
+
+  startStreaming() {
+    // If the socket is disconnected, try to (re)connect.
+    if (!this.socket.connected) {
+      console.log("Socket not connected - attempting to reconnect...");
+      this.socket.connect();
+    } else {
+      console.log("Socket already connected.");
+    }
   }
 
   sendPCMChunk(chunk: Float32Array) {
-    // send raw ArrayBuffer
+    // we send the raw ArrayBuffer payload
     this.socket.emit("audio_chunk", chunk.buffer);
   }
 
