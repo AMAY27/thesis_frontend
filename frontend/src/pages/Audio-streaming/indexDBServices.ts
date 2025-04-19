@@ -1,5 +1,5 @@
 // indexedDBService.ts
-
+import { LiveEvent } from "./types";
 export interface AudioFileRecord {
   fileName: string;
   audioBlob: Blob;
@@ -85,6 +85,24 @@ export async function getAllAudioFiles(): Promise<AudioFileRecord[]> {
     request.onsuccess = () => resolve(request.result as AudioFileRecord[]);
     request.onerror = (event) => {
       console.error("Error reading audio files", event);
+      reject(event);
+    };
+  });
+}
+
+export async function getTopTenLiveEvents(): Promise<LiveEvent[]> {
+  const db = await openDatabase();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([LIVE_EVENTS_STORE_NAME], "readonly");
+    const store = transaction.objectStore(LIVE_EVENTS_STORE_NAME);
+    const request = store.getAll();
+    request.onsuccess = () => {
+      const events = request.result as LiveEvent[];
+      const sortedEvents = events.reverse().slice(0, 10);
+      resolve(sortedEvents);
+    };
+    request.onerror = (event) => {
+      console.error("Error reading live events", event);
       reject(event);
     };
   });
