@@ -12,7 +12,8 @@ import './AudioStreaming.css';
 import { FaPlay } from "react-icons/fa6";
 import { BsRecordCircle } from "react-icons/bs";
 import { sendRecordingForAnalysis } from './api.service';
-import { saveAudioFile, getAllAudioFiles } from './indexDBServices';
+import { saveAudioFile, getAllAudioFiles, getTopTenLiveEvents } from './indexDBServices';
+import { LiveEvent } from './types';
 
 
 const AudioRecorder = () => {
@@ -22,6 +23,17 @@ const AudioRecorder = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [audioFiles, setAudioFiles] = useState<any[]>([]);
+  const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
+
+  useEffect(() => {
+    const liveEvents = getTopTenLiveEvents();
+    liveEvents.then((events) => {
+      setLiveEvents(events);
+      console.log("Top 10 live events:", events);
+    }).catch((err) => {
+      console.error("Error fetching top 10 live events", err);
+    });
+  },[])
 
   const startRecording = async () => {
     try {
@@ -151,6 +163,15 @@ const AudioRecorder = () => {
             )}
             <button onClick={handleSend}>Send Recording</button>
             <LiveAudioStreamer />
+            <div className='live-events-list'>
+              <h3>Live Events</h3>
+              {liveEvents.length > 0 && liveEvents.map((event, index) => (
+                <div key={index} className='live-event-item'>
+                  <p>{event.classname}</p>
+                  <p>{event.Datetime}</p>
+                </div>
+              ))}
+            </div>
         </div>
         <div>
           {audioFiles.length > 0 && (

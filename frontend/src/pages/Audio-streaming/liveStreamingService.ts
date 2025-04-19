@@ -24,7 +24,7 @@ class LiveStreamService {
         } else {
           console.log("Detected events:", payload.events);
           payload.events?.forEach((event) => {
-            saveLiveEvent(event.ClassName,event.ClassName_German,event.Confidence,event.Datetime,event.Datetime_2)
+            saveLiveEvent(event.classname,event.classnameGerman,event.confidence,event.Datetime,event.Datetime_2)
           });
         }
       }
