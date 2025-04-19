@@ -8,8 +8,9 @@ export interface AudioFileRecord {
 }
 
 const DB_NAME = "AudioRecorderDB";
-const DB_VERSION = 1;
-const STORE_NAME = "audioFiles";
+const DB_VERSION = 2;
+const AUDIOFILES_STORE_NAME = "audioFiles";
+const LIVE_EVENTS_STORE_NAME = "liveEvents";
 
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -23,8 +24,12 @@ function openDatabase(): Promise<IDBDatabase> {
     };
     request.onupgradeneeded = () => {
       const db = request.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        const store = db.createObjectStore(STORE_NAME, { keyPath: "fileName" });
+      if (!db.objectStoreNames.contains(AUDIOFILES_STORE_NAME)) {
+        const store = db.createObjectStore(AUDIOFILES_STORE_NAME, { keyPath: "fileName" });
+        store.createIndex("timestamp", "timestamp", { unique: false });
+      }
+      if (!db.objectStoreNames.contains(LIVE_EVENTS_STORE_NAME)) {
+        const store = db.createObjectStore(LIVE_EVENTS_STORE_NAME, { keyPath: "timestamp" });
         store.createIndex("timestamp", "timestamp", { unique: false });
       }
     };
@@ -38,8 +43,8 @@ export async function saveAudioFile(
 ): Promise<void> {
   const db = await openDatabase();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
+    const transaction = db.transaction([AUDIOFILES_STORE_NAME], "readwrite");
+    const store = transaction.objectStore(AUDIOFILES_STORE_NAME);
     const data: AudioFileRecord = { fileName, audioBlob, metadata, timestamp: Date.now() };
     const request = store.put(data);
     request.onsuccess = () => resolve();
@@ -50,11 +55,32 @@ export async function saveAudioFile(
   });
 }
 
+export async function saveLiveEvent(
+  classname: string,
+  classnameGerman: string,
+  confidence: number,
+  Datetime: string,
+  Datetime_2: string,
+): Promise<void>{
+  const db = await openDatabase();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([LIVE_EVENTS_STORE_NAME], "readwrite");
+    const store = transaction.objectStore(LIVE_EVENTS_STORE_NAME);
+    const data = { classname, classnameGerman, confidence, Datetime, Datetime_2, timestamp: Date.now() };
+    const request = store.put(data);
+    request.onsuccess = () => resolve();
+    request.onerror = (event) => {
+      console.error("Error saving live event", event);
+      reject(event);
+    }
+  });
+}
+
 export async function getAllAudioFiles(): Promise<AudioFileRecord[]> {
   const db = await openDatabase();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], "readonly");
-    const store = transaction.objectStore(STORE_NAME);
+    const transaction = db.transaction([AUDIOFILES_STORE_NAME], "readonly");
+    const store = transaction.objectStore(AUDIOFILES_STORE_NAME);
     const request = store.getAll();
     request.onsuccess = () => resolve(request.result as AudioFileRecord[]);
     request.onerror = (event) => {
@@ -67,8 +93,8 @@ export async function getAllAudioFiles(): Promise<AudioFileRecord[]> {
 export async function getAudioFile(fileName: string): Promise<AudioFileRecord | undefined> {
   const db = await openDatabase();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([STORE_NAME], "readonly");
-    const store = transaction.objectStore(STORE_NAME);
+    const transaction = db.transaction([AUDIOFILES_STORE_NAME], "readonly");
+    const store = transaction.objectStore(AUDIOFILES_STORE_NAME);
     const request = store.get(fileName);
     request.onsuccess = () => resolve(request.result as AudioFileRecord | undefined);
     request.onerror = (event) => {

@@ -1,15 +1,17 @@
 // LiveAudioStreamer.tsx
-import { useEffect, useState, useRef } from 'react';
-import { liveStreamService, LiveEvent } from '../liveStreamingService'; // Socket.IO client service
+import { useState, useRef } from 'react';
+import { liveStreamService } from '../liveStreamingService'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
 
 const LiveAudioStreamer = () => {
   
   const audioCtxRef = useRef<AudioContext | null>(null);
   const workletRef = useRef<AudioWorkletNode | null>(null);
+  const [streaming, setStreaming] = useState(false);
 
   const startStreaming = async () => {
     // 1) Get mic
+    setStreaming(true);
     liveStreamService.startStreaming();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const ctx = new AudioContext();
@@ -34,6 +36,8 @@ const LiveAudioStreamer = () => {
 
   const stopStreaming = () => {
     // Tear down
+    setStreaming(false);
+    audioCtxRef.current?.suspend();
     workletRef.current?.disconnect();
     audioCtxRef.current?.close();
     liveStreamService.disconnect();
@@ -42,8 +46,19 @@ const LiveAudioStreamer = () => {
 
   return (
     <div>
-      <button onClick={startStreaming}>Start</button>
-      <button onClick={stopStreaming}>Stop</button>
+      {/* <button onClick={startStreaming}>Start</button>
+      <button onClick={stopStreaming}>Stop</button> */}
+      <div className="stream-buttons">
+        {!streaming ? (
+          <button onClick={startStreaming}>
+            <FaPlay style={{ marginRight: "4px" }} /> Start Streaming
+          </button>
+        ) : (
+          <button onClick={stopStreaming}>
+            <FaStop style={{ marginRight: "4px" }} /> Stop Streaming
+          </button>
+        )}
+      </div>
     </div>
   );
 
