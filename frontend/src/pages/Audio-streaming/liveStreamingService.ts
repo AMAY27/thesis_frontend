@@ -1,13 +1,8 @@
 // 
 // src/services/liveStreamService.ts
 import { io, Socket } from "socket.io-client";
-
-export type LiveEvent = {
-  ClassName: string;
-  ClassName_German: string;
-  filename?: string;
-  timepoint?: string;
-};
+import { saveLiveEvent } from "./indexDBServices";
+import { LiveEvent } from "./types";
 
 
 class LiveStreamService {
@@ -28,6 +23,9 @@ class LiveStreamService {
           console.error("Detection error:", payload.error);
         } else {
           console.log("Detected events:", payload.events);
+          payload.events?.forEach((event) => {
+            saveLiveEvent(event.ClassName,event.ClassName_German,event.Confidence,event.Datetime,event.Datetime_2)
+          });
         }
       }
     );
