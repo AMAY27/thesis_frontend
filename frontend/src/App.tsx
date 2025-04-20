@@ -2,6 +2,7 @@
 import './index.css';
 import './App.css'
 import { NavContextProvider } from './global-context/NavContext';
+import { AudioStreamContextProvider } from './pages/Audio-streaming/context/AudioStreamContext';
 import AlertManagement from './pages/Alert-management/AlertManagement'
 import {BrowserRouter as Router , Routes, Route} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -15,6 +16,7 @@ function App() {
 
   return (
       <NavContextProvider>
+        <AudioStreamContextProvider>
         <Router>
           <Routes>
             <Route path="/alerts" element={<AlertManagement />} />
@@ -25,6 +27,7 @@ function App() {
           </Routes>
           <ToastContainer />
         </Router>
+        </AudioStreamContextProvider>
       </NavContextProvider>
   )
 }

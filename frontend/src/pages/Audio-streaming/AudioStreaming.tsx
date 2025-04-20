@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import LiveAudioStreamer from './components/LiveAudioStreamer';
+import { useAudioStreamContext } from './context/AudioStreamContext';
 
 // Extend the Window interface to include showSaveFilePicker
 declare global {
@@ -14,6 +15,7 @@ import { BsRecordCircle } from "react-icons/bs";
 import { sendRecordingForAnalysis } from './api.service';
 import { saveAudioFile, getAllAudioFiles, getTopTenLiveEvents } from './indexDBServices';
 import { LiveEvent } from './types';
+import { liveStreamService } from './liveStreamingService';
 
 
 const AudioRecorder = () => {
@@ -23,17 +25,12 @@ const AudioRecorder = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [audioFiles, setAudioFiles] = useState<any[]>([]);
-  const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
+  const { setLiveEvents,liveEvents } = useAudioStreamContext();
+
 
   useEffect(() => {
-    const liveEvents = getTopTenLiveEvents();
-    liveEvents.then((events) => {
-      setLiveEvents(events);
-      console.log("Top 10 live events:", events);
-    }).catch((err) => {
-      console.error("Error fetching top 10 live events", err);
-    });
-  },[])
+    liveStreamService.setLiveEventsHandler(setLiveEvents);
+  }, [setLiveEvents]);
 
   const startRecording = async () => {
     try {
