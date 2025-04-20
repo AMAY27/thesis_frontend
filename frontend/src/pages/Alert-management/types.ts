@@ -12,6 +12,7 @@ export interface AlertProps {
     createdAt: string;
 }
 
+
 export interface AlertUpdateProps extends AlertProps {
     _id: string
 }
@@ -40,6 +41,7 @@ export interface AddAlertProps {
     start_time: string;
     end_time: string;
     status: string;
+    createdAt: number;
 }
 
 export interface AlertLogsProps {
