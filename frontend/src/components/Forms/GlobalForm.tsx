@@ -1,5 +1,6 @@
 import React from 'react'
 import './GlobalForm.css'
+import {TimePicker} from 'react-time-picker';
 
 export interface BaseEventProps {
     user_id: string;
@@ -21,6 +22,8 @@ interface BaseEventFormProps {
 
 const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, children, handleCancelClicked}) => {
 
+    const events = ['AlaramClock', 'Blending', 'Breaking','Canopening','Cat', 'Chirpingbirds', 'Clapping', 'Clarinet', 'Clocktick', 'Crying', 'Cupboard', 'Displaying_furniture', 'Dog', 'DoorBell','Dragonground','Drill','Drinking', 'Drum', 'Femalespeaking', 'Flute', 'Glass', 'Guitar', 'Hairdryer', 'Covidcough', 'Help', 'Hen', 'Hihat', 'Hit', 'Jackhammer', 'Keyboardtyping', 'Kissing','Laughing', 'Lighter', 'Healthycough', 'Manspeaking', 'Metal-on-metal', 'Astmacough', 'Mouseclick', 'Ringtone', 'Rooster', 'Silence', 'Sitar', 'Sneezing', 'Snooring', 'Stapler', 'ToiletFlush','Toothbrush','Trampler', 'Vaccumcleaner', 'Vandalism', 'WalkFootsteps', 'Washingmachine', 'Water', 'Whimper', 'Window', 'HandSaw', 'Siren', 'Whistling','Wind']
+
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [formData, setFormData] = React.useState<BaseEventProps>({
         user_id: initialValues?.user_id || "",
@@ -38,6 +41,13 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
         setFormData(prev => ({
             ...prev,
             [name]: value
+        }));
+    };
+
+    const handleTimeChange = (name: 'start_time' | 'end_time', value: string | null) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value || ""
         }));
     };
 
@@ -70,14 +80,9 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
                 <div className='input-div'>
                     <label htmlFor="classname">Class name</label>
                     <select name='classname' onChange={handleChange} value={formData.classname} required>
-                        <option value="Zerbrechen">Zerbrechen</option>
-                        <option value="Türklingel">Türklingel</option>
-                        <option value="Klingelton">Klingelton</option>
-                        <option value="Ruhe">Ruhe</option>
-                        <option value="ZwitscherndeVögel">ZwitscherndeVögel</option>
-                        <option value="Schnarchen">Schnarchen</option>
-                        <option value="Wind">Wind</option>
-                        <option value="Sirene">Sirene</option>
+                        {events.map((event, index) => {
+                            return <option key={index} value={event}>{event}</option>
+                        })}
                     </select>
                 </div>
             </div>
@@ -95,11 +100,23 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
             <div className="input-row">
                 <div className='input-div'>
                     <label htmlFor="">Start Time</label>
-                    <input type="time" name="start_time" onChange={handleChange} required value={formData.start_time} />
+                    <TimePicker 
+                        onChange={(value) => handleTimeChange('start_time', value)} 
+                        value={formData.start_time}
+                        format="hh:mm"
+                        disableClock={true}
+                        required
+                    />
                 </div>
                 <div className='input-div'>
                     <label htmlFor="">End Time</label>
-                    <input type="time" name="end_time" onChange={handleChange} required value={formData.end_time} />
+                    <TimePicker 
+                        onChange={(value) => handleTimeChange('end_time', value)} 
+                        value={formData.end_time}
+                        format="hh:mm"
+                        disableClock={true}
+                        required
+                    />                
                 </div>
             </div>
             <div className="btn-row">

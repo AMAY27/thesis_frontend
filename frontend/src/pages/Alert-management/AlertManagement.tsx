@@ -12,6 +12,7 @@ import './AlertManagement.css'
 import { addAlert } from "./api.services";
 import notification from "../../axios/notification";
 import { BaseEventProps } from "../../components/Forms/GlobalForm";
+import { saveAlert } from "./indexDBServices";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
@@ -84,8 +85,10 @@ const AlertManagement = () => {
         const alertData: AddAlertProps = {
           ...alertDetails,
           alert_type: alertType,
+          createdAt: Date.now()
         }
-        await addAlert("/alert/create", alertData);
+        // await addAlert("/alert/create", alertData);
+        await saveAlert(alertData);
         notification("Alert added successfully!", "success");
         fetchAlerts();
     } catch (error) {
