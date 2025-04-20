@@ -8,7 +8,7 @@ export interface AudioFileRecord {
 }
 
 const DB_NAME = "AudioRecorderDB";
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const AUDIOFILES_STORE_NAME = "audioFiles";
 const LIVE_EVENTS_STORE_NAME = "liveEvents";
 
@@ -56,8 +56,8 @@ export async function saveAudioFile(
 }
 
 export async function saveLiveEvent(
-  classname: string,
-  classnameGerman: string,
+  ClassName: string,
+  ClassName_German: string,
   confidence: number,
   Datetime: string,
   Datetime_2: string,
@@ -66,7 +66,7 @@ export async function saveLiveEvent(
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([LIVE_EVENTS_STORE_NAME], "readwrite");
     const store = transaction.objectStore(LIVE_EVENTS_STORE_NAME);
-    const data = { classname, classnameGerman, confidence, Datetime, Datetime_2, timestamp: Date.now() };
+    const data = { ClassName, ClassName_German, confidence, Datetime, Datetime_2, timestamp: Date.now() };
     const request = store.put(data);
     request.onsuccess = () => resolve();
     request.onerror = (event) => {

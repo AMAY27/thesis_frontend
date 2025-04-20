@@ -164,7 +164,7 @@ const AudioRecorder = () => {
               <h3>Live Events</h3>
               {liveEvents.length > 0 && liveEvents.map((event, index) => (
                 <div key={index} className='live-event-item'>
-                  <p>{event.classname}</p>
+                  <p>{event.ClassName}</p>
                   <p>{event.Datetime}</p>
                 </div>
               ))}

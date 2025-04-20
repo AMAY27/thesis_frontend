@@ -26,8 +26,8 @@ class LiveStreamService {
           // Save each live event to IndexedDB
           for (const event of payload.events) {
             await saveLiveEvent(
-              event.classname,
-              event.classnameGerman,
+              event.ClassName,
+              event.ClassName_German,
               event.confidence,
               event.Datetime,
               event.Datetime_2

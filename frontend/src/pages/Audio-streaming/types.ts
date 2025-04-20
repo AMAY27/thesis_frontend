@@ -1,6 +1,6 @@
 export type LiveEvent = {
-    classname: string;
-    classnameGerman: string;
+    ClassName: string;
+    ClassName_German: string;
     confidence: number;
     Datetime: string;
     Datetime_2: string;
