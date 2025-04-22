@@ -11,12 +11,15 @@ import CustomEvents from './pages/Event-Tracking/CustomEvents';
 import AlertCalendar from './pages/Alert-management/components/AlertCalendar';
 import EventMonitor from './pages/Event-monitor/EventMonitor';
 import AudioStreaming from './pages/Audio-streaming/AudioStreaming';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 
 function App() {
 
   return (
       <NavContextProvider>
         <AudioStreamContextProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Router>
           <Routes>
             <Route path="/alerts" element={<AlertManagement />} />
@@ -27,6 +30,7 @@ function App() {
           </Routes>
           <ToastContainer />
         </Router>
+        </LocalizationProvider>
         </AudioStreamContextProvider>
       </NavContextProvider>
   )

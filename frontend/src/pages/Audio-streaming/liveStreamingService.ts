@@ -3,7 +3,7 @@
 import { io, Socket } from "socket.io-client";
 import { getTopTenLiveEvents, saveLiveEvent } from "./indexDBServices";
 import { LiveEvent } from "./types";
-import { useAudioStreamContext } from "./context/AudioStreamContext";
+import { checkForAlertsFromLiveEvents } from "../Alert-management/indexDBServices";
 
 class LiveStreamService {
   private socket!: Socket;
@@ -33,6 +33,7 @@ class LiveStreamService {
               event.Datetime_2
             );
           }
+          checkForAlertsFromLiveEvents(payload.events);
           // Update live events through the callback
           if (this.setLiveEventsCallback) {
             const events = await getTopTenLiveEvents();

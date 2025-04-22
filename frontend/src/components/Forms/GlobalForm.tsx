@@ -1,6 +1,7 @@
 import React from 'react'
 import './GlobalForm.css'
-import {TimePicker} from 'react-time-picker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { format, parse } from 'date-fns';
 
 export interface BaseEventProps {
     user_id: string;
@@ -101,22 +102,40 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
                 <div className='input-div'>
                     <label htmlFor="">Start Time</label>
                     <TimePicker 
-                        onChange={(value) => handleTimeChange('start_time', value)} 
-                        value={formData.start_time}
-                        format="hh:mm"
-                        disableClock={true}
-                        required
+                        onChange={(value) => {
+                            if (value) {
+                              handleTimeChange('start_time', format(value, 'HH:mm'));
+                            } else {
+                              handleTimeChange('start_time', '');
+                            }
+                        }} 
+                        value={
+                            formData.start_time
+                              ? parse(formData.start_time, 'HH:mm', new Date())
+                              : null
+                        }
+                        format="HH:mm"
+                        ampm={false}
                     />
                 </div>
                 <div className='input-div'>
                     <label htmlFor="">End Time</label>
                     <TimePicker 
-                        onChange={(value) => handleTimeChange('end_time', value)} 
-                        value={formData.end_time}
-                        format="hh:mm"
-                        disableClock={true}
-                        required
-                    />                
+                        onChange={(value) => {
+                            if (value) {
+                              handleTimeChange('end_time', format(value, 'HH:mm'));
+                            } else {
+                              handleTimeChange('end_time', '');
+                            }
+                        }} 
+                        value={
+                            formData.end_time
+                              ? parse(formData.end_time, 'HH:mm', new Date())
+                              : null
+                        }
+                        format="HH:mm"
+                        ampm={false}
+                    />               
                 </div>
             </div>
             <div className="btn-row">

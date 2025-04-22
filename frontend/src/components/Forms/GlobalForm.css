@@ -38,6 +38,11 @@
     /* padding: 0.3rem; */
 }
 
+.input-div input{
+    /* width: 100%; */
+    /* background: red; */
+}
+
 @media screen and (max-width:480px){
     .input-row{
         flex-direction: column;
