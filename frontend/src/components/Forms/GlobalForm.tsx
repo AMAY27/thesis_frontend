@@ -12,6 +12,7 @@ export interface BaseEventProps {
     start_date: string;
     end_date: string;
     status: string;
+    createdAt?: number;
 }
 
 interface BaseEventFormProps {
@@ -34,7 +35,8 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
         end_time: initialValues?.end_time || "",
         start_date: initialValues?.start_date || "",
         end_date: initialValues?.end_date || "",
-        status: initialValues?.status || "active"
+        status: initialValues?.status || "active",
+        createdAt: Date.now(),
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
