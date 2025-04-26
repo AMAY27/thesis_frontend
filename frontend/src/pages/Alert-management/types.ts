@@ -53,6 +53,15 @@ export interface AlertLogsProps {
     alertClass: string;
 }
 
+export interface AlertLogProps {
+    alertId: number;
+    alertTitle: string;
+    alertClass: string;
+    triggerDate: string;
+    time: string;
+    createdAt: number;
+}
+
 export interface CalendarProps extends AlertProps {
     alertLogs: AlertLogsProps[];
 }

@@ -42,6 +42,11 @@ class LiveStreamService {
         }
       }
     });
+
+    this.socket.on("connect_error", (err) => {    
+      console.log(err.message);
+    });
+
     this.socket.on("disconnect", () => {
       console.log("❌ WS disconnected");
     });
