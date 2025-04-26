@@ -9,6 +9,7 @@ import './CustomEvents.css'
 import notification from '../../axios/notification';
 import CustomEventsGraph from './components/CustomEventsGraph';
 import CustomEventsDetailsAndUpdateCard from './components/CustomEventsDetailsAndUpdateCard';
+import { saveCustomEvent } from './indexDBServices';
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
@@ -44,12 +45,16 @@ const CustomEvents = () => {
 
     useEffect(() => {
       fetchCustomEvents();
+      setIsLoading(false);
     },[]);
 
     const handleSubmit = async (data: BaseEventProps) => {
       try {
-        await postCustomEvents("/custom-events/create", data);
-        notification("Custom Event created successfully", "success");
+        // await postCustomEvents("/custom-events/create", data);
+        saveCustomEvent(data).then(() => {
+          notification("Custom Event created successfully", "success");
+        })
+        // notification("Custom Event created successfully", "success");
         fetchCustomEvents();
       } catch (error) {
         // error already handled in api.service.ts

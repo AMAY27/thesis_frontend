@@ -9,6 +9,16 @@ export interface createCustomEventProps {
     status: string;
 }
 
+export interface saveCustomEventProps {
+    title: string;
+    classname: string;
+    start_time: string;
+    end_time: string;
+    start_date: Date;
+    end_date: Date;
+    status: string;
+}
+
 export interface CustomEventProps{
     id: string;
     title: string;
