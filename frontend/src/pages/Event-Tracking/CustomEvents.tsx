@@ -9,7 +9,7 @@ import './CustomEvents.css'
 import notification from '../../axios/notification';
 import CustomEventsGraph from './components/CustomEventsGraph';
 import CustomEventsDetailsAndUpdateCard from './components/CustomEventsDetailsAndUpdateCard';
-import { saveCustomEvent } from './indexDBServices';
+import { saveCustomEvent, getCustomEventsForAnalytics } from './indexDBServices';
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
@@ -37,9 +37,11 @@ const CustomEvents = () => {
 
     const fetchCustomEvents = async () => {
       setIsLoading(true);
-      const resp:CustomEventAnalyticsProps[] = await getCustomEventAnalytics<CustomEventAnalyticsProps[]>("/custom-events/getEventAnalytics", "676bdb353db50d80a5c8a82a");
-      setCustomEvents(resp);
-      setCustomEventAnalytics(resp[0]);
+      getCustomEventsForAnalytics().then((resp) => {
+        console.log(resp);
+        setCustomEvents(resp);
+        setCustomEventAnalytics(resp[0]);
+      })
       setIsLoading(false);
     }
 
