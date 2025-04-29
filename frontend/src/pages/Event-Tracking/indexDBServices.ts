@@ -1,5 +1,7 @@
 // import { saveCustomEventProps } from "./types";
 import { BaseEventProps } from "../../components/Forms/GlobalForm";
+import { getAllLiveEvents } from "../Audio-streaming/indexDBServices";
+import { CustomEventAnalyticsProps } from "./types";
 
 const DB_NAME = "EventTrackerDB";
 const DB_VERSION = 1;
@@ -37,4 +39,70 @@ export async function saveCustomEvent(event: BaseEventProps): Promise<void> {
             reject(event);
         };
     });
+}
+
+export async function getCustomEventsForAnalytics(): Promise<CustomEventAnalyticsProps[]> {
+    return new Promise(async (resolve, reject) => {
+        const db = await openDatabase();
+        const transaction = db.transaction([CUSTOM_EVENT_STORE_NAME], "readonly");
+        const store = transaction.objectStore(CUSTOM_EVENT_STORE_NAME);
+        const request = store.getAll();
+        const events = await getAllLiveEvents();
+        const customEvents = request.result;
+        let customEventsAnalytics:CustomEventAnalyticsProps[] = [];
+        customEvents.forEach((event) => {
+            const customEventDetails = {
+                id: event.createdAt,
+                title: event.title,
+                classname: event.classname,
+                start_date: event.start_date,
+                end_date: event.end_date,
+                start_time: event.start_time,
+                end_time: event.end_time,
+                status: event.status,
+            }
+            const filteredEvents = events.filter((e) => {
+                const eventDate = parseDateTime(e.Datetime, e.Datetime_2);
+                const startDate = parseDateTime(event.start_date, event.start_time);
+                const endDate = parseDateTime(event.end_date, event.end_time);
+                return event.classname === e.ClassName && eventDate >= startDate && eventDate <= endDate;
+            });
+            const monthMap = new Map<string, { freq: number; dailyFrequency: Map<string, number> }>();
+            for (const event of filteredEvents) {
+                const month = event.Datetime.slice(0,7);
+                console.log(month);
+                const day = event.Datetime
+                if (!monthMap.has(month)) {
+                    monthMap.set(month, { freq: 0, dailyFrequency: new Map<string, number>() });
+                }
+                const monthData = monthMap.get(month);
+                if (monthData) {
+                    monthData.freq += 1;
+                }
+                const currentCount = monthData?.dailyFrequency.get(day) || 0;
+                monthData?.dailyFrequency.set(day, currentCount + 1);
+            }
+            const frequencies = Array.from(monthMap.entries()).map(([month, data]) => {
+                const dailyFrequency = Array.from(data.dailyFrequency.entries()).map(([date, count]) => ({ date, count }));
+                return { month, freq: data.freq, dailyFrequency };
+            });
+            const result: CustomEventAnalyticsProps = {
+                customEventDetails,
+                frequencies,
+            };
+            customEventsAnalytics.push(result);
+        })
+        console.log(customEventsAnalytics);
+        request.onsuccess = () => resolve(customEventsAnalytics);
+        request.onerror = (event) => {
+            console.error("Error fetching custom events", event);
+            reject(event);
+        };
+    });
+}
+
+function parseDateTime(date: string, time: string): Date {
+    const [Y, M, D] = date.split('-').map(Number);
+    const [h, m]    = time.split(':').map(Number);
+    return new Date(Y, M - 1, D, h, m);
 }

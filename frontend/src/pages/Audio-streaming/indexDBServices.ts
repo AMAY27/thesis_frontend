@@ -108,6 +108,21 @@ export async function getTopTenLiveEvents(): Promise<LiveEvent[]> {
   });
 }
 
+export async function getAllLiveEvents(): Promise<LiveEvent[]> {
+  const db = await openDatabase();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction([LIVE_EVENTS_STORE_NAME], "readonly");
+    const store = transaction.objectStore(LIVE_EVENTS_STORE_NAME);
+    const request = store.getAll();
+    request.onsuccess = () => resolve(request.result as LiveEvent[]);
+    request.onerror = (event) => {
+      console.error("Error reading live events", event);
+      reject(event);
+    };
+  });
+}
+
+
 export async function getAudioFile(fileName: string): Promise<AudioFileRecord | undefined> {
   const db = await openDatabase();
   return new Promise((resolve, reject) => {
