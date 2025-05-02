@@ -37,17 +37,21 @@ const CustomEvents = () => {
 
     const fetchCustomEvents = async () => {
       setIsLoading(true);
-      getCustomEventsForAnalytics().then((resp) => {
+      try {
+        const resp = await getCustomEventsForAnalytics();
         console.log(resp);
         setCustomEvents(resp);
         setCustomEventAnalytics(resp[0]);
-      })
-      setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     useEffect(() => {
       fetchCustomEvents();
-      setIsLoading(false);
+      // setIsLoading(false);
     },[]);
 
     const handleSubmit = async (data: BaseEventProps) => {

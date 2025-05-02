@@ -47,53 +47,55 @@ export async function getCustomEventsForAnalytics(): Promise<CustomEventAnalytic
         const transaction = db.transaction([CUSTOM_EVENT_STORE_NAME], "readonly");
         const store = transaction.objectStore(CUSTOM_EVENT_STORE_NAME);
         const request = store.getAll();
-        const events = await getAllLiveEvents();
-        const customEvents = request.result;
-        let customEventsAnalytics:CustomEventAnalyticsProps[] = [];
-        customEvents.forEach((event) => {
-            const customEventDetails = {
-                id: event.createdAt,
-                title: event.title,
-                classname: event.classname,
-                start_date: event.start_date,
-                end_date: event.end_date,
-                start_time: event.start_time,
-                end_time: event.end_time,
-                status: event.status,
-            }
-            const filteredEvents = events.filter((e) => {
-                const eventDate = parseDateTime(e.Datetime, e.Datetime_2);
-                const startDate = parseDateTime(event.start_date, event.start_time);
-                const endDate = parseDateTime(event.end_date, event.end_time);
-                return event.classname === e.ClassName && eventDate >= startDate && eventDate <= endDate;
-            });
-            const monthMap = new Map<string, { freq: number; dailyFrequency: Map<string, number> }>();
-            for (const event of filteredEvents) {
-                const month = event.Datetime.slice(0,7);
-                console.log(month);
-                const day = event.Datetime
-                if (!monthMap.has(month)) {
-                    monthMap.set(month, { freq: 0, dailyFrequency: new Map<string, number>() });
+        request.onsuccess = async () => {
+            const customEvents = request.result;
+            const events = await getAllLiveEvents();
+            let customEventsAnalytics:CustomEventAnalyticsProps[] = [];
+            customEvents.forEach((event) => {
+                const customEventDetails = {
+                    id: event.createdAt,
+                    title: event.title,
+                    classname: event.classname,
+                    start_date: event.start_date,
+                    end_date: event.end_date,
+                    start_time: event.start_time,
+                    end_time: event.end_time,
+                    status: event.status,
                 }
-                const monthData = monthMap.get(month);
-                if (monthData) {
-                    monthData.freq += 1;
+                const filteredEvents = events.filter((e) => {
+                    const eventDate = parseDateTime(e.Datetime, e.Datetime_2);
+                    const startDate = parseDateTime(event.start_date, event.start_time);
+                    const endDate = parseDateTime(event.end_date, event.end_time);
+                    return event.classname === e.ClassName && eventDate >= startDate && eventDate <= endDate;
+                });
+                const monthMap = new Map<string, { freq: number; dailyFrequency: Map<string, number> }>();
+                for (const event of filteredEvents) {
+                    const month = event.Datetime.slice(0,7);
+                    console.log(month);
+                    const day = event.Datetime
+                    if (!monthMap.has(month)) {
+                        monthMap.set(month, { freq: 0, dailyFrequency: new Map<string, number>() });
+                    }
+                    const monthData = monthMap.get(month);
+                    if (monthData) {
+                        monthData.freq += 1;
+                        const currentCount = monthData?.dailyFrequency.get(day) || 0;
+                        monthData?.dailyFrequency.set(day, currentCount + 1);
+                    }
                 }
-                const currentCount = monthData?.dailyFrequency.get(day) || 0;
-                monthData?.dailyFrequency.set(day, currentCount + 1);
-            }
-            const frequencies = Array.from(monthMap.entries()).map(([month, data]) => {
-                const dailyFrequency = Array.from(data.dailyFrequency.entries()).map(([date, count]) => ({ date, count }));
-                return { month, freq: data.freq, dailyFrequency };
+                const frequencies = Array.from(monthMap.entries()).map(([month, data]) => {
+                    const dailyFrequency = Array.from(data.dailyFrequency.entries()).map(([date, count]) => ({ date, count }));
+                    return { month, freq: data.freq, dailyFrequency };
+                });
+                const result: CustomEventAnalyticsProps = {
+                    customEventDetails,
+                    frequencies,
+                };
+                customEventsAnalytics.push(result);
             });
-            const result: CustomEventAnalyticsProps = {
-                customEventDetails,
-                frequencies,
-            };
-            customEventsAnalytics.push(result);
-        })
-        console.log(customEventsAnalytics);
-        request.onsuccess = () => resolve(customEventsAnalytics);
+            console.log(customEventsAnalytics);
+            resolve(customEventsAnalytics);
+        }
         request.onerror = (event) => {
             console.error("Error fetching custom events", event);
             reject(event);
