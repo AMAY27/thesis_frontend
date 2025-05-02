@@ -8,6 +8,7 @@
 .hoc-layer-one {
     display: flex;
     height: 100%;
+    width: 100%;
     /* position: relative; */
 }
 
@@ -27,6 +28,8 @@
     height: 100vh;
     padding-inline: 4rem;
     padding-block: 0.5rem;
+    width: 100%;
+    max-width: 100%;
     /* background: yellow; */
     /* position: relative; */
 }
@@ -46,7 +49,10 @@
     height: calc(100vh - 60px);
     overflow-y: auto;
     padding: 20px;
+    position: relative;
     /* background: red; */
+    width: 100%;
+    max-width: 100%;
 }
 
 @media screen and (max-width:1000px) {
