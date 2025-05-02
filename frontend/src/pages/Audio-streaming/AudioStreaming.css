@@ -1,8 +1,20 @@
-.streaming-parent{
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.streaming-parent {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     font-family: "Inter", serif;
-    /* background: whitesmoke; */
+    /* background: gray; */
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;         /* hide any stray overflow */
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .audio-recorder{
@@ -95,4 +107,32 @@
     /* .filename-div{
         width: 100%;
     } */
+}
+
+
+
+.live-streamer {
+    max-width: 100%;
+    width: 100%;
+    /* padding: 10px; */
+    /* background: blue; */
+    overflow-x: hidden;   /* hide any overflow at this level */
+}
+  
+  /* horizontal list that scrolls internally */
+.live-events-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;     /* scroll the row of items */
+    gap: 10px;            /* spacing instead of margin-inline */
+}
+  
+.live-event-item{
+    padding: 0.5rem;
+    border: 1px solid #62B2C0;
+    border-radius: 5px;
+    margin-block: 15px;
+    margin-inline: 5px;
+    flex: 0 0 150px;      /* don’t grow or shrink, always 150px */
+    width: 150px;
 }

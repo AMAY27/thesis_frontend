@@ -123,70 +123,73 @@ const AudioRecorder = () => {
 
   return (
     <div className='streaming-parent'>
-        <div className='audio-recorder'>
-            <h3>Audio Recorder</h3>
-            <div className='record-buttons-div'>
-                {!recording ? (
-                  <button onClick={startRecording}>
-                    <span style={{marginRight:"4px"}}><FaPlay/></span> 
-                    Start Recording
-                  </button>
-                ) : (
-                  <button style={{backgroundColor:"red", color:"white"}} onClick={stopRecording}>
-                    <span style={{marginRight:"4px"}}><BsRecordCircle/></span> 
-                    Stop Recording
-                  </button>
-                )}
+      <div className="live-streamer">
+        <LiveAudioStreamer />
+        <h3>Live Events</h3>
+        <div className='live-events-list'>
+          {liveEvents.length > 0 && liveEvents.map((event, index) => (
+            <div key={index} className='live-event-item'>
+              <p>{event.ClassName}</p>
+              <p>{event.Datetime}</p>
             </div>
-            {/* If recording has been stopped and audio chunks are available, provide options to send and playback */}
-            {audioChunks.length > 0 && !recording && (
-                <div>
-                  <div className='filename-div'>
-                    <label>
-                      Filename:
-                      <input
-                        type="text"
-                        value={fileName}
-                        onChange={(e) => setFileName(e.target.value)}
-                      />
-                    </label>
-                  </div>
-                  <audio
-                    className='audio-player'
-                    controls
-                    src={URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm; codecs=opus" }))}
-                  />
-                </div>
+          ))}
+        </div>
+      </div>
+      <div className='audio-recorder'>
+        <h3>Audio Recorder</h3>
+        <div className='record-buttons-div'>
+            {!recording ? (
+              <button onClick={startRecording}>
+                <span style={{marginRight:"4px"}}><FaPlay/></span> 
+                Start Recording
+              </button>
+            ) : (
+              <button style={{backgroundColor:"red", color:"white"}} onClick={stopRecording}>
+                <span style={{marginRight:"4px"}}><BsRecordCircle/></span> 
+                Stop Recording
+              </button>
             )}
-            <button onClick={handleSend}>Send Recording</button>
-            <LiveAudioStreamer />
-            <div className='live-events-list'>
-              <h3>Live Events</h3>
-              {liveEvents.length > 0 && liveEvents.map((event, index) => (
-                <div key={index} className='live-event-item'>
-                  <p>{event.ClassName}</p>
-                  <p>{event.Datetime}</p>
-                </div>
-              ))}
-            </div>
         </div>
-        <div>
-          {audioFiles.length > 0 && (
-            <div className='audio-files-list'>
-              <h3>Stored Audio Files</h3>
-              {audioFiles.map((file, index) => (
-                <div key={index} className='audio-file-item'>
-                  <span>{file.fileName}</span>
-                  <div>
-                    <span>Metadata:</span>
-                    <pre>{JSON.stringify(file.metadata, null, 2)}</pre>
+        {/* If recording has been stopped and audio chunks are available, provide options to send and playback */}
+        {audioChunks.length > 0 && !recording && (
+            <div>
+              <div className='filename-div'>
+                <label>
+                  Filename:
+                  <input
+                    type="text"
+                    value={fileName}
+                    onChange={(e) => setFileName(e.target.value)}
+                  />
+                </label>
+              </div>
+              <audio
+                className='audio-player'
+                controls
+                src={URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm; codecs=opus" }))}
+              />
+            </div>
+        )}
+        <button onClick={handleSend}>Send Recording</button>
+          <div>
+            {audioFiles.length > 0 && (
+              <div className='audio-files-list'>
+                <h3>Stored Audio Files</h3>
+                {audioFiles.map((file, index) => (
+                  <div key={index} className='audio-file-item'>
+                    <span>{file.fileName}</span>
+                    <div>
+                      <span>Metadata:</span>
+                      <pre>{JSON.stringify(file.metadata, null, 2)}</pre>
+                    </div>
+                    <audio controls src={URL.createObjectURL(file.audioBlob)} />
                   </div>
-                  <audio controls src={URL.createObjectURL(file.audioBlob)} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+                ))}
+              </div>
+            )}
+          </div>
+      </div>
+        
     </div>
   );
 };
