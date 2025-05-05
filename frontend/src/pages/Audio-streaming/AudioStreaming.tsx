@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import LiveAudioStreamer from './components/LiveAudioStreamer';
 import { useAudioStreamContext } from './context/AudioStreamContext';
-
 // Extend the Window interface to include showSaveFilePicker
 declare global {
   interface Window {
