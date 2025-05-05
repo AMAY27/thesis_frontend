@@ -2,13 +2,14 @@
 import { useState, useRef } from 'react';
 import { liveStreamService } from '../liveStreamingService'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
-import { AudioVisualizer } from 'react-audio-visualize';
+import LiveAudioCanvasVisualizer from './LiveAudioCanvasVisualizer';
 
 
 const LiveAudioStreamer = () => {
   
   const audioCtxRef = useRef<AudioContext | null>(null);
   const workletRef = useRef<AudioWorkletNode | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
   const [streaming, setStreaming] = useState(false);
   const [blob, setBlob] = useState<Blob>();
   const visualizerRef = useRef<HTMLCanvasElement>(null)
@@ -29,9 +30,14 @@ const LiveAudioStreamer = () => {
 
     // 3) When the worklet posts a chunk, send it
     pcmNode.port.onmessage = (e: MessageEvent<Float32Array>) => {
-      setBlob(new Blob([e.data], { type: "audio/wav" }));
       liveStreamService.sendPCMChunk(e.data);
     };
+
+    const analyser = ctx.createAnalyser();
+    analyser.fftSize = 2048;
+    analyserRef.current = analyser;
+
+    source.connect(analyser);
 
     // 4) Connect graph and start
     source.connect(pcmNode).connect(ctx.destination);
@@ -52,17 +58,7 @@ const LiveAudioStreamer = () => {
   return (
     <div>
       <div>
-        {blob && (
-          <AudioVisualizer
-            ref={visualizerRef}
-            blob={blob}
-            width={500}
-            height={75}
-            barWidth={1}
-            gap={0}
-            barColor={'#f76565'}
-          />
-        )}
+        <LiveAudioCanvasVisualizer analyser={analyserRef.current} />
       </div>
       <div className="stream-buttons">
         {!streaming ? (
