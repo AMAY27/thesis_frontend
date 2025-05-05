@@ -2,12 +2,16 @@
 import { useState, useRef } from 'react';
 import { liveStreamService } from '../liveStreamingService'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
+import { AudioVisualizer } from 'react-audio-visualize';
+
 
 const LiveAudioStreamer = () => {
   
   const audioCtxRef = useRef<AudioContext | null>(null);
   const workletRef = useRef<AudioWorkletNode | null>(null);
   const [streaming, setStreaming] = useState(false);
+  const [blob, setBlob] = useState<Blob>();
+  const visualizerRef = useRef<HTMLCanvasElement>(null)
 
   const startStreaming = async () => {
     // 1) Get mic
@@ -25,6 +29,7 @@ const LiveAudioStreamer = () => {
 
     // 3) When the worklet posts a chunk, send it
     pcmNode.port.onmessage = (e: MessageEvent<Float32Array>) => {
+      setBlob(new Blob([e.data], { type: "audio/wav" }));
       liveStreamService.sendPCMChunk(e.data);
     };
 
@@ -46,8 +51,19 @@ const LiveAudioStreamer = () => {
 
   return (
     <div>
-      {/* <button onClick={startStreaming}>Start</button>
-      <button onClick={stopStreaming}>Stop</button> */}
+      <div>
+        {blob && (
+          <AudioVisualizer
+            ref={visualizerRef}
+            blob={blob}
+            width={500}
+            height={75}
+            barWidth={1}
+            gap={0}
+            barColor={'#f76565'}
+          />
+        )}
+      </div>
       <div className="stream-buttons">
         {!streaming ? (
           <button onClick={startStreaming}>
