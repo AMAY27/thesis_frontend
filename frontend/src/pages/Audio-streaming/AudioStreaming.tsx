@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import LiveAudioStreamer from './components/LiveAudioStreamer';
 import { useAudioStreamContext } from './context/AudioStreamContext';
+import { getEventsMonitoringData } from './indexDBServices';
 // Extend the Window interface to include showSaveFilePicker
 declare global {
   interface Window {
@@ -15,6 +16,7 @@ import { sendRecordingForAnalysis } from './api.service';
 import { saveAudioFile, getAllAudioFiles, getTopTenLiveEvents } from './indexDBServices';
 import { LiveEvent } from './types';
 import { liveStreamService } from './liveStreamingService';
+import { EventsMonitorData } from '../Event-monitor/types';
 
 
 const AudioRecorder = () => {
@@ -25,7 +27,19 @@ const AudioRecorder = () => {
   const streamRef = useRef<MediaStream | null>(null);
   const [audioFiles, setAudioFiles] = useState<any[]>([]);
   const { setLiveEvents,liveEvents } = useAudioStreamContext();
+  const [eventsMonitoringData, setEventsMonitoringData ] = useState<EventsMonitorData>();
 
+  useEffect(() => {
+    async function getMonitorData(){
+      const events = await getEventsMonitoringData();
+      setEventsMonitoringData(events);
+    }
+    getMonitorData();
+  },[])
+
+  useEffect(() => {
+    console.log(eventsMonitoringData);
+  },[eventsMonitoringData])
 
   useEffect(() => {
     liveStreamService.setLiveEventsHandler(setLiveEvents);
