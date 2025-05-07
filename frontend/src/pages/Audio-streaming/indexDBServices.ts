@@ -123,13 +123,15 @@ export async function getAllLiveEvents(): Promise<LiveEvent[]> {
   });
 }
 
-export async function getEventsMonitoringData(): Promise<EventsMonitorData> {
+export async function getEventsMonitoringData(): Promise<EventsMonitorData[]> {
   const db = await openDatabase();
 
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([LIVE_EVENTS_STORE_NAME], "readonly");
     const store = transaction.objectStore(LIVE_EVENTS_STORE_NAME);
     const request = store.getAll();
+
+    const monitorResult:EventsMonitorData[] = [];
 
     const result: EventsMonitorData = {
       fiveMinutes: [],
@@ -170,7 +172,6 @@ export async function getEventsMonitoringData(): Promise<EventsMonitorData> {
 
       request.result.forEach((event: LiveEvent) => {
         const eventDate = parseDateTime(event.Datetime, event.Datetime_2);
-        console.log("Event date:", eventDate, "Event class name:", event.ClassName);
         const eventDateOnly = event.Datetime.split("T")[0];
 
         if (eventDate > thresholds.fiveMinutes) addEventToBucket(result.fiveMinutes, event.ClassName);
@@ -185,8 +186,9 @@ export async function getEventsMonitoringData(): Promise<EventsMonitorData> {
         if (eventDateOnly === thresholds.yesterday) addEventToBucket(result.yesterday, event.ClassName);
         if (eventDateOnly === thresholds.dayBeforeYesterday) addEventToBucket(result.dayBeforeYesterday, event.ClassName);
       });
+      monitorResult.push(result);
 
-      resolve(result);
+      resolve(monitorResult);
     };
 
     request.onerror = (event) => {
