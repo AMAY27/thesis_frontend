@@ -17,7 +17,7 @@ import { saveAudioFile, getAllAudioFiles, getTopTenLiveEvents } from './indexDBS
 import { LiveEvent } from './types';
 import { liveStreamService } from './liveStreamingService';
 import { EventsMonitorData } from '../Event-monitor/types';
-
+import EventMonitor from '../Event-monitor/EventMonitor';
 
 const AudioRecorder = () => {
   const [recording, setRecording] = useState(false);
@@ -27,7 +27,7 @@ const AudioRecorder = () => {
   const streamRef = useRef<MediaStream | null>(null);
   const [audioFiles, setAudioFiles] = useState<any[]>([]);
   const { setLiveEvents,liveEvents } = useAudioStreamContext();
-  const [eventsMonitoringData, setEventsMonitoringData ] = useState<EventsMonitorData>();
+  const [eventsMonitoringData, setEventsMonitoringData ] = useState<EventsMonitorData[]>();
 
   useEffect(() => {
     async function getMonitorData(){
@@ -147,6 +147,9 @@ const AudioRecorder = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        <EventMonitor/>
       </div>
       <div className='audio-recorder'>
         <h3>Audio Recorder</h3>

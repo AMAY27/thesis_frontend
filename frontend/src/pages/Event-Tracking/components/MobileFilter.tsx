@@ -9,18 +9,15 @@ interface MobileFilterProps {
     setActiveHourforData: (hour: keyof EventsMonitorData) => void;
 }
 const MobileFilter:React.FC<MobileFilterProps> = ({selectedClass, activeHourforData,handleChange, handleSelectedClassDelete,setActiveHourforData}) => {
+    const events = ['AlaramClock', 'Blending', 'Breaking','Canopening','Cat', 'Chirpingbirds', 'Clapping', 'Clarinet', 'Clocktick', 'Crying', 'Cupboard', 'Displaying_furniture', 'Dog', 'DoorBell','Dragonground','Drill','Drinking', 'Drum', 'Femalespeaking', 'Flute', 'Glass', 'Guitar', 'Hairdryer', 'Covidcough', 'Help', 'Hen', 'Hihat', 'Hit', 'Jackhammer', 'Keyboardtyping', 'Kissing','Laughing', 'Lighter', 'Healthycough', 'Manspeaking', 'Metal-on-metal', 'Astmacough', 'Mouseclick', 'Ringtone', 'Rooster', 'Silence', 'Sitar', 'Sneezing', 'Snooring', 'Stapler', 'ToiletFlush','Toothbrush','Trampler', 'Vaccumcleaner', 'Vandalism', 'WalkFootsteps', 'Washingmachine', 'Water', 'Whimper', 'Window', 'HandSaw', 'Siren', 'Whistling','Wind']
+
   return (
     <div>
         <div className="events-class-selector">
             <select name='classname' onChange={handleChange} required>
-                <option value="Zerbrechen">Zerbrechen</option>
-                <option value="Türklingel">Türklingel</option>
-                <option value="Klingelton">Klingelton</option>
-                <option value="Ruhe">Ruhe</option>
-                <option value="ZwitscherndeVögel">ZwitscherndeVögel</option>
-                <option value="Schnarchen">Schnarchen</option>
-                <option value="Wind">Wind</option>
-                <option value="Sirene">Sirene</option>
+                {events.map((event) => (
+                    <option key={event} value={event}>{event}</option>
+                ))}
             </select>
             <div className="selected-class-list">
                 {selectedClass.map((item) => (
