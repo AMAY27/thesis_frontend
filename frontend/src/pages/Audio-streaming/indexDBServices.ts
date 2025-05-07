@@ -1,6 +1,6 @@
 // indexedDBService.ts
 import { LiveEvent } from "./types";
-import { EventsMonitorData } from "../Event-monitor/types";
+import { EventsMonitorData, SoundCount } from "../Event-monitor/types";
 export interface AudioFileRecord {
   fileName: string;
   audioBlob: Blob;
@@ -123,16 +123,18 @@ export async function getAllLiveEvents(): Promise<LiveEvent[]> {
   });
 }
 
-export async function getEventsMonitoringData(): Promise<EventsMonitorData>{
+export async function getEventsMonitoringData(): Promise<EventsMonitorData> {
   const db = await openDatabase();
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([LIVE_EVENTS_STORE_NAME], "readonly");
     const store = transaction.objectStore(LIVE_EVENTS_STORE_NAME);
     const request = store.getAll();
+
     const result: EventsMonitorData = {
       fiveMinutes: [],
       fifteenMinutes: [],
-      thirtyMinutes: [],  
+      thirtyMinutes: [],
       oneHour: [],
       threeHour: [],
       sixHour: [],
@@ -141,145 +143,57 @@ export async function getEventsMonitoringData(): Promise<EventsMonitorData>{
       yesterday: [],
       dayBeforeYesterday: [],
     };
-    const today = new Date(Date.now()).toISOString();
-    const todayDate = today.split("T")[0];
-    const currentTime = today.split("T")[1]?.split(".")[0].slice(0,5);
-    const yesterdayDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split("T")[0];
-    const dayBeforeYesterdayDate = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString().split("T")[0];
-    const fiveMinutesAgoTime = new Date(Date.now() - 5 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const fifteenMinutesAgoTime = new Date(Date.now() - 15 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const thirtyMinutesAgoTime = new Date(Date.now() - 30 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const oneHourAgoTime = new Date(Date.now() - 60 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const threeHourAgoTime = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const sixHourAgoTime = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const twelveHourAgoTime = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    const twentyFourHourAgoTime = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split("T")[1]?.split(".")[0].slice(0,5);
-    console.log({
-      "todayDate": today,
-      "Current Time": currentTime,
-      "yesterday": yesterdayDate,
-      "dayBeforeYesterday": dayBeforeYesterdayDate,
-      "fiveMinutes": fiveMinutesAgoTime,
-      "fifteenMinutes": fifteenMinutesAgoTime,
-      "thirtyMinutes": thirtyMinutesAgoTime,
-      "oneHour": oneHourAgoTime,
-      "threeHour": threeHourAgoTime,
-      "sixHour": sixHourAgoTime,
-      "twelveHour": twelveHourAgoTime,
-      "twentyFourHour": twentyFourHourAgoTime,
-    })
-    
+
+    const now = new Date();
+    const thresholds = {
+      fiveMinutes: new Date(now.getTime() - 5 * 60 * 1000),
+      fifteenMinutes: new Date(now.getTime() - 15 * 60 * 1000),
+      thirtyMinutes: new Date(now.getTime() - 30 * 60 * 1000),
+      oneHour: new Date(now.getTime() - 60 * 60 * 1000),
+      threeHour: new Date(now.getTime() - 3 * 60 * 60 * 1000),
+      sixHour: new Date(now.getTime() - 6 * 60 * 60 * 1000),
+      twelveHour: new Date(now.getTime() - 12 * 60 * 60 * 1000),
+      twentyFourHour: new Date(now.getTime() - 24 * 60 * 60 * 1000),
+      yesterday: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      dayBeforeYesterday: new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString().split("T")[0],
+    };
+
+    console.log("Thresholds:", thresholds);
+
+    function addEventToBucket(bucket: SoundCount[], className: string) {
+      const found = bucket.find(entry => entry._id === className);
+      found ? found.count++ : bucket.push({ _id: className, count: 1 });
+    }
+
     request.onsuccess = () => {
       console.log("Live events:", request.result);
 
       request.result.forEach((event: LiveEvent) => {
         const eventDate = parseDateTime(event.Datetime, event.Datetime_2);
-        if(eventDate <= parseDateTime(todayDate, currentTime) && eventDate >= parseDateTime(todayDate, fiveMinutesAgoTime)){
-          const existingEntry = result.fiveMinutes.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            // Increase count by 1 if exists
-            existingEntry.count += 1;
-          } else {
-            // Add new entry with a count of 1 if not already present
-            result.fiveMinutes.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-            // 15 Minutes window
-        else if (
-          eventDate < parseDateTime(todayDate, currentTime) &&
-          eventDate >= parseDateTime(todayDate, fifteenMinutesAgoTime)
-        ) {
-          const existingEntry = result.fifteenMinutes.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            existingEntry.count += 1;
-          } else {
-            result.fifteenMinutes.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-        // 30 Minutes window
-        else if (
-          eventDate < parseDateTime(todayDate, currentTime) &&
-          eventDate >= parseDateTime(todayDate, thirtyMinutesAgoTime)
-        ) {
-          const existingEntry = result.thirtyMinutes.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            existingEntry.count += 1;
-          } else {
-            result.thirtyMinutes.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-        // 1 Hour window
-        else if (
-          eventDate < parseDateTime(todayDate, currentTime) &&
-          eventDate >= parseDateTime(todayDate, oneHourAgoTime)
-        ) {
-          const existingEntry = result.oneHour.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            existingEntry.count += 1;
-          } else {
-            result.oneHour.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-        // 3 Hour window
-        else if (
-          eventDate < parseDateTime(todayDate, currentTime) &&
-          eventDate >= parseDateTime(todayDate, threeHourAgoTime)
-        ) {
-          const existingEntry = result.threeHour.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            existingEntry.count += 1;
-          } else {
-            result.threeHour.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-        // 6 Hour window
-        else if (
-          eventDate < parseDateTime(todayDate, currentTime) &&
-          eventDate >= parseDateTime(todayDate, sixHourAgoTime)
-        ) {
-          const existingEntry = result.sixHour.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            existingEntry.count += 1;
-          } else {
-            result.sixHour.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-        // 12 Hour window
-        else if (
-          eventDate < parseDateTime(todayDate, currentTime) &&
-          eventDate >= parseDateTime(todayDate, twelveHourAgoTime)
-        ) {
-          const existingEntry = result.twelveHour.find(
-            (entry) => entry._id === event.ClassName
-          );
-          if (existingEntry) {
-            existingEntry.count += 1;
-          } else {
-            result.twelveHour.push({ _id: event.ClassName, count: 1 });
-          }
-        }
-      })
+        console.log("Event date:", eventDate, "Event class name:", event.ClassName);
+        const eventDateOnly = event.Datetime.split("T")[0];
+
+        if (eventDate > thresholds.fiveMinutes) addEventToBucket(result.fiveMinutes, event.ClassName);
+        if (eventDate > thresholds.fifteenMinutes) addEventToBucket(result.fifteenMinutes, event.ClassName);
+        if (eventDate > thresholds.thirtyMinutes) addEventToBucket(result.thirtyMinutes, event.ClassName);
+        if (eventDate > thresholds.oneHour) addEventToBucket(result.oneHour, event.ClassName);
+        if (eventDate > thresholds.threeHour) addEventToBucket(result.threeHour, event.ClassName);
+        if (eventDate > thresholds.sixHour) addEventToBucket(result.sixHour, event.ClassName);
+        if (eventDate > thresholds.twelveHour) addEventToBucket(result.twelveHour, event.ClassName);
+        if (eventDate > thresholds.twentyFourHour) addEventToBucket(result.twentyFourHour, event.ClassName);
+
+        if (eventDateOnly === thresholds.yesterday) addEventToBucket(result.yesterday, event.ClassName);
+        if (eventDateOnly === thresholds.dayBeforeYesterday) addEventToBucket(result.dayBeforeYesterday, event.ClassName);
+      });
+
       resolve(result);
     };
+
     request.onerror = (event) => {
       console.error("Error reading live events", event);
       reject(event);
     };
   });
-
-
 }
 
 
