@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { liveStreamService } from '../liveStreamingService'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
 import LiveAudioCanvasVisualizer from './LiveAudioCanvasVisualizer';
+import './LiveAudioStreamer.css';
 
 
 const LiveAudioStreamer = () => {
@@ -56,17 +57,17 @@ const LiveAudioStreamer = () => {
   };
 
   return (
-    <div>
+    <div className='live-audio-streamer'>
       <div>
         <LiveAudioCanvasVisualizer analyser={analyserRef.current} />
       </div>
       <div className="stream-buttons">
         {!streaming ? (
-          <button onClick={startStreaming}>
+          <button onClick={startStreaming} className='start-button'>
             <FaPlay style={{ marginRight: "4px" }} /> Start Streaming
           </button>
         ) : (
-          <button onClick={stopStreaming}>
+          <button onClick={stopStreaming} className='stop-button'>
             <FaStop style={{ marginRight: "4px" }} /> Stop Streaming
           </button>
         )}
