@@ -22,7 +22,7 @@ export const AudioStreamContextProvider = ({ children }: AudioStreamContextProvi
     useEffect(() => {
         // Fetch live events from the server or any other source
         const fetchLiveEvents = async () => {
-            const fetchedLiveEvents: LiveEvent[] = await getTopTenLiveEvents();
+            const fetchedLiveEvents: LiveEvent[] = [];
             setLiveEvents(fetchedLiveEvents);
         };
 
