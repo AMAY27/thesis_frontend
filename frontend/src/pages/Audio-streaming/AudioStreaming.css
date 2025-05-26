@@ -119,6 +119,7 @@
     /* padding: 10px; */
     /* background: blue; */
     overflow-x: hidden;   /* hide any overflow at this level */
+    margin-bottom: 2rem;
 }
   
   /* horizontal list that scrolls internally */

@@ -36,8 +36,8 @@ class LiveStreamService {
           checkForAlertsFromLiveEvents(payload.events);
           // Update live events through the callback
           if (this.setLiveEventsCallback) {
-            const events = await getTopTenLiveEvents();
-            this.setLiveEventsCallback(events);
+            // const events = await getTopTenLiveEvents();
+            this.setLiveEventsCallback(payload.events);
           }
         }
       }
