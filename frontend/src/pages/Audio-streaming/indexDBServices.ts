@@ -134,6 +134,7 @@ export async function getEventsMonitoringData(): Promise<EventsMonitorData[]> {
     const monitorResult:EventsMonitorData[] = [];
 
     const result: EventsMonitorData = {
+      all: [],
       fiveMinutes: [],
       fifteenMinutes: [],
       thirtyMinutes: [],
@@ -173,6 +174,7 @@ export async function getEventsMonitoringData(): Promise<EventsMonitorData[]> {
       request.result.forEach((event: LiveEvent) => {
         const eventDate = parseDateTime(event.Datetime, event.Datetime_2);
         const eventDateOnly = event.Datetime.split("T")[0];
+        addEventToBucket(result.all, event.ClassName);
 
         if (eventDate > thresholds.fiveMinutes) addEventToBucket(result.fiveMinutes, event.ClassName);
         if (eventDate > thresholds.fifteenMinutes) addEventToBucket(result.fifteenMinutes, event.ClassName);

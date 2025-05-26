@@ -11,7 +11,7 @@ import { getEventsMonitoringData } from "../Audio-streaming/indexDBServices";
 
 const EventMonitor = () => {
     const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
-    const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("oneHour");
+    const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("all");
     const [selectedClass, setSelectedClass] = useState<string[]>([]);
     const [barChartData, setBarChartData] = useState<SoundCount[]>([]);
     // const [isMobile, setIsMobile] = useState<Boolean>(false);
@@ -55,10 +55,10 @@ const EventMonitor = () => {
     useEffect(() => {
         const rawData = eventsMonitorData && eventsMonitorData[0] ? eventsMonitorData[0][activeHourforData] || [] : [];
             // Filter data based on selectedClass if necessary
-        const filteredData = rawData.filter((item: any) =>
-          selectedClass.includes(item._id)
-        );
-        setBarChartData(filteredData);
+        // const filteredData = rawData.filter((item: any) =>
+        //   selectedClass.includes(item._id)
+        // );
+        setBarChartData(rawData);
     }, [activeHourforData, selectedClass])
 
   return (
@@ -70,7 +70,7 @@ const EventMonitor = () => {
             handleChange={handleChange}
             handleSelectedClassDelete={handleSelectedClassDelete}
         />
-        <div>
+        <div className="events-monitor-bar-chart">
             <EventMonitorBarChart data={barChartData} />
         </div>
     </div>

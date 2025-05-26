@@ -4,6 +4,7 @@ export interface SoundCount {
 }
   
 export interface EventsMonitorData {
+    all: SoundCount[];
     fiveMinutes: SoundCount[];
     fifteenMinutes: SoundCount[];
     thirtyMinutes: SoundCount[];

@@ -29,6 +29,10 @@
     /* border-radius: 10px; */
 }
 
+.events-monitor-bar-chart{
+    margin-top: 2rem;;
+}
+
 .events-class-selector{
     display: flex;
     flex-direction: row;

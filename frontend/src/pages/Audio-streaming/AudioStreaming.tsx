@@ -137,22 +137,20 @@ const AudioRecorder = () => {
   return (
     <div className='streaming-parent'>
       <div className="live-streamer">
-        <LiveAudioStreamer />
-        <h3>Live Events</h3>
-        <div className='live-events-list'>
-          {liveEvents.length > 0 && liveEvents.map((event, index) => (
-            <div key={index} className='live-event-item'>
-              <p>{event.ClassName}</p>
-              <p>{event.Datetime}</p>
-            </div>
+        {liveEvents.length > 0 && 
+          <div className='live-events-list'>
+            {liveEvents.map((event, index) => (
+              <div key={index} className='live-event-item'>
+                <p>{event.ClassName}</p>
+                <p>{event.Datetime}</p>
+              </div>
           ))}
-        </div>
-      </div>
-      <div>
+          </div>}
+        <LiveAudioStreamer />
         <EventMonitor/>
       </div>
       <div className='audio-recorder'>
-        <h3>Audio Recorder</h3>
+        <h3>Record sample files for analysis</h3>
         <div className='record-buttons-div'>
             {!recording ? (
               <button onClick={startRecording}>
