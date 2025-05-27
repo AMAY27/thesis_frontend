@@ -15,7 +15,7 @@
     max-width: 100%;
     overflow-x: auto;         /* hide any stray overflow */
     position: relative;
-    padding: 20px;
+    /* padding: 20px; */
     box-sizing: border-box;
 }
 
@@ -117,12 +117,9 @@
 
 .live-streamer {
     /* max-width: 0%; */
-    width: 80%;
-    /* padding: 10px; */
-    /* background: blue; */
+    width: 70%;
     overflow-x: hidden;   /* hide any overflow at this level */
     overflow-y: hidden;
-    margin-bottom: 2rem;
     border-radius: 20px;
     display: flex;
     flex-direction: column;

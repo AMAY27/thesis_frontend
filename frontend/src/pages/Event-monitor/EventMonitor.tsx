@@ -27,10 +27,10 @@ const EventMonitor = () => {
             // Get the raw data for the active hour (e.g., oneHour, threeHour, etc.)
             const rawData = eventsMonitorData[0][activeHourforData] || [];
             // Filter data based on selectedClass if necessary
-            const filteredData = rawData.filter((item: any) =>
-              selectedClass.includes(item._id)
-            );
-            setBarChartData(filteredData);
+            // const filteredData = rawData.filter((item: any) =>
+            //   selectedClass.includes(item._id)
+            // );
+            setBarChartData(rawData);
         }
     },[])
     useEffect(() => {
