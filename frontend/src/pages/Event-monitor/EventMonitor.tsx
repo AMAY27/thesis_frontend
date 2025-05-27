@@ -7,35 +7,72 @@ import EventMonitorBarChart from "./components/EventMonitorBarChart";
 import { SoundCount } from "./types";
 import './EventMonitor.css';
 import MobileFilter from "../Event-Tracking/components/MobileFilter";
-import { getEventsMonitoringData } from "../Audio-streaming/indexDBServices";
+import { getEventsMonitoringData, getAllLiveEvents } from "../Audio-streaming/indexDBServices";
+import { LiveEvent } from "../Audio-streaming/types";
+
+
 
 const EventMonitor = () => {
+
+    const timeRanges = [
+      "fiveMinutes",
+      "fifteenMinutes",
+      "thirtyMinutes",
+      "oneHour",
+      "threeHour",
+      "sixHour",
+      "twelveHour",
+      "twentyFourHour",
+      "yesterday",
+      "dayBeforeYesterday",
+      "all"
+    ];
+
+    const readableLabels: Record<string, string> = {
+      all: "All Time",
+      fiveMinutes: "Last 5 Minutes",
+      fifteenMinutes: "Last 15 Minutes",
+      thirtyMinutes: "Last 30 Minutes",
+      oneHour: "Last 1 Hour",
+      threeHour: "Last 3 Hours",
+      sixHour: "Last 6 Hours",
+      twelveHour: "Last 12 Hours",
+      twentyFourHour: "Last 24 Hours",
+      yesterday: "Yesterday",
+      dayBeforeYesterday: "Day Before Yesterday"
+    };
     const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
     const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("all");
     const [selectedClass, setSelectedClass] = useState<string[]>([]);
-    const [barChartData, setBarChartData] = useState<SoundCount[]>([]);
-    // const [isMobile, setIsMobile] = useState<Boolean>(false);
-// 
+    const [barChartData, setBarChartData] = useState<SoundCount[]>([]); 
+    const [toggleView, setToggleView] = useState<string>("data");
+    const [eventLogs, setEventLogs] = useState<LiveEvent[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const resp:EventsMonitorData[] = await getEventsMonitoringData();
+            const eventRest: LiveEvent[] = await getAllLiveEvents();
             setEventsMonitorData(resp);
+            setEventLogs(eventRest);
         }
         fetchData();
-        if (eventsMonitorData && eventsMonitorData.length > 0) {
-            // Get the raw data for the active hour (e.g., oneHour, threeHour, etc.)
-            const rawData = eventsMonitorData[0][activeHourforData] || [];
             // Filter data based on selectedClass if necessary
             // const filteredData = rawData.filter((item: any) =>
             //   selectedClass.includes(item._id)
             // );
-            setBarChartData(rawData);
-        }
     },[])
     useEffect(() => {
-        console.log(barChartData);
-    },[barChartData])
+        if (eventsMonitorData && eventsMonitorData.length > 0) {
+            const rawData = eventsMonitorData[0][activeHourforData] || [];
+            console.log("Raw Data:", rawData);
+            // Filter data based on selectedClass if necessary
+            setBarChartData(rawData);
+        }
+    }, [eventsMonitorData, activeHourforData, selectedClass]);
+
+    useEffect(() => {
+        console.log(eventsMonitorData);
+    },[eventsMonitorData])
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedClass((prev) => {
@@ -63,16 +100,87 @@ const EventMonitor = () => {
 
   return (
     <div className="events-monitor">
-        <MobileFilter
-            activeHourforData={activeHourforData}
-            setActiveHourforData={setActiveHourforData}
-            selectedClass={selectedClass}
-            handleChange={handleChange}
-            handleSelectedClassDelete={handleSelectedClassDelete}
-        />
-        <div className="events-monitor-bar-chart">
-            <EventMonitorBarChart data={barChartData} />
+        <div className="view-selector-parent">
+            <div 
+                onClick={() => setToggleView("data")} 
+                className={`view-selector ${toggleView === "data" ? "active-selector" : ""}`}
+            >
+                Data View
+            </div>
+            <div
+                onClick={() => setToggleView("graph")} 
+                className={`view-selector ${toggleView === "graph" ? "active-selector" : ""}`}
+            >
+                Graph View
+            </div>
+            <div
+                onClick={() => setToggleView("logs")} 
+                className={`view-selector ${toggleView === "logs" ? "active-selector" : ""}`}
+            >
+                Event Logs
+            </div>
         </div>
+        { toggleView==="data" ? (
+            <div className="data-view">
+                {/* {eventsMonitorData && eventsMonitorData.map((item, idx) => (
+                    <div key={idx}>
+                        {JSON.stringify(item)}
+                    </div>
+                ))} */}
+                {timeRanges.map((rangeKey) => {
+                    const events = eventsMonitorData && eventsMonitorData[0][rangeKey as keyof EventsMonitorData];
+                    return (
+                      events && events.length > 0 && (
+                        <>
+                            <div className="time-range-heading">{readableLabels[rangeKey]}</div>
+                            <div key={rangeKey} className="time-range-section">
+                              {events.map((event: SoundCount, index: number) => (
+                                <div key={index} className="event-item">
+                                  <span className="event-class-name">{event._id}</span>
+                                  <span className="event-count">Count: {event.count}</span>
+                                </div>
+                              ))}
+                            </div>
+                        </>
+                      )
+                    );
+                })}
+            </div>
+        ) : toggleView==="graph" ? (
+        <div className="graph-view">
+            <MobileFilter
+                activeHourforData={activeHourforData}
+                setActiveHourforData={setActiveHourforData}
+                selectedClass={selectedClass}
+                handleChange={handleChange}
+                handleSelectedClassDelete={handleSelectedClassDelete}
+            />
+            <div className="events-monitor-bar-chart">
+                <EventMonitorBarChart data={barChartData} />
+            </div>
+        </div>
+        ): (
+            <div className="event-logs">
+                <table id="event-logs-table">
+                    
+                    <tr className="event-table-headings">
+                        <th>Class Name</th>
+                        <th>Class Name (German)</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                    
+                    {eventLogs.map((event, index) => (
+                        <tr key={index}>
+                            <td>{event.ClassName}</td>
+                            <td>{event.ClassName_German}</td>
+                            <td>{event.Datetime}</td>
+                            <td>{event.Datetime_2}</td>
+                        </tr>
+                    ))}
+                </table>
+            </div>
+        )}
     </div>
   )
 }
