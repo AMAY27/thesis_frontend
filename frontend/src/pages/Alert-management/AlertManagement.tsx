@@ -2,7 +2,7 @@
 import hoc from "../../hoc/hoc"
 import { useNavContext } from "../../global-context/NavContext";
 import AlertCard from "./components/AlertCard";
-import { getAlerts } from "./api.services";
+// import { getAlerts } from "./api.services";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {AddAlertProps, AlertCalendarProps} from "./types";
@@ -12,7 +12,7 @@ import './AlertManagement.css'
 import { addAlert } from "./api.services";
 import notification from "../../axios/notification";
 import { BaseEventProps } from "../../components/Forms/GlobalForm";
-import { saveAlert } from "./indexDBServices";
+import { saveAlert, getAlerts } from "./indexDBServices";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
@@ -24,7 +24,7 @@ const AlertManagement = () => {
   const [alertType, setAlertType] = useState<string>("active");
 
   const fetchAlerts = async() => {
-    const resp = await getAlerts<AlertCalendarProps[]>("/alert/alerts");
+    const resp = await getAlerts();
     console.log(resp);
     const alertsWithHandler = resp.map((alert) => ({
       

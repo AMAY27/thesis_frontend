@@ -34,7 +34,7 @@
     align-items: center;
 }
 
-.record-buttons-div button{
+.audio-recorder button{
     background: transparent;
     color: #62B2C0;
     border: 1px solid #62B2C0;
@@ -44,9 +44,11 @@
     width: fit-content;   
     display: flex;
     align-items: center;
+    margin-top: 1rem;
+    
 }
 
-.record-buttons-div button:hover{
+.audio-recorder button:hover{
     background: #62B2C0;
     color: white;
 }   
