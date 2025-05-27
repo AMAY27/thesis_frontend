@@ -27,7 +27,7 @@ export interface AlertCalendarProps {
     start_time: string;
     end_time: string;
     status: string;
-    createdAt: string;
+    createdAt: number;
     handleAlertCalendarClicked: () => void;
 }
 

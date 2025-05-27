@@ -80,6 +80,14 @@ const AudioRecorder = () => {
       setRecording(false);
     }
   };
+  const deleteRecording = () => {
+    // Clear the audio chunks and reset the recording state
+    setAudioChunks([]);
+    setRecording(false);
+    mediaRecorderRef.current = null;
+    streamRef.current = null;
+    setFileName('');
+  }
 
   const handleSend = async () => {
     // Combine the audio chunks into a single Blob with WAV MIME type
@@ -176,15 +184,16 @@ const AudioRecorder = () => {
                     onChange={(e) => setFileName(e.target.value)}
                   />
                 </label>
+                <button onClick={deleteRecording}>delete</button>
               </div>
               <audio
                 className='audio-player'
                 controls
                 src={URL.createObjectURL(new Blob(audioChunks, { type: "audio/webm; codecs=opus" }))}
               />
+              <button onClick={handleSend}>Send Recording</button>
             </div>
         )}
-        <button onClick={handleSend}>Send Recording</button>
           <div>
             {audioFiles.length > 0 && (
               <div className='audio-files-list'>
