@@ -13,8 +13,7 @@ import './AudioStreaming.css';
 import { FaPlay } from "react-icons/fa6";
 import { BsRecordCircle } from "react-icons/bs";
 import { sendRecordingForAnalysis } from './api.service';
-import { saveAudioFile, getAllAudioFiles, getTopTenLiveEvents } from './indexDBServices';
-import { LiveEvent } from './types';
+import { saveAudioFile, getAllAudioFiles } from './indexDBServices';
 import { liveStreamService } from './liveStreamingService';
 import { EventsMonitorData } from '../Event-monitor/types';
 import EventMonitor from '../Event-monitor/EventMonitor';
@@ -27,19 +26,7 @@ const AudioRecorder = () => {
   const streamRef = useRef<MediaStream | null>(null);
   const [audioFiles, setAudioFiles] = useState<any[]>([]);
   const { setLiveEvents,liveEvents } = useAudioStreamContext();
-  const [eventsMonitoringData, setEventsMonitoringData ] = useState<EventsMonitorData[]>();
 
-  useEffect(() => {
-    async function getMonitorData(){
-      const events = await getEventsMonitoringData();
-      setEventsMonitoringData(events);
-    }
-    getMonitorData();
-  },[])
-
-  useEffect(() => {
-    console.log(eventsMonitoringData);
-  },[eventsMonitoringData])
 
   useEffect(() => {
     liveStreamService.setLiveEventsHandler(setLiveEvents);

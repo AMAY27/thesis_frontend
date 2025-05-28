@@ -9,6 +9,9 @@ import './EventMonitor.css';
 import MobileFilter from "../Event-Tracking/components/MobileFilter";
 import { getEventsMonitoringData, getAllLiveEvents } from "../Audio-streaming/indexDBServices";
 import { LiveEvent } from "../Audio-streaming/types";
+import { useAudioStreamContext } from '../Audio-streaming/context/AudioStreamContext';
+import {liveStreamService} from '../Audio-streaming/liveStreamingService';
+import { set } from "date-fns";
 
 
 
@@ -41,26 +44,22 @@ const EventMonitor = () => {
       yesterday: "Yesterday",
       dayBeforeYesterday: "Day Before Yesterday"
     };
-    const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
+    const {eventsMonitorData, setEventsMonitorData} = useAudioStreamContext();
     const [activeHourforData, setActiveHourforData] = useState<keyof EventsMonitorData>("all");
     const [selectedClass, setSelectedClass] = useState<string[]>([]);
     const [barChartData, setBarChartData] = useState<SoundCount[]>([]); 
     const [toggleView, setToggleView] = useState<string>("data");
-    const [eventLogs, setEventLogs] = useState<LiveEvent[]>([]);
+    const {eventLogs, setEventLogs} = useAudioStreamContext();
 
     useEffect(() => {
-        const fetchData = async () => {
-            const resp:EventsMonitorData[] = await getEventsMonitoringData();
-            const eventRest: LiveEvent[] = await getAllLiveEvents();
-            setEventsMonitorData(resp);
-            setEventLogs(eventRest);
-        }
-        fetchData();
+        liveStreamService.setLiveEventsMonitoringDataUpdateHandler(setEventsMonitorData);
+        liveStreamService.setLiveEventLogsHandler(setEventLogs);
+        
             // Filter data based on selectedClass if necessary
             // const filteredData = rawData.filter((item: any) =>
             //   selectedClass.includes(item._id)
             // );
-    },[])
+    },[setEventsMonitorData, setEventLogs]);
     useEffect(() => {
         if (eventsMonitorData && eventsMonitorData.length > 0) {
             const rawData = eventsMonitorData[0][activeHourforData] || [];
