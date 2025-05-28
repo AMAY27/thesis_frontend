@@ -2,16 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { EventsMonitorData } from "./types"
-// import ResponsiveHeatmap from "./components/ResponsiveHeatmap";
 import EventMonitorBarChart from "./components/EventMonitorBarChart";
 import { SoundCount } from "./types";
 import './EventMonitor.css';
 import MobileFilter from "../Event-Tracking/components/MobileFilter";
-import { getEventsMonitoringData, getAllLiveEvents } from "../Audio-streaming/indexDBServices";
-import { LiveEvent } from "../Audio-streaming/types";
 import { useAudioStreamContext } from '../Audio-streaming/context/AudioStreamContext';
 import {liveStreamService} from '../Audio-streaming/liveStreamingService';
-import { set } from "date-fns";
+import { getEventsMonitoringData, getAllLiveEvents } from '../Audio-streaming/indexDBServices';
 
 
 
@@ -54,12 +51,24 @@ const EventMonitor = () => {
     useEffect(() => {
         liveStreamService.setLiveEventsMonitoringDataUpdateHandler(setEventsMonitorData);
         liveStreamService.setLiveEventLogsHandler(setEventLogs);
+        (async () => {
+          try {
+             const initialData = await getEventsMonitoringData();
+             const initialEventLogs = await getAllLiveEvents();
+             setEventLogs(initialEventLogs);
+             setEventsMonitorData(initialData);
+          } catch (error) {
+             console.error("Failed to load initial events monitoring data", error);
+          }
+        })();
         
             // Filter data based on selectedClass if necessary
             // const filteredData = rawData.filter((item: any) =>
             //   selectedClass.includes(item._id)
             // );
     },[setEventsMonitorData, setEventLogs]);
+
+
     useEffect(() => {
         if (eventsMonitorData && eventsMonitorData.length > 0) {
             const rawData = eventsMonitorData[0][activeHourforData] || [];
@@ -69,9 +78,12 @@ const EventMonitor = () => {
         }
     }, [eventsMonitorData, activeHourforData, selectedClass]);
 
+
+
     useEffect(() => {
-        console.log(eventsMonitorData);
-    },[eventsMonitorData])
+        liveStreamService.setLiveEventsMonitoringDataUpdateHandler(setEventsMonitorData);
+        liveStreamService.setLiveEventLogsHandler(setEventLogs);
+    },[])
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedClass((prev) => {
@@ -127,7 +139,7 @@ const EventMonitor = () => {
                     </div>
                 ))} */}
                 {timeRanges.map((rangeKey) => {
-                    const events = eventsMonitorData && eventsMonitorData[0][rangeKey as keyof EventsMonitorData];
+                    const events = eventsMonitorData?.[0]?.[rangeKey as keyof EventsMonitorData];
                     return (
                       events && events.length > 0 && (
                         <>
