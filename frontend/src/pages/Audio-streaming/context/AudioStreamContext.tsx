@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, ReactNode, useContext } from "react";
 import { LiveEvent } from "../types";
 import { getTopTenLiveEvents } from "../indexDBServices";
+import { EventsMonitorData } from "../../Event-monitor/types";
 
 interface AudioStreamContextProviderProps {
     children: ReactNode;
@@ -9,15 +10,25 @@ interface AudioStreamContextProviderProps {
 interface AudioStreamContextProps {
     liveEvents: LiveEvent[];
     setLiveEvents: (liveEvents: LiveEvent[]) => void;
+    eventsMonitorData: EventsMonitorData[] | null;
+    setEventsMonitorData: (eventsMonitorData: EventsMonitorData[] | null) => void;
+    eventLogs: LiveEvent[];
+    setEventLogs: (eventLogs: LiveEvent[]) => void;
 }
 
 const AudioStreamContext = createContext<AudioStreamContextProps | undefined>({
     liveEvents: [],
     setLiveEvents: () => {},
+    eventsMonitorData: null,
+    setEventsMonitorData: () => {},
+    eventLogs: [],
+    setEventLogs: () => {},
 });   
 
 export const AudioStreamContextProvider = ({ children }: AudioStreamContextProviderProps) => {
     const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
+    const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
+    const [eventLogs, setEventLogs] = useState<LiveEvent[]>([]);
 
     useEffect(() => {
         // Fetch live events from the server or any other source
@@ -31,6 +42,10 @@ export const AudioStreamContextProvider = ({ children }: AudioStreamContextProvi
     const contextData = {
         liveEvents,
         setLiveEvents,
+        eventsMonitorData,
+        setEventsMonitorData,
+        eventLogs,
+        setEventLogs,
     }
 
     return (

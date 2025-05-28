@@ -1,13 +1,16 @@
 // 
 // src/services/liveStreamService.ts
 import { io, Socket } from "socket.io-client";
-import { getTopTenLiveEvents, saveLiveEvent } from "./indexDBServices";
+import { getEventsMonitoringData, getAllLiveEvents, saveLiveEvent } from "./indexDBServices";
 import { LiveEvent } from "./types";
 import { checkForAlertsFromLiveEvents } from "../Alert-management/indexDBServices";
+import { EventsMonitorData } from "../Event-monitor/types";
 
 class LiveStreamService {
   private socket!: Socket;
   private setLiveEventsCallback?: (events: LiveEvent[]) => void;
+  private setLiveEventLogsCallback?: (eventLogs: LiveEvent[]) => void;
+  private setLiveEventMonitoringDataCallback?: (eventMonitoringData: EventsMonitorData[]) => void;
 
   constructor() {
     this.socket = io("http://localhost:5001", {
@@ -39,6 +42,14 @@ class LiveStreamService {
             // const events = await getTopTenLiveEvents();
             this.setLiveEventsCallback(payload.events);
           }
+          if (this.setLiveEventMonitoringDataCallback) {
+            const eventMonitoringData: EventsMonitorData[] = await getEventsMonitoringData();
+            this.setLiveEventMonitoringDataCallback(eventMonitoringData);
+          }
+          if (this.setLiveEventLogsCallback) {
+            const eventLogs: LiveEvent[] = await getAllLiveEvents();
+            this.setLiveEventLogsCallback(eventLogs);
+          }
         }
       }
     });
@@ -54,6 +65,14 @@ class LiveStreamService {
 
   setLiveEventsHandler(callback: (events: LiveEvent[]) => void) {
     this.setLiveEventsCallback = callback;
+  }
+
+  setLiveEventsMonitoringDataUpdateHandler(callback: (eventMonitoringData: EventsMonitorData[])=>void){
+    this.setLiveEventMonitoringDataCallback = callback;
+  }
+
+  setLiveEventLogsHandler(callback: (eventLogs: LiveEvent[]) => void) {
+    this.setLiveEventLogsCallback = callback;
   }
 
   startStreaming() {
