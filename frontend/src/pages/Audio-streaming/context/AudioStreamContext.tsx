@@ -10,8 +10,8 @@ interface AudioStreamContextProviderProps {
 interface AudioStreamContextProps {
     liveEvents: LiveEvent[];
     setLiveEvents: (liveEvents: LiveEvent[]) => void;
-    eventsMonitorData: EventsMonitorData[] | null;
-    setEventsMonitorData: (eventsMonitorData: EventsMonitorData[] | null) => void;
+    eventsMonitorData: EventsMonitorData[];
+    setEventsMonitorData: (eventsMonitorData: EventsMonitorData[]) => void;
     eventLogs: LiveEvent[];
     setEventLogs: (eventLogs: LiveEvent[]) => void;
 }
@@ -19,7 +19,7 @@ interface AudioStreamContextProps {
 const AudioStreamContext = createContext<AudioStreamContextProps | undefined>({
     liveEvents: [],
     setLiveEvents: () => {},
-    eventsMonitorData: null,
+    eventsMonitorData: [],
     setEventsMonitorData: () => {},
     eventLogs: [],
     setEventLogs: () => {},
@@ -27,7 +27,7 @@ const AudioStreamContext = createContext<AudioStreamContextProps | undefined>({
 
 export const AudioStreamContextProvider = ({ children }: AudioStreamContextProviderProps) => {
     const [liveEvents, setLiveEvents] = useState<LiveEvent[]>([]);
-    const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[] | null>(null);
+    const [eventsMonitorData, setEventsMonitorData] = useState<EventsMonitorData[]>([]);
     const [eventLogs, setEventLogs] = useState<LiveEvent[]>([]);
 
     useEffect(() => {
@@ -35,6 +35,10 @@ export const AudioStreamContextProvider = ({ children }: AudioStreamContextProvi
         const fetchLiveEvents = async () => {
             const fetchedLiveEvents: LiveEvent[] = [];
             setLiveEvents(fetchedLiveEvents);
+            const fetchedEventsMonitorData: EventsMonitorData[] = [];
+            setEventsMonitorData(fetchedEventsMonitorData);
+            const fetchedEventLogs: LiveEvent[] = await getTopTenLiveEvents();
+            setEventLogs(fetchedEventLogs);
         };
 
         fetchLiveEvents();
