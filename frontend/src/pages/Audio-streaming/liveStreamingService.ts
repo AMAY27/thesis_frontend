@@ -5,6 +5,7 @@ import { getEventsMonitoringData, getAllLiveEvents, saveLiveEvent } from "./inde
 import { LiveEvent } from "./types";
 import { checkForAlertsFromLiveEvents } from "../Alert-management/indexDBServices";
 import { EventsMonitorData } from "../Event-monitor/types";
+import notification from "../../axios/notification";
 
 class LiveStreamService {
   private socket!: Socket;
@@ -56,6 +57,7 @@ class LiveStreamService {
 
     this.socket.on("connect_error", (err) => {    
       console.log(err.message);
+      notification("Connection error: " + err.message, "error");
     });
 
     this.socket.on("disconnect", () => {

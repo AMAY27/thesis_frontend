@@ -22,6 +22,7 @@ const AlertCreationForm:React.FC<AlertCreationFormProps> = ({handleCloseAlertCLi
         start_time: "",
         end_time: "",
         status: "active",
+        createdAt: Date.now(),
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -49,6 +50,7 @@ const AlertCreationForm:React.FC<AlertCreationFormProps> = ({handleCloseAlertCLi
                 start_time: "",
                 end_time: "",
                 status: "active",
+                createdAt: Date.now(),
             });
         } catch (error) {
             // Error handling is already done in addAlert

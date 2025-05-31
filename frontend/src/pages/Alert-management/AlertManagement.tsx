@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import {AddAlertProps, AlertCalendarProps} from "./types";
 import GlobalForm from "../../components/Forms/GlobalForm";
 import './AlertManagement.css'
-// import AlertCreationForm from "./components/AlertCreationForm";
-import { addAlert } from "./api.services";
 import notification from "../../axios/notification";
 import { BaseEventProps } from "../../components/Forms/GlobalForm";
 import { saveAlert, getAlerts } from "./indexDBServices";
@@ -19,17 +17,19 @@ const AlertManagement = () => {
   const navigate = useNavigate();
   const [alerts, setAlerts] = useState<AlertCalendarProps[]>([]);
   const [addAlertClicked, setAddAlertClicked] = useState<Boolean>(false);
+  const [updateAlertClicked, setUpdateAlertClicked] = useState<Boolean>(false);
   const [mobileAlertClicked, setMobileAlertClicked] = useState<Boolean>(false);
   const [isMobile, setIsMobile] = useState<Boolean>(false);
   const [alertType, setAlertType] = useState<string>("active");
+  const [updateAlert, setUpdateAlert] = useState<BaseEventProps>();
 
   const fetchAlerts = async() => {
     const resp = await getAlerts();
     console.log(resp);
     const alertsWithHandler = resp.map((alert) => ({
-      
       ...alert,
-      handleAlertCalendarClicked: handleAlertCalendarClicked
+      handleAlertCalendarClicked: handleAlertCalendarClicked,
+      handleAlertUpdateClicked: () => handleAlertUpdateClicked(alert),
     }));
     setAlerts(alertsWithHandler);
   }
@@ -56,6 +56,22 @@ const AlertManagement = () => {
   const handleCancelClicked = () => {
     setMobileAlertClicked(false);
     setAddAlertClicked(false);
+    setUpdateAlertClicked(false);
+  }
+
+  const handleAlertUpdateClicked = ({user_id,title,classname,start_date,end_date,start_time,end_time,status}: BaseEventProps) => {
+    setUpdateAlertClicked(true);
+    const alertDetails: BaseEventProps = {
+      user_id,
+      title,
+      classname,
+      start_date,
+      end_date,
+      start_time,
+      end_time,
+      status,
+    };
+    setUpdateAlert(alertDetails);
   }
 
   useEffect(() => {
@@ -94,8 +110,24 @@ const AlertManagement = () => {
     } catch (error) {
         // Error handling is already done in addAlert
     } 
-    
   }
+  
+  // const handleUpdateSubmit = async (alertDetails: BaseEventProps) => {
+  //   try {
+  //       const alertData: AddAlertProps = {
+  //         ...alertDetails,
+  //         alert_type: updateAlert?.alert_type || alertType,
+  //         createdAt: Date.now()
+  //       }
+  //       // await addAlert("/alert/update", alertData);
+  //       await saveAlert(alertData);
+  //       notification("Alert updated successfully!", "success");
+  //       fetchAlerts();
+    
+  //   } catch (error) {
+  //       // Error handling is already done in addAlert
+  //   } 
+  // }
 
   // if (addAlertClicked) {
   //   return <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>;
@@ -106,6 +138,23 @@ const AlertManagement = () => {
       {addAlertClicked && 
         <div className="form-overlay">
           <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleCancelClicked}>
+            <div className="input-div">
+              <label htmlFor="alert_type">Alert Type</label>
+              <select name="alert_type" onChange={handleChange} value={alertType} required>
+                <option value="active">
+                  Triggered when event is detected
+                </option>
+                <option value="inactive">
+                  Triggered when event is not detected
+                </option>
+              </select>
+            </div>
+          </GlobalForm>
+        </div>
+      }
+      {updateAlertClicked && 
+        <div className="form-overlay">
+          <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleCancelClicked} initialValues={updateAlert}>
             <div className="input-div">
               <label htmlFor="alert_type">Alert Type</label>
               <select name="alert_type" onChange={handleChange} value={alertType} required>
