@@ -30,6 +30,7 @@ export interface AlertCalendarProps {
     createdAt: number;
     handleAlertCalendarClicked: () => void;
     handleAlertUpdateClicked: () => void;
+    handleDeleteAlertClicked: () => void;
 }
 
 export interface AddAlertProps {
