@@ -73,6 +73,42 @@ export async function saveAlertLog(alertLog: AlertLogProps): Promise<void> {
   });
 }
 
+export async function getAlertLogsForCurrentDay(): Promise<AlertLogProps[]> {
+  return new Promise(async (resolve, reject) => {
+    const db = await openDatabase();
+    const transaction = db.transaction([ALERT_LOG_STORE_NAME], "readonly");
+    const store = transaction.objectStore(ALERT_LOG_STORE_NAME);
+    const request = store.getAll();
+    request.onsuccess = () => {
+      const today = new Date();
+      const todayLogs = request.result.filter(log => {
+        const logDate = new Date(log.createdAt);
+        return logDate.getFullYear() === today.getFullYear() &&
+               logDate.getMonth() === today.getMonth() &&
+               logDate.getDate() === today.getDate();
+      });
+      resolve(todayLogs);
+    };
+    request.onerror = (event) => {
+      console.error("Error fetching alert logs", event);
+      reject(event);
+    };
+  });
+}
+
+export async function deleteAlert(alertId: number): Promise<void> {
+  return new Promise(async (resolve, reject) => {
+    const db = await openDatabase();
+    const transaction = db.transaction([ALERTS_STORE_NAME], "readwrite");
+    const store = transaction.objectStore(ALERTS_STORE_NAME);
+    const request = store.delete(alertId);
+    request.onsuccess = () => resolve();
+    request.onerror = (event) => {
+      console.error("Error deleting alert", event);
+      reject(event);
+    };
+  })
+}
 export async function checkForAlertsFromLiveEvents(events: LiveEvent[]) {
     const alerts = await getAlerts();   // assume returns Alert[]
 
