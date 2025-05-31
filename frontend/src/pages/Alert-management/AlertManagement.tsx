@@ -9,7 +9,6 @@ import {AddAlertProps, AlertCalendarProps} from "./types";
 import GlobalForm from "../../components/Forms/GlobalForm";
 import './AlertManagement.css'
 import notification from "../../axios/notification";
-import { BaseEventProps } from "../../components/Forms/GlobalForm";
 import { saveAlert, getAlerts } from "./indexDBServices";
 
 const AlertManagement = () => {
@@ -21,7 +20,7 @@ const AlertManagement = () => {
   const [mobileAlertClicked, setMobileAlertClicked] = useState<Boolean>(false);
   const [isMobile, setIsMobile] = useState<Boolean>(false);
   const [alertType, setAlertType] = useState<string>("active");
-  const [updateAlert, setUpdateAlert] = useState<BaseEventProps>();
+  const [updateAlert, setUpdateAlert] = useState<AddAlertProps>();
 
   const fetchAlerts = async() => {
     const resp = await getAlerts();
@@ -59,9 +58,9 @@ const AlertManagement = () => {
     setUpdateAlertClicked(false);
   }
 
-  const handleAlertUpdateClicked = ({user_id,title,classname,start_date,end_date,start_time,end_time,status}: BaseEventProps) => {
+  const handleAlertUpdateClicked = ({user_id,title,classname,start_date,end_date,start_time,end_time,status,alert_type,createdAt}: AddAlertProps) => {
     setUpdateAlertClicked(true);
-    const alertDetails: BaseEventProps = {
+    const alertDetails: AddAlertProps = {
       user_id,
       title,
       classname,
@@ -70,6 +69,8 @@ const AlertManagement = () => {
       start_time,
       end_time,
       status,
+      alert_type,
+      createdAt
     };
     setUpdateAlert(alertDetails);
   }
@@ -96,15 +97,11 @@ const AlertManagement = () => {
     return null;
   }
 
-  const handleSubmit = async (alertDetails: BaseEventProps) => {
+  const handleSubmit = async (alertDetails: AddAlertProps) => {
     try {
-        const alertData: AddAlertProps = {
-          ...alertDetails,
-          alert_type: alertType,
-          createdAt: Date.now()
-        }
+        
         // await addAlert("/alert/create", alertData);
-        await saveAlert(alertData);
+        await saveAlert(alertDetails);
         notification("Alert added successfully!", "success");
         fetchAlerts();
     } catch (error) {

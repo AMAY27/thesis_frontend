@@ -2,23 +2,13 @@ import React from 'react'
 import './GlobalForm.css'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format, parse } from 'date-fns';
+import { AddAlertProps } from '../../pages/Alert-management/types';
 
-export interface BaseEventProps {
-    user_id: string;
-    title: string;
-    classname: string;
-    start_time: string;
-    end_time: string;
-    start_date: string;
-    end_date: string;
-    status: string;
-    createdAt?: number;
-}
 
 interface BaseEventFormProps {
-    onSubmit: (data: BaseEventProps) => void;
+    onSubmit: (data: AddAlertProps) => void;
     handleCancelClicked: () => void | undefined;
-    initialValues?: Partial<BaseEventProps>;
+    initialValues?: Partial<AddAlertProps>;
     children?: React.ReactNode;
 }
 
@@ -27,7 +17,7 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
     const events = ['AlaramClock', 'Blending', 'Breaking','Canopening','Cat', 'Chirpingbirds', 'Clapping', 'Clarinet', 'Clocktick', 'Crying', 'Cupboard', 'Displaying_furniture', 'Dog', 'DoorBell','Dragonground','Drill','Drinking', 'Drum', 'Femalespeaking', 'Flute', 'Glass', 'Guitar', 'Hairdryer', 'Covidcough', 'Help', 'Hen', 'Hihat', 'Hit', 'Jackhammer', 'Keyboardtyping', 'Kissing','Laughing', 'Lighter', 'Healthycough', 'Manspeaking', 'Metal-on-metal', 'Astmacough', 'Mouseclick', 'Ringtone', 'Rooster', 'Silence', 'Sitar', 'Sneezing', 'Snooring', 'Stapler', 'ToiletFlush','Toothbrush','Trampler', 'Vaccumcleaner', 'Vandalism', 'WalkFootsteps', 'Washingmachine', 'Water', 'Whimper', 'Window', 'HandSaw', 'Siren', 'Whistling','Wind']
 
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
-    const [formData, setFormData] = React.useState<BaseEventProps>({
+    const [formData, setFormData] = React.useState<AddAlertProps>({
         user_id: initialValues?.user_id || "",
         title: initialValues?.title || "",
         classname: initialValues?.classname || "",
@@ -36,7 +26,8 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
         start_date: initialValues?.start_date || "",
         end_date: initialValues?.end_date || "",
         status: initialValues?.status || "active",
-        createdAt: Date.now(),
+        alert_type: initialValues?.status || "active",
+        createdAt: initialValues?.createdAt || Date.now(),
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -58,16 +49,34 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
         setIsLoading(true);
         e.preventDefault();
         onSubmit(formData);
-        setFormData({
-            user_id: "",
-            title: "",
-            classname: "",
-            start_time: "",
-            end_time: "",
-            start_date: "",
-            end_date: "",
-            status: "active"
-        })
+        if (!initialValues?.createdAt) {
+            setFormData({
+                user_id: "",
+                title: "",
+                classname: "",
+                start_time: "",
+                end_time: "",
+                start_date: "",
+                end_date: "",
+                status: "active",
+                alert_type: "active",
+                createdAt: Date.now()
+            });
+            } else {
+            // Optionally clear other fields if needed, but keep createdAt as is.
+            setFormData(prev => ({
+                ...prev,
+                user_id: "",
+                title: "",
+                classname: "",
+                start_time: "",
+                end_time: "",
+                start_date: "",
+                end_date: "",
+                status: "active"
+                // keep createdAt unchanged
+            }));
+        }
         setIsLoading(false);
     };
 
