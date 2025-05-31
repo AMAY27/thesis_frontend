@@ -12,8 +12,6 @@ const LiveAudioStreamer = () => {
   const workletRef = useRef<AudioWorkletNode | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const [streaming, setStreaming] = useState(false);
-  const [blob, setBlob] = useState<Blob>();
-  const visualizerRef = useRef<HTMLCanvasElement>(null)
 
   const startStreaming = async () => {
     // 1) Get mic

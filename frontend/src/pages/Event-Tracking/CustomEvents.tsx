@@ -3,7 +3,6 @@ import hoc from "../../hoc/hoc"
 import { useNavContext } from "../../global-context/NavContext";
 import GlobalForm, { BaseEventProps } from "../../components/Forms/GlobalForm";
 import { CustomEventAnalyticsProps } from './types';
-import { getCustomEventAnalytics, postCustomEvents } from './api.service';
 import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
 import notification from '../../axios/notification';
@@ -13,7 +12,7 @@ import { saveCustomEvent, getCustomEventsForAnalytics } from './indexDBServices'
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
-    const [mobileAlertClicked, setMobileAlertClicked] = React.useState<Boolean>(false);
+    // const [mobileAlertClicked, setMobileAlertClicked] = React.useState<Boolean>(false);
     const [isLoading, setIsLoading] = React.useState<Boolean>(false);
     const [isMobile, setIsMobile] = React.useState<Boolean>(false);
     const [customEvents, setCustomEvents] = React.useState<CustomEventAnalyticsProps[]>([]);
@@ -26,7 +25,7 @@ const CustomEvents = () => {
     useEffect(() => {
       const handleResize = () => {
         setIsMobile(window.innerWidth <= 1000);
-        setMobileAlertClicked(window.innerWidth <= 1000);
+        // setMobileAlertClicked(window.innerWidth <= 1000);
       };
       handleResize();
       window.addEventListener('resize', handleResize);

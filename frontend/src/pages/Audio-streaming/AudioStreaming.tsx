@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import LiveAudioStreamer from './components/LiveAudioStreamer';
 import { useAudioStreamContext } from './context/AudioStreamContext';
-import { getEventsMonitoringData } from './indexDBServices';
 // Extend the Window interface to include showSaveFilePicker
 declare global {
   interface Window {
@@ -15,7 +14,6 @@ import { BsRecordCircle } from "react-icons/bs";
 import { sendRecordingForAnalysis } from './api.service';
 import { saveAudioFile, getAllAudioFiles } from './indexDBServices';
 import { liveStreamService } from './liveStreamingService';
-import { EventsMonitorData } from '../Event-monitor/types';
 import EventMonitor from '../Event-monitor/EventMonitor';
 
 const AudioRecorder = () => {
@@ -79,14 +77,6 @@ const AudioRecorder = () => {
   const handleSend = async () => {
     // Combine the audio chunks into a single Blob with WAV MIME type
     const audioBlob = new Blob(audioChunks);
-    const options = {
-      types: [
-        {
-          description: 'Audio file',
-          accept: { 'audio/webm': ['.webm'] },
-        },
-      ],
-    };
     // Show the save file picker to the user.
     //if (!window.showSaveFilePicker) {
     //  throw new Error('The showSaveFilePicker API is not supported in this browser.');
