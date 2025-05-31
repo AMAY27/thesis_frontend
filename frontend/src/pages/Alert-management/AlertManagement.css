@@ -50,14 +50,14 @@
 
 .left-container{
     /* background: gray; */
-    width: 55%;
+    width: 65%;
     flex-grow: 1;
 }
 
 .right-container{
     position: relative;
     /* background: yellow; */
-    width: 45%;
+    width: 35%;
 }
 
 .btn-div{

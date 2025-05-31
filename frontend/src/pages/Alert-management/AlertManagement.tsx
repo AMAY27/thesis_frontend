@@ -9,7 +9,7 @@ import {AddAlertProps, AlertCalendarProps} from "./types";
 import GlobalForm from "../../components/Forms/GlobalForm";
 import './AlertManagement.css'
 import notification from "../../axios/notification";
-import { saveAlert, getAlerts } from "./indexDBServices";
+import { saveAlert, getAlerts, deleteAlert } from "./indexDBServices";
 
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
@@ -29,6 +29,7 @@ const AlertManagement = () => {
       ...alert,
       handleAlertCalendarClicked: handleAlertCalendarClicked,
       handleAlertUpdateClicked: () => handleAlertUpdateClicked(alert),
+      handleDeleteAlertClicked: () => handleAlertDeleteClicked(alert.createdAt)
     }));
     setAlerts(alertsWithHandler);
   }
@@ -108,23 +109,17 @@ const AlertManagement = () => {
         // Error handling is already done in addAlert
     } 
   }
-  
-  // const handleUpdateSubmit = async (alertDetails: BaseEventProps) => {
-  //   try {
-  //       const alertData: AddAlertProps = {
-  //         ...alertDetails,
-  //         alert_type: updateAlert?.alert_type || alertType,
-  //         createdAt: Date.now()
-  //       }
-  //       // await addAlert("/alert/update", alertData);
-  //       await saveAlert(alertData);
-  //       notification("Alert updated successfully!", "success");
-  //       fetchAlerts();
-    
-  //   } catch (error) {
-  //       // Error handling is already done in addAlert
-  //   } 
-  // }
+
+  const handleAlertDeleteClicked = async (alertId: number) => {
+    try {
+      await deleteAlert(alertId);
+      fetchAlerts();
+      notification("Alert deleted successfully!", "success");
+    } catch (error) {
+      notification("Error deleting alert", "error");
+    }
+  }
+
 
   // if (addAlertClicked) {
   //   return <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked}/>;
@@ -183,12 +178,17 @@ const AlertManagement = () => {
           </div>
       </GlobalForm> : 
       <div className="left-container">
+        <div className="btn-div">
+          <button onClick={handleAddAlertClicked}>Add Alert</button>
+        </div>
         <table className="alert-table">
         {!isMobile && <colgroup>
           <col style={{ width: '20%', fontWeight: 'bolder' }} />
-          <col style={{ width: '40%' }} />
+          <col style={{ width: '15%' }} />
           <col style={{ width: '25%' }} />
           <col style={{ width: '15%' }} />
+          <col style={{ width: '10%' }} />
+          <col style={{ width: '10%' }} />
         </colgroup>}
           <tbody>
           {
@@ -202,33 +202,7 @@ const AlertManagement = () => {
           </tbody>
         </table>
       </div>}
-      <div className="right-container">
-        <div className="btn-div">
-          <button onClick={handleAddAlertClicked}>Add Alert</button>
-        </div>
-        {/* {addAlertClicked && 
-          // <AlertCreationForm handleCloseAlertCLicked={handleAddAlertClicked} refetchAlerts={fetchAlerts}/>
-          <GlobalForm onSubmit={handleSubmit}>
-            <div className='input-div'>
-                <label htmlFor="alert_type">Alert Type</label>
-                <select name="alert_type" onChange={handleChange} value={alertType} required>
-                    <option value="active">
-                        Triggered when event is detected
-                    </option>
-                    <option value="inactive">
-                        Triggered when event is not detected
-                    </option>
-                </select>
-            </div>
-          </GlobalForm>
-        } */}
-        <div className="notification-div">
-          <h2 style={{color: "#62B2C0"}}>
-            Alert Notifications
-          </h2>
-          <p>There are no notifications at the moment</p>
-        </div>
-      </div>
+      
       {isMobile && <button className={`alert-add-btn ${mobileAlertClicked ? 'alert-btn-disabled' : ''}` } onClick={handleMobileAlertCLicked}>+</button>}
     </div>
   )
