@@ -1,5 +1,5 @@
-// import { saveCustomEventProps } from "./types";
-import { BaseEventProps } from "../../components/Forms/GlobalForm";
+
+import { AddAlertProps } from "../Alert-management/types";
 import { getAllLiveEvents } from "../Audio-streaming/indexDBServices";
 import { CustomEventAnalyticsProps } from "./types";
 
@@ -27,7 +27,7 @@ function openDatabase(): Promise<IDBDatabase> {
     })
 }
 
-export async function saveCustomEvent(event: BaseEventProps): Promise<void> {
+export async function saveCustomEvent(event: AddAlertProps ): Promise<void> {
     return new Promise(async (resolve, reject) => {
         const db = await openDatabase();
         const transaction = db.transaction([CUSTOM_EVENT_STORE_NAME], "readwrite");
@@ -61,6 +61,7 @@ export async function getCustomEventsForAnalytics(): Promise<CustomEventAnalytic
                     start_time: event.start_time,
                     end_time: event.end_time,
                     status: event.status,
+                    createdAt: event.createdAt,
                 }
                 const filteredEvents = events.filter((e) => {
                     const eventDate = parseDateTime(e.Datetime, e.Datetime_2);

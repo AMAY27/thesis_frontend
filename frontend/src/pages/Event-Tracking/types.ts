@@ -28,6 +28,8 @@ export interface CustomEventProps{
     start_time: string;
     end_time: string;
     status: string;
+    createdAt: number;
+    reFetchCutstomEvents?: () => void;
 }
 
 export interface CustomEventAnalyticsProps {

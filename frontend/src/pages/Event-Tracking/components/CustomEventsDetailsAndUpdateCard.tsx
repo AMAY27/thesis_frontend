@@ -1,12 +1,23 @@
 import React from 'react'
 import { CustomEventProps } from '../types'
 import GlobalForm from '../../../components/Forms/GlobalForm';
+import { saveCustomEvent } from '../indexDBServices';
+import notification from '../../../axios/notification';
+import { AddAlertProps } from '../../Alert-management/types';
 
-const CustomEventsDetailsAndUpdateCard:React.FC<CustomEventProps> = ({id, title, classname, start_date, end_date, start_time, end_time, status}) => {
+const CustomEventsDetailsAndUpdateCard:React.FC<CustomEventProps> = ({id, title, classname, start_date, end_date, start_time, end_time, status, createdAt, reFetchCutstomEvents}) => {
     const [isEditing, setIsEditing] = React.useState(false);
 
-    const handleSubmit = () => {
-        console.log("submitting")
+    const handleSubmit = async (updatedData: AddAlertProps) => {
+        try {
+            await saveCustomEvent(updatedData).then(() => {
+                notification("Custom Event Updated Successfully");
+                setIsEditing(false);
+            })
+        } catch (error) {
+            console.error("Error updating custom event:", error);
+            notification("Error updating custom event", "error");
+        }
     }
   return (
     <>
@@ -24,6 +35,7 @@ const CustomEventsDetailsAndUpdateCard:React.FC<CustomEventProps> = ({id, title,
                             start_date: start_date,
                             end_date: end_date,
                             status: status,
+                            createdAt: createdAt
                         }}
                         handleCancelClicked={() => setIsEditing(false)}
                     />

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import hoc from "../../hoc/hoc"
 import { useNavContext } from "../../global-context/NavContext";
-import GlobalForm, { BaseEventProps } from "../../components/Forms/GlobalForm";
+import GlobalForm from "../../components/Forms/GlobalForm";
 import { CustomEventAnalyticsProps } from './types';
 import { DailyFrequencyDto } from './types';
 import './CustomEvents.css'
@@ -9,6 +9,7 @@ import notification from '../../axios/notification';
 import CustomEventsGraph from './components/CustomEventsGraph';
 import CustomEventsDetailsAndUpdateCard from './components/CustomEventsDetailsAndUpdateCard';
 import { saveCustomEvent, getCustomEventsForAnalytics } from './indexDBServices';
+import { AddAlertProps } from '../Alert-management/types';
 
 const CustomEvents = () => {
     const { clickedNavItem } = useNavContext();
@@ -53,7 +54,7 @@ const CustomEvents = () => {
       // setIsLoading(false);
     },[]);
 
-    const handleSubmit = async (data: BaseEventProps) => {
+    const handleSubmit = async (data: AddAlertProps) => {
       try {
         // await postCustomEvents("/custom-events/create", data);
         saveCustomEvent(data).then(() => {
@@ -133,6 +134,7 @@ const CustomEvents = () => {
             start_time={customEventAnalytics?.customEventDetails.start_time || ''}
             end_time={customEventAnalytics?.customEventDetails.end_time || ''}
             status={customEventAnalytics?.customEventDetails.status || ''}
+            createdAt={customEventAnalytics?.customEventDetails.createdAt ?? 0}
           />
         </div>
       }
@@ -197,6 +199,7 @@ const CustomEvents = () => {
           start_time={customEventAnalytics?.customEventDetails.start_time || ''}
           end_time={customEventAnalytics?.customEventDetails.end_time || ''}
           status={customEventAnalytics?.customEventDetails.status || ''}
+          createdAt={customEventAnalytics?.customEventDetails.createdAt ?? 0}
         />
       </div>
     </div>

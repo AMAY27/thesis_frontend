@@ -57,7 +57,7 @@ class LiveStreamService {
 
     this.socket.on("connect_error", (err) => {    
       console.log(err.message);
-      notification("Connection error: " + err.message, "error");
+      // notification("Connection error: " + err.message, "error");
     });
 
     this.socket.on("disconnect", () => {

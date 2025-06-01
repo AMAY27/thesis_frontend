@@ -13,6 +13,8 @@ interface BaseEventFormProps {
 }
 
 const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, children, handleCancelClicked}) => {
+    const [dateError, setDateError] = React.useState<string>("");
+    const todayStr = format(new Date(), 'yyyy-MM-dd');
 
     const events = ['AlaramClock', 'Blending', 'Breaking','Canopening','Cat', 'Chirpingbirds', 'Clapping', 'Clarinet', 'Clocktick', 'Crying', 'Cupboard', 'Displaying_furniture', 'Dog', 'DoorBell','Dragonground','Drill','Drinking', 'Drum', 'Femalespeaking', 'Flute', 'Glass', 'Guitar', 'Hairdryer', 'Covidcough', 'Help', 'Hen', 'Hihat', 'Hit', 'Jackhammer', 'Keyboardtyping', 'Kissing','Laughing', 'Lighter', 'Healthycough', 'Manspeaking', 'Metal-on-metal', 'Astmacough', 'Mouseclick', 'Ringtone', 'Rooster', 'Silence', 'Sitar', 'Sneezing', 'Snooring', 'Stapler', 'ToiletFlush','Toothbrush','Trampler', 'Vaccumcleaner', 'Vandalism', 'WalkFootsteps', 'Washingmachine', 'Water', 'Whimper', 'Window', 'HandSaw', 'Siren', 'Whistling','Wind']
 
@@ -20,9 +22,9 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
     const [formData, setFormData] = React.useState<AddAlertProps>({
         user_id: initialValues?.user_id || "",
         title: initialValues?.title || "",
-        classname: initialValues?.classname || "",
-        start_time: initialValues?.start_time || "",
-        end_time: initialValues?.end_time || "",
+        classname: initialValues?.classname || "AlaramClock",
+        start_time: initialValues?.start_time || "00:00",
+        end_time: initialValues?.end_time || "00:01",
         start_date: initialValues?.start_date || "",
         end_date: initialValues?.end_date || "",
         status: initialValues?.status || "active",
@@ -32,10 +34,26 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => {
+            const updated = { ...prev, [name]: value };
+
+            // Date validation
+            if (
+                (name === "start_date" && updated.end_date && value > updated.end_date) ||
+                (name === "end_date" && updated.start_date && value < updated.start_date)
+            ) {
+                setDateError("End date cannot be before start date.");
+            } else if (
+                (name === "start_date" || name === "end_date") &&
+                value < format(new Date(), "yyyy-MM-dd")
+            ) {
+                setDateError("Date cannot be before today.");
+            } else {
+                setDateError("");
+            }
+
+            return updated;
+        });
     };
 
     const handleTimeChange = (name: 'start_time' | 'end_time', value: string | null) => {
@@ -53,7 +71,7 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
             setFormData({
                 user_id: "",
                 title: "",
-                classname: "",
+                classname: "AlaramClock",
                 start_time: "",
                 end_time: "",
                 start_date: "",
@@ -68,7 +86,7 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
                 ...prev,
                 user_id: "",
                 title: "",
-                classname: "",
+                classname: "AlaramClock",
                 start_time: "",
                 end_time: "",
                 start_date: "",
@@ -102,11 +120,11 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
             <div className="input-row">
                 <div className='input-div'>
                     <label htmlFor="start_date">Start Date</label>
-                    <input type="date" name="start_date" onChange={handleChange} min="2018-01-01" max="2030-12-31" value={formData.start_date} required/>
+                    <input type="date" name="start_date" onChange={handleChange} min={todayStr} max="2030-12-31" value={formData.start_date} required/>
                 </div>
                 <div className='input-div'>
                     <label htmlFor="">End Date</label>
-                    <input type="date" name="end_date" onChange={handleChange} min="2018-01-01" max="2030-12-31" value={formData.end_date} required/>
+                    <input type="date" name="end_date" onChange={handleChange} min={formData.start_date || todayStr} max="2030-12-31" value={formData.end_date} required/>
                 </div>
             </div>
             <div className="input-row">
@@ -150,7 +168,7 @@ const GlobalForm: React.FC<BaseEventFormProps> = ({onSubmit, initialValues, chil
                 </div>
             </div>
             <div className="btn-row">
-                <button type='submit' disabled={isLoading}>
+                <button type='submit' disabled={isLoading || !!dateError}>
                     Submit
                 </button>
                 <button onClick={handleCancelClicked} disabled={isLoading}>
