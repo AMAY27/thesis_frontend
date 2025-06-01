@@ -1,10 +1,8 @@
 import "../SideNav/SideNav.css";
 import { useNavContext } from "../../global-context/NavContext";
-// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineCrisisAlert, MdOutlineDashboardCustomize } from "react-icons/md";
 import { SiAudiomack } from "react-icons/si";
-import { PiMonitorPlayBold  } from "react-icons/pi";
 
 const SideNav = () => {
     const { clickedNavItem, setClickedNavItem } = useNavContext();
@@ -18,8 +16,7 @@ const SideNav = () => {
     const navItems = [
         {item:"alerts", title:"Alerts", icon: <MdOutlineCrisisAlert style={{fontSize:"1.5rem"}}/>}, 
         {item: "livestream", title:"Live Stream", icon: <SiAudiomack style={{fontSize:"1.5rem"}}/>}, 
-        {item: "customevents", title:"Custom Events", icon: <MdOutlineDashboardCustomize style={{fontSize:"1.5rem"}}/>}, 
-        {item: "eventsmonitor", title:"Events Monitor", icon: <PiMonitorPlayBold style={{fontSize:"1.5rem"}}/>}
+        {item: "customevents", title:"Custom Events", icon: <MdOutlineDashboardCustomize style={{fontSize:"1.5rem"}}/>},
     ];
 
     return(

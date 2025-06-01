@@ -104,3 +104,21 @@
     cursor: pointer;
     margin-top: 0.5rem;
 }
+
+.MuiInputBase-root input {
+  background: #fff !important;
+  color: #fff;
+}
+
+/* Remove box-shadow from the icon button */
+.MuiInputAdornment-root .MuiIconButton-root {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Optional: Remove background/shadow from the icon itself */
+.MuiInputAdornment-root .MuiSvgIcon-root {
+  filter: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
