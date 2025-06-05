@@ -62,6 +62,7 @@ const CustomEvents = () => {
         })
         // notification("Custom Event created successfully", "success");
         fetchCustomEvents();
+        setAddEventsClicked(false);
       } catch (error) {
         // error already handled in api.service.ts
       }
@@ -71,7 +72,7 @@ const CustomEvents = () => {
     const handleEventSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setIsLoading(true);
       if(e.target.value) {
-        const resp = customEvents.find((event) => event.customEventDetails.id === e.target.value);
+        const resp = customEvents.find((event) => event.customEventDetails.createdAt === Number(e.target.value));
         if(resp){
           setCustomEventAnalytics(resp);
           if (resp.frequencies && resp.frequencies.length > 0) {
@@ -97,9 +98,9 @@ const CustomEvents = () => {
     }
 
 
-    if (clickedNavItem !== "customevents") {
-        return null;
-    }
+    // if (clickedNavItem !== "customevents") {
+    //     return null;
+    // }
   return (
     <div className='custom-events'>
       {isLoading &&
@@ -143,7 +144,7 @@ const CustomEvents = () => {
           {!isMobile &&<button onClick={() => setAddEventsClicked(true)}>Add</button>}
           {!isMobile && <select name="select-custom-event" id="" onChange={handleEventSelect}>
             {customEvents.map((event) => (
-              <option value={event.customEventDetails?.id} key={event.customEventDetails?.id}>{event.customEventDetails?.title}</option>
+              <option value={event.customEventDetails?.createdAt} key={event.customEventDetails?.createdAt}>{event.customEventDetails?.title}</option>
             ))}
           </select>}
         </div>
