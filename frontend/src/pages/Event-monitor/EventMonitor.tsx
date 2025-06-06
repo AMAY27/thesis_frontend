@@ -100,6 +100,11 @@ const EventMonitor = () => {
         })
     } 
 
+    const handleActiveHourChange = (rangeKey: keyof EventsMonitorData) => {
+        setActiveHourforData(rangeKey);
+        // Update bar chart data based on the selected time range
+    }
+
     useEffect(() => {
         const rawData = eventsMonitorData && eventsMonitorData[0] ? eventsMonitorData[0][activeHourforData] || [] : [];
             // Filter data based on selectedClass if necessary
@@ -138,7 +143,31 @@ const EventMonitor = () => {
                         {JSON.stringify(item)}
                     </div>
                 ))} */}
-                {timeRanges.map((rangeKey) => {
+                <select name="" id="" onChange={(e) => handleActiveHourChange(e.target.value as keyof EventsMonitorData)}>
+                    {timeRanges.map((rangeKey) => (
+                        <option 
+                            key={rangeKey} 
+                            value={rangeKey}
+                        >
+                            {readableLabels[rangeKey]}
+                        </option>
+                    ))}
+                </select>
+                <div>
+                    {eventsMonitorData && eventsMonitorData?.[0]?.[activeHourforData].length > 0 ? (
+                        <div>
+                            {eventsMonitorData[0][activeHourforData].map((event: SoundCount, index: number) => (
+                                <div key={index} className="event-item">
+                                    <span className="event-class-name">{event._id}</span>
+                                    <span className="event-count">Count: {event.count}</span>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="no-data">No Data Available</div>
+                    )}
+                </div>
+                {/* {timeRanges.map((rangeKey) => {
                     const events = eventsMonitorData?.[0]?.[rangeKey as keyof EventsMonitorData];
                     return (
                       events && events.length > 0 && (
@@ -155,7 +184,7 @@ const EventMonitor = () => {
                         </>
                       )
                     );
-                })}
+                })} */}
             </div>
         ) : toggleView==="graph" ? (
         <div className="graph-view">
