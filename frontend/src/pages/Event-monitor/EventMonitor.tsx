@@ -153,20 +153,18 @@ const EventMonitor = () => {
                         </option>
                     ))}
                 </select>
-                <div>
-                    {eventsMonitorData && eventsMonitorData?.[0]?.[activeHourforData].length > 0 ? (
-                        <div>
-                            {eventsMonitorData[0][activeHourforData].map((event: SoundCount, index: number) => (
-                                <div key={index} className="event-item">
-                                    <span className="event-class-name">{event._id}</span>
-                                    <span className="event-count">Count: {event.count}</span>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="no-data">No Data Available</div>
-                    )}
-                </div>
+                {eventsMonitorData && eventsMonitorData?.[0]?.[activeHourforData].length > 0 ? (
+                    <div className="time-range-section">
+                        {eventsMonitorData[0][activeHourforData].map((event: SoundCount, index: number) => (
+                            <div key={index} className="event-item">
+                                <span className="event-class-name">{event._id}</span>
+                                <span className="event-count">Count: {event.count}</span>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="no-data">No Data Available</div>
+                )}
                 {/* {timeRanges.map((rangeKey) => {
                     const events = eventsMonitorData?.[0]?.[rangeKey as keyof EventsMonitorData];
                     return (

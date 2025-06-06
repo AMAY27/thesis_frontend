@@ -19,7 +19,8 @@ const NavContext = createContext<NavContextProps >({
 });
 
 export const NavContextProvider = ({ children }: NavContextProviderProps) => {
-    const [clickedNavItem, setClickedNavItem] = useState<string>("alerts");
+    const navItem = localStorage.getItem("clickedNavItem") || "alerts";
+    const [clickedNavItem, setClickedNavItem] = useState<string>(navItem);
     const [isMobileNavClicked, setIsMobileNavClicked] = useState<boolean>(false);
     const contextData = {
         clickedNavItem,
