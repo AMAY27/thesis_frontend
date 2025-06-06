@@ -9,6 +9,7 @@ const SideNav = () => {
     const navigate = useNavigate();
     
     const handleNavigation = (navItem: string) => {
+        localStorage.setItem("clickedNavItem", navItem);
         setClickedNavItem(navItem);
         navigate(`/${navItem}`);
     }
