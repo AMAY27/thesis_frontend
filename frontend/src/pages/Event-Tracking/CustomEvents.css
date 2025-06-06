@@ -1,10 +1,13 @@
 .custom-events{
     width: 100%;
     display: flex;
-    flex-direction: row;
-    gap: 4rem;
+    flex-direction: column;
+    gap: 2rem;
     font-family: "Inter", serif;
     position: relative;
+    /* background-color: aliceblue; */
+    padding-inline: 4rem;
+
 }
 
 @media screen and (max-width: 1000px){
@@ -15,17 +18,17 @@
         gap: 1rem;
     }
 
-    .custom-events-right-container{
+    .custom-events-details-container{
         display: none;
     }
-    .custom-events .custom-events-left-container{
+    .custom-events .custom-events-graph-container{
         width: 100%;
         /* background-color: #DCE7E9; */
         padding-top: 20px;
         margin: 0;
     }
 
-    .custom-events .custom-events-left-container .custom-events-header{
+    .custom-events .custom-events-graph-container .custom-events-header{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -40,15 +43,15 @@
     }
 }
 
-.custom-events-left-container{
+.custom-events-graph-container{
     /* background: gray; */
-    width: 75%;
+    width: 100%;
     flex-grow: 1;
 }
 
-.custom-events-right-container{
+.custom-events-details-container{
     /* background: yellow; */
-    width: 25%;
+    width: 100%;
     background: #DCE7E9;
     padding: 10px;
     border: 1px solid #62B2C0;
@@ -69,7 +72,7 @@
 
 .custom-events-header{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 0.2rem;
 }
@@ -82,14 +85,38 @@
     color: #62B2C0;
     font-weight: bold;
     border-radius: 10px;
-    font-size: small;
+    font-size: medium;
     margin-right: 10px;
+    white-space: nowrap;
+    text-align: center;
+    width: fit-content;
 }
 
 .custom-events-header button:hover{
     background-color: #62B2C0;
     color: white;
     cursor: pointer;
+}
+
+.custom-events-select-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.custom-events-select-div p{
+    font-weight: bold;
+    font-size: medium;
+    margin: 0;
+    color: #62B2C0;
+}
+.custom-events-select-div select{
+    padding: 5px;
+    border: 2px solid #62B2C0;
+    border-radius: 10px;
+    background: transparent;
+    font-size: medium;
+    font-weight: bold;
 }
 
 .graph-format-selector{

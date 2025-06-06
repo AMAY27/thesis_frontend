@@ -115,10 +115,10 @@ const CustomEvents = () => {
       }
       {isMobile && 
         <div className='custom-events-mobile-container'>
-          <button 
+          <button
             className='mobile-add-custom-events-button'
             onClick={() => setAddEventsClicked(true)}
-          > 
+          >
             Add Custom Events
           </button>
           <select name="select-custom-event" id="" onChange={handleEventSelect} style={{width: '100%', marginTop: '10px'}}>
@@ -139,15 +139,31 @@ const CustomEvents = () => {
           />
         </div>
       }
-      <div className='custom-events-left-container'>
-        <div className='custom-events-header'>
-          {!isMobile &&<button onClick={() => setAddEventsClicked(true)}>Add</button>}
+      <div className='custom-events-header'>
+        <div className='custom-events-select-div'>
+          <p>Select From Saved Custom Events:</p>
           {!isMobile && <select name="select-custom-event" id="" onChange={handleEventSelect}>
             {customEvents.map((event) => (
               <option value={event.customEventDetails?.createdAt} key={event.customEventDetails?.createdAt}>{event.customEventDetails?.title}</option>
             ))}
           </select>}
         </div>
+        {!isMobile &&<button onClick={() => setAddEventsClicked(true)}>Add Custom Event</button>}
+      </div>
+      <div className='custom-events-details-container'>
+        <CustomEventsDetailsAndUpdateCard
+          id={customEventAnalytics?.customEventDetails.id || ''}
+          title={customEventAnalytics?.customEventDetails.title || ''}
+          classname={customEventAnalytics?.customEventDetails.classname || ''}
+          start_date={customEventAnalytics?.customEventDetails.start_date || ''}
+          end_date={customEventAnalytics?.customEventDetails.end_date || ''}
+          start_time={customEventAnalytics?.customEventDetails.start_time || ''}
+          end_time={customEventAnalytics?.customEventDetails.end_time || ''}
+          status={customEventAnalytics?.customEventDetails.status || ''}
+          createdAt={customEventAnalytics?.customEventDetails.createdAt ?? 0}
+        />
+      </div>
+      <div className='custom-events-graph-container'>
         <div className='graph-format-selector'>
           <div className={`${graphFormat  === 'monthly' ? 'format-active': ''}`} onClick={() => setGraphFormat("monthly")}>Monthly</div>
           <div className={`${graphFormat  === 'daily' ? 'format-active': ''}`} onClick={handleDailyClicked}>Daily</div>
@@ -155,7 +171,7 @@ const CustomEvents = () => {
         <div className='custom-events-graph'>
           {
           
-            graphFormat === 'monthly' && customEventAnalytics?.frequencies ? 
+            graphFormat === 'monthly' && customEventAnalytics?.frequencies?.length && customEventAnalytics.frequencies.length > 0 ? 
           
             (
               <CustomEventsGraph 
@@ -166,7 +182,7 @@ const CustomEvents = () => {
                 graphType="monthly"
               />
             ) :
-            graphFormat === 'daily' && customEventAnalytics?.frequencies ? 
+            graphFormat === 'daily' && customEventAnalytics?.frequencies?.length && customEventAnalytics.frequencies.length > 0 ? 
             
             (
               <>
@@ -183,25 +199,15 @@ const CustomEvents = () => {
                   <CustomEventsGraph data={dailyFrequency} graphType='daily'/>
                 )}
               </>
-            ) : 
+            ) : customEventAnalytics?.frequencies?.length == 0 ?
+            (
+              <div className='no-data'>No Data Available</div>
+            ) :
             (
               <div className='no-data'>Please Select the Custom Event</div>
             )
           }
         </div>
-      </div>
-      <div className='custom-events-right-container'>
-        <CustomEventsDetailsAndUpdateCard
-          id={customEventAnalytics?.customEventDetails.id || ''}
-          title={customEventAnalytics?.customEventDetails.title || ''}
-          classname={customEventAnalytics?.customEventDetails.classname || ''}
-          start_date={customEventAnalytics?.customEventDetails.start_date || ''}
-          end_date={customEventAnalytics?.customEventDetails.end_date || ''}
-          start_time={customEventAnalytics?.customEventDetails.start_time || ''}
-          end_time={customEventAnalytics?.customEventDetails.end_time || ''}
-          status={customEventAnalytics?.customEventDetails.status || ''}
-          createdAt={customEventAnalytics?.customEventDetails.createdAt ?? 0}
-        />
       </div>
     </div>
     
