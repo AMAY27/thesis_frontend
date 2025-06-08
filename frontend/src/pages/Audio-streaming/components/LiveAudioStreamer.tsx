@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { liveStreamService } from '../liveStreamingService'; // Socket.IO client service
 import { FaPlay, FaStop } from 'react-icons/fa';
 import LiveAudioCanvasVisualizer from './LiveAudioCanvasVisualizer';
+import { useAudioStreamContext } from '../context/AudioStreamContext';
 import './LiveAudioStreamer.css';
 
 
@@ -12,6 +13,7 @@ const LiveAudioStreamer = () => {
   const workletRef = useRef<AudioWorkletNode | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const [streaming, setStreaming] = useState(false);
+  const { setLiveEvents } = useAudioStreamContext();
 
   const startStreaming = async () => {
     // 1) Get mic
@@ -51,6 +53,7 @@ const LiveAudioStreamer = () => {
     workletRef.current?.disconnect();
     audioCtxRef.current?.close();
     liveStreamService.disconnect();
+    setLiveEvents([]); // Clear live events
     console.log("🛑 Stopped streaming");
   };
 

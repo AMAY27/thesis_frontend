@@ -5,7 +5,6 @@ import { getEventsMonitoringData, getAllLiveEvents, saveLiveEvent } from "./inde
 import { LiveEvent } from "./types";
 import { checkForAlertsFromLiveEvents } from "../Alert-management/indexDBServices";
 import { EventsMonitorData } from "../Event-monitor/types";
-import notification from "../../axios/notification";
 
 class LiveStreamService {
   private socket!: Socket;
