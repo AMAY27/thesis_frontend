@@ -64,6 +64,7 @@ const AudioRecorder = () => {
       streamRef.current?.getTracks().forEach(track => track.stop());
       setRecording(false);
     }
+    
   };
   const deleteRecording = () => {
     // Clear the audio chunks and reset the recording state
@@ -127,7 +128,7 @@ const AudioRecorder = () => {
             {liveEvents.map((event, index) => (
               <div key={index} className='live-event-item'>
                 <p>{event.ClassName}</p>
-                <p>{event.Datetime}</p>
+                <p>{event.Datetime_2}</p>
               </div>
           ))}
           </div>}
