@@ -8,12 +8,12 @@ interface MobileFilterProps {
     handleSelectedClassDelete: (classname:string) => void;
     setActiveHourforData: (hour: keyof EventsMonitorData) => void;
 }
-const MobileFilter:React.FC<MobileFilterProps> = ({selectedClass, activeHourforData,handleChange, handleSelectedClassDelete,setActiveHourforData}) => {
-    const events = ['AlaramClock', 'Blending', 'Breaking','Canopening','Cat', 'Chirpingbirds', 'Clapping', 'Clarinet', 'Clocktick', 'Crying', 'Cupboard', 'Displaying_furniture', 'Dog', 'DoorBell','Dragonground','Drill','Drinking', 'Drum', 'Femalespeaking', 'Flute', 'Glass', 'Guitar', 'Hairdryer', 'Covidcough', 'Help', 'Hen', 'Hihat', 'Hit', 'Jackhammer', 'Keyboardtyping', 'Kissing','Laughing', 'Lighter', 'Healthycough', 'Manspeaking', 'Metal-on-metal', 'Astmacough', 'Mouseclick', 'Ringtone', 'Rooster', 'Silence', 'Sitar', 'Sneezing', 'Snooring', 'Stapler', 'ToiletFlush','Toothbrush','Trampler', 'Vaccumcleaner', 'Vandalism', 'WalkFootsteps', 'Washingmachine', 'Water', 'Whimper', 'Window', 'HandSaw', 'Siren', 'Whistling','Wind']
+const MobileFilter:React.FC<MobileFilterProps> = ({ activeHourforData,setActiveHourforData}) => {
+    // const events = ['AlaramClock', 'Blending', 'Breaking','Canopening','Cat', 'Chirpingbirds', 'Clapping', 'Clarinet', 'Clocktick', 'Crying', 'Cupboard', 'Displaying_furniture', 'Dog', 'DoorBell','Dragonground','Drill','Drinking', 'Drum', 'Femalespeaking', 'Flute', 'Glass', 'Guitar', 'Hairdryer', 'Covidcough', 'Help', 'Hen', 'Hihat', 'Hit', 'Jackhammer', 'Keyboardtyping', 'Kissing','Laughing', 'Lighter', 'Healthycough', 'Manspeaking', 'Metal-on-metal', 'Astmacough', 'Mouseclick', 'Ringtone', 'Rooster', 'Silence', 'Sitar', 'Sneezing', 'Snooring', 'Stapler', 'ToiletFlush','Toothbrush','Trampler', 'Vaccumcleaner', 'Vandalism', 'WalkFootsteps', 'Washingmachine', 'Water', 'Whimper', 'Window', 'HandSaw', 'Siren', 'Whistling','Wind']
 
   return (
     <div>
-        <div className="events-class-selector">
+        {/* <div className="events-class-selector">
             <select name='classname' onChange={handleChange} required>
                 {events.map((event) => (
                     <option key={event} value={event}>{event}</option>
@@ -27,7 +27,7 @@ const MobileFilter:React.FC<MobileFilterProps> = ({selectedClass, activeHourforD
                     </div>
                 ))}
             </div>
-        </div>
+        </div> */}
         <div className="em-btn-div">
             <button 
                 className={`${activeHourforData === "all" ? 'em-btn-div-active' : ''}`}
