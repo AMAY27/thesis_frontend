@@ -44,3 +44,8 @@
     display: inline-block;
     width: auto;
 }
+
+.active{
+    background: #0C4D58;
+    color: white;
+}

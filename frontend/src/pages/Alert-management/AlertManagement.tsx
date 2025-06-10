@@ -104,6 +104,7 @@ const AlertManagement = () => {
         // await addAlert("/alert/create", alertData);
         await saveAlert(alertDetails);
         notification("Alert added successfully!", "success");
+        setAddAlertClicked(false);
         fetchAlerts();
     } catch (error) {
         // Error handling is already done in addAlert
@@ -178,9 +179,11 @@ const AlertManagement = () => {
           </div>
       </GlobalForm> : 
       <div className="left-container">
-        <div className="btn-div">
-          <button onClick={handleAddAlertClicked}>Add Alert</button>
-        </div>
+        {!isMobile &&
+          <div className="btn-div">
+            <button onClick={handleAddAlertClicked}>Add Alert</button>
+          </div>
+        }
         <table className="alert-table">
         {!isMobile && <colgroup>
           <col style={{ width: '20%', fontWeight: 'bolder' }} />
