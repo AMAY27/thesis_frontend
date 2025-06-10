@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import hoc from "../../hoc/hoc"
-import { useNavContext } from "../../global-context/NavContext";
 import GlobalForm from "../../components/Forms/GlobalForm";
 import { CustomEventAnalyticsProps } from './types';
 import { DailyFrequencyDto } from './types';
@@ -12,13 +11,12 @@ import { saveCustomEvent, getCustomEventsForAnalytics } from './indexDBServices'
 import { AddAlertProps } from '../Alert-management/types';
 
 const CustomEvents = () => {
-    const { clickedNavItem } = useNavContext();
     // const [mobileAlertClicked, setMobileAlertClicked] = React.useState<Boolean>(false);
     const [isLoading, setIsLoading] = React.useState<Boolean>(false);
     const [isMobile, setIsMobile] = React.useState<Boolean>(false);
     const [customEvents, setCustomEvents] = React.useState<CustomEventAnalyticsProps[]>([]);
     const [customEventAnalytics, setCustomEventAnalytics] = React.useState<CustomEventAnalyticsProps>();
-    const [graphFormat, setGraphFormat] = React.useState<string>("monthly");
+    const [graphFormat, setGraphFormat] = React.useState<string>("daily");
     const [monthForDailyAnalytics, setMonthForDailyAnalytics] = React.useState<string>("");
     const [dailyFrequency, setDailyFrequency] = React.useState<DailyFrequencyDto[]>([]);
     const [addEventsClicked, setAddEventsClicked] = React.useState<Boolean>(false);
@@ -39,9 +37,9 @@ const CustomEvents = () => {
       setIsLoading(true);
       try {
         const resp = await getCustomEventsForAnalytics();
-        console.log(resp);
         setCustomEvents(resp);
         setCustomEventAnalytics(resp[0]);
+        setDailyFrequency(resp[0]?.frequencies[0]?.dailyFrequency ?? []);
       } catch (error) {
         console.error(error);
       } finally {
@@ -139,17 +137,17 @@ const CustomEvents = () => {
           />
         </div>
       }
-      <div className='custom-events-header'>
+      {!isMobile && <div className='custom-events-header'>
         <div className='custom-events-select-div'>
           <p>Select From Saved Custom Events:</p>
-          {!isMobile && <select name="select-custom-event" id="" onChange={handleEventSelect}>
+          <select name="select-custom-event" id="" onChange={handleEventSelect}>
             {customEvents.map((event) => (
               <option value={event.customEventDetails?.createdAt} key={event.customEventDetails?.createdAt}>{event.customEventDetails?.title}</option>
             ))}
-          </select>}
+          </select>
         </div>
-        {!isMobile &&<button onClick={() => setAddEventsClicked(true)}>Add Custom Event</button>}
-      </div>
+        <button onClick={() => setAddEventsClicked(true)}>Add Custom Event</button>
+      </div>}
       <div className='custom-events-details-container'>
         <CustomEventsDetailsAndUpdateCard
           id={customEventAnalytics?.customEventDetails.id || ''}

@@ -28,7 +28,7 @@ const MobileFilter:React.FC<MobileFilterProps> = ({ activeHourforData,setActiveH
                 ))}
             </div>
         </div> */}
-        <div className="em-btn-div">
+        <div className="em-btn-div" style={{display:"flex", justifyContent:"center", overflowX:"auto"}}>
             <button 
                 className={`${activeHourforData === "all" ? 'em-btn-div-active' : ''}`}
                 onClick={() => setActiveHourforData("all")}

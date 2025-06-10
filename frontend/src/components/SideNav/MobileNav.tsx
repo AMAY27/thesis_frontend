@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./MobileNav.css";
 
 const MobileNav = () => {
-    const { setClickedNavItem, setIsMobileNavClicked } = useNavContext();
+    const { setClickedNavItem, clickedNavItem, setIsMobileNavClicked } = useNavContext();
     const navigate = useNavigate();
 
     const handleNavigation = (navItem: string) => {
@@ -15,8 +15,7 @@ const MobileNav = () => {
     const navItems = [
         {item:"alerts", title:"Alerts"}, 
         {item: "livestream", title:"Live Stream"}, 
-        {item: "customevents", title:"Custom Events"}, 
-        {item: "eventsmonitor", title:"Events Monitor"}
+        {item: "customevents", title:"Custom Events"}
     ];
   return (
     <div className="mobnav">
@@ -33,7 +32,7 @@ const MobileNav = () => {
                 return (
                     <div
                         key={navItem.item}
-                        className="mobnavitems"
+                        className={`mobnavitems ${clickedNavItem === navItem.item ? "active" : ""}`}
                         onClick={() => handleNavigation(navItem.item)}
                     >
                         {navItem.title}
