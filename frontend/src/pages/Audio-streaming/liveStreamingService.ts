@@ -88,7 +88,7 @@ class LiveStreamService {
 
   sendPCMChunk(chunk: Float32Array) {
     // we send the raw ArrayBuffer payload
-    const timestamp = performance.now();  // Record the timestamp before sending the data
+    const timestamp = Date.now();  // Record the timestamp before sending the data
     
     // Send the raw audio chunk along with the timestamp to the backend
     this.socket.emit("audio_chunk", {
