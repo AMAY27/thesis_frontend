@@ -131,16 +131,22 @@ const AlertManagement = () => {
       {addAlertClicked && 
         <div className="form-overlay">
           <GlobalForm onSubmit={handleSubmit} handleCancelClicked={handleCancelClicked}>
-            <div className="input-div">
-              <label htmlFor="alert_type">Alert Type</label>
-              <select name="alert_type" onChange={handleChange} value={alertType} required>
-                <option value="active">
-                  Triggered when event is detected
-                </option>
-                <option value="inactive">
-                  Triggered when event is not detected
-                </option>
-              </select>
+            <div className="input-row">
+              <div className="input-div">
+                <label htmlFor="alert_type">Alert Type</label>
+                <select name="alert_type" onChange={handleChange} value={alertType} required>
+                  <option value="active">
+                    Triggered when event is detected
+                  </option>
+                  <option value="inactive">
+                    Triggered when event is not detected
+                  </option>
+                </select>
+              </div>
+              <div className="input-div">
+                <label htmlFor="alert_type">Alert Threshold</label>
+                <input type="number" name="alert_threshold" placeholder="Enter alert threshold" required />
+              </div>
             </div>
           </GlobalForm>
         </div>
