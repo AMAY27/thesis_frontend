@@ -8,6 +8,7 @@ const MainNav = () => {
     const [isMobile, setIsMobile] = useState<Boolean>(false);
     const [isNotificationClicked, setIsNotificationClicked] = useState<Boolean>(false);
     const notificationDivRef = useRef<HTMLDivElement | null>(null);
+    const [notificationCount, setNotificationCount] = useState<number>(1);
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 720);
@@ -49,12 +50,21 @@ const MainNav = () => {
         <h1>Sound Secure</h1>
         <div className='notification-icon' ref={notificationDivRef}>
             <IoNotifications className='profile-icon' size="2em" color='#62B2C0' onClick={handleNotificationsClick}/>
+            {notificationCount > 0 && (
+                <span className="notification-badge">{notificationCount}</span>
+            )}
             {isNotificationClicked && 
                 <>
                     <div className='notification-container'>
                         {/* <h3>Notifications</h3> */}
-                        <div className='no-notification'>
-                            <h3>No notifications today</h3>
+                        <h3>June 06, 2025</h3>
+                        <div className='notification-card'>
+                            <h3>Breaking occured more than 3 times</h3>
+                            <div className="logs">
+                                <span>13:00</span>
+                                <span>13:12</span>
+                                <span>13:15</span>
+                            </div>
                         </div>
                     </div>
                 </>

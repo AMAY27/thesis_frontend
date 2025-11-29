@@ -19,12 +19,91 @@
     color: gray;
 }
 
+
+.notification-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 0.5rem;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    z-index: 10;            /* z-10 */
+    width: 300px;            /* w-auto */
+    max-width: 400px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-full (custom shadow) */
+    /* padding: 1rem 0;        py-4 */
+    margin: 0.25rem 0;
+    border-radius: 15px;
+    border: 2px solid #62B2C0;
+}
+
+.notification-card{
+    padding-inline: 0.5rem;
+    padding-block: 0.1rem;
+    background: #c3e6ec;
+    border-radius: 15px;
+    text-wrap: wrap;
+}
+
+.notification-card p{
+    font-size: medium;
+}
+
+.notification-icon{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.logs{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 0.5rem;
+}
+
+.logs span{
+    margin-right: 0.5rem;
+    font-size: small;
+    font-weight: bold;
+    background: #62B2C0;
+    color: white;
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.8em;
+  font-weight: bold;
+  transform: translate(40%, -40%);
+  z-index: 1;
+  min-width: 20px;
+  text-align: center;
+  pointer-events: none;
+}
+
 @media screen and (max-width:720px) {
     .mainnav{
         display: flex;
         align-items: center;
         justify-content: space-between;
         /* padding: 1rem; */
+    }
+
+    .notification-container{
+        width: 250px;
+        max-width: 300px;
     }
 }
 
@@ -35,33 +114,4 @@
         justify-content: space-between;
         /* padding-left: 2rem; */
     }
-}
-
-.notification-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    color: #62B2C0;
-    z-index: 10;            /* z-10 */
-    width: 200px;            /* w-auto */
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-full (custom shadow) */
-    /* padding: 1rem 0;        py-4 */
-    margin: 0.25rem 0;
-    border-radius: 15px;  
-}
-
-.no-notification{
-    padding: 0.5rem;
-    background: lightgray;
-    border-radius: 15px;
-}
-
-.notification-icon{
-    position: relative;
 }
