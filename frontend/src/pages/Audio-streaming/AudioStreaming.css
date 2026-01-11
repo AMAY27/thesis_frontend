@@ -5,143 +5,141 @@
 }
 
 .streaming-parent {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    /* align-items: center; */
-    font-family: "Inter", serif;
-    /* background: gray; */
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto;         /* hide any stray overflow */
-    position: relative;
-    /* padding: 20px; */
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* align-items: center; */
+  font-family: 'Inter', serif;
+  /* background: gray; */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto; /* hide any stray overflow */
+  position: relative;
+  padding-inline: 10rem;
+  box-sizing: border-box;
 }
 
-.audio-recorder{
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: fit-content;
+.audio-recorder {
+  /* width: 30%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
 }
 
-.record-buttons-div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.record-buttons-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.audio-recorder button{
-    background: transparent;
-    color: #62B2C0;
-    border: 1px solid #62B2C0;
-    margin-right: 10px;
-    white-space: nowrap;
-    text-align: center;
-    width: fit-content;   
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-    
+.audio-recorder button {
+  background: transparent;
+  color: #62b2c0;
+  border: 1px solid #62b2c0;
+  margin-right: 10px;
+  white-space: nowrap;
+  text-align: center;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
 }
 
-.audio-recorder button:hover{
-    background: #62B2C0;
-    color: white;
-}   
+.audio-recorder button:hover {
+  background: #62b2c0;
+  color: white;
+}
 
 .sound-clips {
-    box-shadow: inset 0 3px 4px rgb(0 0 0 / 70%);
-    background-color: rgb(0 0 0 / 10%);
-    height: calc(100% - 240px - 0.7rem);
-    overflow: scroll;
+  box-shadow: inset 0 3px 4px rgb(0 0 0 / 70%);
+  background-color: rgb(0 0 0 / 10%);
+  height: calc(100% - 240px - 0.7rem);
+  overflow: scroll;
 }
 
-.filename-div{
-    display: flex;
-    margin-right: 10px;
-    color: #62B2C0;
-    font-weight: bold;
+.filename-div {
+  display: flex;
+  margin-right: 10px;
+  color: #62b2c0;
+  font-weight: bold;
 }
 
-.filename-div input{
-    border: 1px solid #62B2C0;
-    border-radius: 5px;
-    padding: 0.3rem;
-    color: #62B2C0;
-    font-weight: bold;
-    margin-left: 10px;  
+.filename-div input {
+  border: 1px solid #62b2c0;
+  border-radius: 5px;
+  padding: 0.3rem;
+  color: #62b2c0;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
-
-.audio-player{
-    width:100%;
-    padding: 5px;
-    color: white;
-    /* background: #62B2C0; */
-    margin-top: 1rem;
+.audio-player {
+  width: 100%;
+  padding: 5px;
+  color: white;
+  /* background: #62B2C0; */
+  margin-top: 1rem;
 }
 
 .live-streamer {
-    /* max-width: 0%; */
-    width: 70%;
-    overflow-x: hidden;   /* hide any overflow at this level */
-    overflow-y: hidden;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-  
-  /* horizontal list that scrolls internally */
-.live-events-list {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;     /* scroll the row of items */
-    gap: 10px;            /* spacing instead of margin-inline */
-}
-  
-.live-event-item{
-    padding: 0.5rem;
-    border: 1px solid #62B2C0;
-    border-radius: 5px;
-    margin-block: 15px;
-    margin-inline: 5px;
-    flex: 0 0 150px;      /* don’t grow or shrink, always 150px */
-    width: 150px;
+  /* max-width: 0%; */
+  width: 100%;
+  overflow-x: hidden; /* hide any overflow at this level */
+  overflow-y: hidden;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@media screen and (max-width: 1000px){
-    .streaming-parent{
-        flex-direction: column;
-        padding: 5px;
-    }
-    .audio-recorder{
-        width: 100%;
-    }
-    .record-buttons-div{
-        flex-direction: column;
-        align-items: center;
-    }
-    .record-buttons-div button{
-        width: 100%;
-        margin-top: 1rem;
-    }
-    .filename-div input{
-        margin-left: 0;
-        width: 100%;
-    }
-    .audio-player{
-        background: yellowgreen;
-    }
-    .live-streamer{
-        width: 100%;
-    }
-    
-    /* .filename-div{
+/* horizontal list that scrolls internally */
+.live-events-list {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* scroll the row of items */
+  gap: 10px; /* spacing instead of margin-inline */
+}
+
+.live-event-item {
+  padding: 0.5rem;
+  border: 1px solid #62b2c0;
+  border-radius: 5px;
+  margin-block: 15px;
+  margin-inline: 5px;
+  flex: 0 0 150px; /* don’t grow or shrink, always 150px */
+  width: 150px;
+}
+
+@media screen and (max-width: 1000px) {
+  .streaming-parent {
+    flex-direction: column;
+    padding: 5px;
+  }
+  .audio-recorder {
+    width: 100%;
+  }
+  .record-buttons-div {
+    flex-direction: column;
+    align-items: center;
+  }
+  .record-buttons-div button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .filename-div input {
+    margin-left: 0;
+    width: 100%;
+  }
+  .audio-player {
+    background: yellowgreen;
+  }
+  .live-streamer {
+    width: 100%;
+  }
+
+  /* .filename-div{
         width: 100%;
     } */
 }

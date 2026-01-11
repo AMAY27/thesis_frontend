@@ -1,42 +1,85 @@
-.alertcard{
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
-    border-radius: 1rem;
-    font-family: "Inter", serif;
-    /* align-items: center; */
-    border: 1px solid #62B2C0;
+.alert-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border: 1px solid #d6e8ee;
+  border-radius: 14px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: 0.15s ease;
+  font-family: 'Inter', serif;
 }
 
-.alertcard td{
-    padding: 1rem;
-    text-align: left; /* or center, right, depending on your requirement */
+.alert-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.alertcard button{
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: #62B2C0;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+.alert-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
-@media screen and (max-width: 480px) {
-    .alertcard{
-        display: flex;
-        flex-direction: column;
-        margin-top: 1rem;
-        padding: 1rem;
-        /* background: #62B2C0; */
-    }
+.alert-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2b697f;
+}
 
-    .alertcard td{
-        padding-inline: 0.5rem;
-        padding-block: 0.2rem;
-    }
+.alert-sound {
+  color: #4c8a9f;
+  font-weight: 500;
+}
 
-    tr.alertcard td:not(:first-child) {
-        font-size: smaller;
-        color: gray;
-    }
+.alert-dates,
+.alert-time {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.alert-card-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.alert-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.alert-btn.edit {
+  background: #62b2c0;
+  color: white;
+}
+
+.alert-btn.edit:hover {
+  opacity: 0.9;
+}
+
+.alert-btn.delete {
+  background: #ff4d4d;
+  color: white;
+}
+
+.alert-btn.delete:hover {
+  opacity: 0.9;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .alert-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .alert-card-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

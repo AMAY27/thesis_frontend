@@ -1,10 +1,10 @@
-// 
+//
 // src/services/liveStreamService.ts
-import { io, Socket } from "socket.io-client";
-import { getEventsMonitoringData, getAllLiveEvents, saveLiveEvent } from "./indexDBServices";
-import { LiveEvent } from "./types";
-import { checkForAlertsFromLiveEvents } from "../Alert-management/indexDBServices";
-import { EventsMonitorData } from "../Event-monitor/types";
+import { io, Socket } from 'socket.io-client';
+import { getEventsMonitoringData, getAllLiveEvents, saveLiveEvent } from './indexDBServices';
+import { LiveEvent } from './types';
+import { checkForAlertsFromLiveEvents } from '../Alert-management/indexDBServices';
+import { EventsMonitorData } from '../Event-monitor/types';
 
 class LiveStreamService {
   private socket!: Socket;
@@ -13,18 +13,18 @@ class LiveStreamService {
   private setLiveEventMonitoringDataCallback?: (eventMonitoringData: EventsMonitorData[]) => void;
 
   constructor() {
-    this.socket = io("http://localhost:5001", {
-      transports: ["websocket"],
+    this.socket = io('http://localhost:5001', {
+      transports: ['websocket'],
     });
 
-    this.socket.on("connect", () => {
-      console.log("✅ WS connected:", this.socket.id);
+    this.socket.on('connect', () => {
+      console.log('✅ WS connected:', this.socket.id);
     });
-    this.socket.on("live_events", async (payload: { events?: LiveEvent[]; error?: string }) => {
+    this.socket.on('live_events', async (payload: { events?: LiveEvent[]; error?: string }) => {
       if (payload.error) {
-        console.error("Detection error:", payload.error);
+        console.error('Detection error:', payload.error);
       } else {
-        console.log("Detected events:", payload.events);
+        console.log('Detected events:', payload.events);
         if (payload.events) {
           // Save each live event to IndexedDB
           for (const event of payload.events) {
@@ -54,13 +54,13 @@ class LiveStreamService {
       }
     });
 
-    this.socket.on("connect_error", (err) => {    
+    this.socket.on('connect_error', (err) => {
       console.log(err.message);
       // notification("Connection error: " + err.message, "error");
     });
 
-    this.socket.on("disconnect", () => {
-      console.log("❌ WS disconnected");
+    this.socket.on('disconnect', () => {
+      console.log('❌ WS disconnected');
     });
   }
 
@@ -68,7 +68,9 @@ class LiveStreamService {
     this.setLiveEventsCallback = callback;
   }
 
-  setLiveEventsMonitoringDataUpdateHandler(callback: (eventMonitoringData: EventsMonitorData[])=>void){
+  setLiveEventsMonitoringDataUpdateHandler(
+    callback: (eventMonitoringData: EventsMonitorData[]) => void
+  ) {
     this.setLiveEventMonitoringDataCallback = callback;
   }
 
@@ -79,21 +81,21 @@ class LiveStreamService {
   startStreaming() {
     // If the socket is disconnected, try to (re)connect.
     if (!this.socket.connected) {
-      console.log("Socket not connected - attempting to reconnect...");
+      console.log('Socket not connected - attempting to reconnect...');
       this.socket.connect();
     } else {
-      console.log("Socket already connected.");
+      console.log('Socket already connected.');
     }
   }
 
   sendPCMChunk(chunk: Float32Array) {
     // we send the raw ArrayBuffer payload
-    const timestamp = Date.now();  // Record the timestamp before sending the data
-    
+    const timestamp = Date.now(); // Record the timestamp before sending the data
+
     // Send the raw audio chunk along with the timestamp to the backend
-    this.socket.emit("audio_chunk", {
-        audio_data: chunk.buffer,
-        timestamp: timestamp
+    this.socket.emit('audio_chunk', {
+      audio_data: chunk.buffer,
+      timestamp: timestamp,
     });
   }
 

@@ -1,47 +1,47 @@
-.sidenav{
-    background: #62B2C0;
-    height: 100%;
-    width: 6rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    font-family: "Inter", serif;
-    font-style: normal;
-    font-size: small;
-    position: relative;
+.sidenav {
+  background: #62b2c0;
+  height: 100%;
+  width: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: 'Inter', serif;
+  font-style: normal;
+  font-size: small;
+  position: relative;
 }
 
-.sidenav ul{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    text-align: center;
+.sidenav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  text-align: center;
 }
 
-.sidenav ul li{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem .5rem;
-    color: white;
-    font-weight: bold;
-    gap: 5px;
+.sidenav ul li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  color: white;
+  font-weight: bold;
+  gap: 5px;
 }
 
 .sidenav ul li.navitems:hover {
-    background: #166876;
-    cursor: pointer;
+  background: #166876;
+  cursor: pointer;
 }
 
-.sidenav ul li.navitems.active{
-    background: #166876;
+.sidenav ul li.navitems.active {
+  background: #166876;
 }
 
-@media screen and (max-width:720px) {
-    .sidenav{
-        display: none;
-    }
+@media screen and (max-width: 720px) {
+  .sidenav {
+    display: none;
+  }
 }

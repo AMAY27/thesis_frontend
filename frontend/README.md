@@ -18,7 +18,7 @@ This is a React-based frontend application designed as part of a thesis project.
 
 ### 📥 1. Clone the Repository
 
-```bash
+````bash
 git clone https://github.com/AMAY27/thesis_frontend.git
 cd thesis_frontend
 
@@ -27,7 +27,7 @@ cd thesis_frontend
 
 ```bash
 docker build -t thesis-frontend .
-```
+````
 
 ### ▶️ 3. Run the Docker Container
 
@@ -71,14 +71,13 @@ CMD ["serve", "-s", "dist"]
 
 ## 🧪 Scripts
 
-* `npm install` – Install dependencies
-* `npm run dev` – Run dev server (localhost:3000)
-* `npm run build` – Build for production
-* `npm run preview` – Preview the production build
+- `npm install` – Install dependencies
+- `npm run dev` – Run dev server (localhost:3000)
+- `npm run build` – Build for production
+- `npm run preview` – Preview the production build
 
 ## 👤 Author
 
 **Amay Rajvaidya**
 📫 [rajvaidyaamay27@gmail.com](mailto:rajvaidyaamay27@gmail.com)
 🔗 [GitHub Profile](https://github.com/AMAY27)
-

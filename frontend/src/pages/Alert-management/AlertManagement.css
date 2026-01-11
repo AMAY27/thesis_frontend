@@ -1,124 +1,140 @@
-.alert-manager{
+.alert-manager {
+  width: 100%;
+  gap: 4rem;
+  position: relative;
+  padding-inline: 10rem;
+}
+
+.alert-card-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .alert-manager {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    gap: 4rem;
-    position: relative;
-}
-
-@media screen and (max-width:1000px) {
-    .alert-manager{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .alert-manager .left-container{
-        width: 100%;
-        flex-grow: 1;
-        /* background: wheat; */
-    }
-
-    .right-container{
-        display: none;
-    }
-
-    .alert-add-btn{
-        border: 0px;
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        background: #62B2C0;
-        border-radius: 9999px;
-        z-index: 0.2;
-        /* border-radius: 10px; */
-        color: white;
-        font-size: 2rem;
-        font-weight: bolder;
-        padding: 5px;
-    }
-
-    .alert-btn-disabled{
-        display: none;
-    }
-}
-
-.alert-manager-disabled{
-    opacity: 0.2;
-    z-index: 10;
-}
-
-.left-container{
-    /* background: gray; */
-    width: 65%;
-    flex-grow: 1;
-}
-
-.right-container{
-    position: relative;
-    /* background: yellow; */
-    width: 35%;
-}
-
-.btn-div{
-    display: flex;
-    justify-content: end;
-    /* padding-inline: 2rem; */
-    padding-block: 1rem;
-}
-
-.btn-div button{
-    padding-inline: 0.5rem;
-    padding-block: 0.5rem;
-    border: solid 1px #62B2C0;
-    background: transparent;
-    color: #62B2C0;
-    font-weight: bold;
-    border-radius: 10px;
-    font-size: large;
-}
-
-.btn-div button:hover{
-    background-color: #62B2C0;
-    color: white;
-    cursor: pointer;
-}
-
-.notification-div{
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-block: 1rem;
-    border: 1px solid #62B2C0;
-    border-radius: 10px;
-    font-family: "Inter", serif;
-    margin-top: 0.5rem;
+  }
+
+  .alert-manager .container {
+    width: 100%;
+    flex-grow: 1;
+    /* background: wheat; */
+  }
+
+  .right-container {
+    display: none;
+  }
+
+  .alert-add-btn {
+    border: 0px;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: #62b2c0;
+    border-radius: 9999px;
+    z-index: 0.2;
+    /* border-radius: 10px; */
+    color: white;
+    font-size: 2rem;
+    font-weight: bolder;
+    padding: 5px;
+  }
+
+  .alert-btn-disabled {
+    display: none;
+  }
+}
+
+.alert-manager-disabled {
+  opacity: 0.2;
+  z-index: 10;
+}
+
+.container {
+  /* background: gray; */
+  width: 100%;
+  flex-grow: 1;
+}
+
+.right-container {
+  position: relative;
+  /* background: yellow; */
+  width: 35%;
+}
+
+.btn-div {
+  display: flex;
+  justify-content: center;
+  /* padding-inline: 2rem; */
+  padding-block: 1rem;
+}
+
+.btn-div button {
+  padding-inline: 0.5rem;
+  padding-block: 0.5rem;
+  border: solid 1px #62b2c0;
+  background: transparent;
+  color: #62b2c0;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: large;
+}
+
+.btn-div button:hover {
+  background-color: #62b2c0;
+  color: white;
+  cursor: pointer;
+}
+
+.notification-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-block: 1rem;
+  border: 1px solid #62b2c0;
+  border-radius: 10px;
+  font-family: 'Inter', serif;
+  margin-top: 0.5rem;
 }
 
 .alert-table {
-    width: 100%;
-    table-layout: fixed; /* Ensures fixed table layout */
-    border-collapse: separate;
-    border-spacing: 0 1rem;
+  width: 100%;
+  table-layout: fixed; /* Ensures fixed table layout */
+  border-collapse: separate;
+  border-spacing: 0 1rem;
 }
 
 .alert-table tr {
-    border: 1px solid #62B2C0;
-    border-radius: 1rem;
+  border: 1px solid #62b2c0;
+  border-radius: 1rem;
 }
 
 .form-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    /* Adjust left or width, to cover the intended area */
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.95); /* lightly opaque background */
-    z-index: 100; /* ensure it sits on top */
-    display: flex;
-    justify-content: center;
-    padding-top: 0;
-    margin-top: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Adjust left or width, to cover the intended area */
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95); /* lightly opaque background */
+  z-index: 100; /* ensure it sits on top */
+  display: flex;
+  justify-content: center;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.alert-manager-info {
+  font-family: 'Inter', serif;
+  font-size: medium;
+  padding: 1rem;
+  /* border-radius: 15px;
+  border: 1px solid #62b2c0; */
 }

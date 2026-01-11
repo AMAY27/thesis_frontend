@@ -1,51 +1,51 @@
-.mobnav{
-    /* background: #62B2C0; */
-    /* width: 100%;
+.mobnav {
+  /* background: #62B2C0; */
+  /* width: 100%;
     height: 100vh; */
-    /* position: absolute; */
-    z-index: 10;
-    color: white;
-    font-family: "Inter", serif;
-    padding-inline: 1rem;
-    width: 100%;
+  /* position: absolute; */
+  z-index: 10;
+  color: white;
+  font-family: 'Inter', serif;
+  padding-inline: 1rem;
+  width: 100%;
 }
 
-.mobnav .mobnav-head{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    /* padding-block: 1rem; */
-    /* padding-inline: 1rem; */
-    border-bottom: 1px solid white;
+.mobnav .mobnav-head {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  /* padding-block: 1rem; */
+  /* padding-inline: 1rem; */
+  border-bottom: 1px solid white;
 }
 
-.mobnav .mobnav-head h4{
-    cursor: pointer;
+.mobnav .mobnav-head h4 {
+  cursor: pointer;
 }
 
-.mobnavlist{
-    padding: 1rem;
+.mobnavlist {
+  padding: 1rem;
 }
 
-.mobnavlist div{
-    padding-block: 0.5rem;
-    padding-inline: 0.5rem;
-    border-bottom: 1px solid #62B2C0;
-    cursor: pointer;
+.mobnavlist div {
+  padding-block: 0.5rem;
+  padding-inline: 0.5rem;
+  border-bottom: 1px solid #62b2c0;
+  cursor: pointer;
 }
 
-.mobnavlist div:hover{
-    background: #0C4D58;
+.mobnavlist div:hover {
+  background: #0c4d58;
 }
 
 .mobnav-head h2 {
-    /* Prevent headings from taking full width */
-    display: inline-block;
-    width: auto;
+  /* Prevent headings from taking full width */
+  display: inline-block;
+  width: auto;
 }
 
-.active{
-    background: #0C4D58;
-    color: white;
+.active {
+  background: #0c4d58;
+  color: white;
 }

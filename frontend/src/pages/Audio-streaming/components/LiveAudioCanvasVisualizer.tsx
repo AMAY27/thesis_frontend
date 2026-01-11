@@ -6,11 +6,7 @@ interface Props {
   barColor?: string;
 }
 
-const LiveAudioCanvasVisualizer = ({
-  analyser,
-  height = 75,
-  barColor = '#f76565',
-}: Props) => {
+const LiveAudioCanvasVisualizer = ({ analyser, height = 75, barColor = '#f76565' }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const [canvasWidth, setCanvasWidth] = useState<number>(window.innerWidth);

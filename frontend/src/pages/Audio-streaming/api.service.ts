@@ -4,41 +4,37 @@ import notification from '../../axios/notification';
 // import { io, Socket } from "socket.io-client";
 
 export interface ApiResponse {
-    class_counts: Record<string, number>;
-    records: RecordItem[];
+  class_counts: Record<string, number>;
+  records: RecordItem[];
 }
 
 export interface RecordItem {
-    ClassName: string;
-    ClassName_German: string;
-    filename: string;
-    timepoint: string;
+  ClassName: string;
+  ClassName_German: string;
+  filename: string;
+  timepoint: string;
 }
 
-
-
-export const sendRecordingForAnalysis = async <TResponse> (
-    url: string,
-    formData: FormData,
-    config?: AxiosRequestConfig 
+export const sendRecordingForAnalysis = async <TResponse>(
+  url: string,
+  formData: FormData,
+  config?: AxiosRequestConfig
 ): Promise<TResponse> => {
-    try {
-        const resp = await axiosInstanceFlask.post<TResponse>(url, formData, config);
-        return resp.data;
-    } catch (error) {
-        const message = (error as AxiosError<{message: string}>).response?.data?.message;
-        notification(`Error while fetching ${url}. ${message ?? ''}`, 'error');
-        throw error;
-    }
-}
-
-
+  try {
+    const resp = await axiosInstanceFlask.post<TResponse>(url, formData, config);
+    return resp.data;
+  } catch (error) {
+    const message = (error as AxiosError<{ message: string }>).response?.data?.message;
+    notification(`Error while fetching ${url}. ${message ?? ''}`, 'error');
+    throw error;
+  }
+};
 
 // class LiveStreamService {
 //   private socket: Socket;
 //   constructor() {
 //     this.socket = io('http://localhost:5001', { transports: ['polling', 'websocket'] });
-    
+
 //     this.socket.on("connect", () => {
 //       console.log("Connected to live streaming backend via WebSocket");
 //     });
@@ -82,7 +78,7 @@ export const sendRecordingForAnalysis = async <TResponse> (
 //     reader.readAsDataURL(chunk);
 //   }
 
-//   // Register a callback to listen for live events  
+//   // Register a callback to listen for live events
 //   onLiveEvents(callback: (data: any) => void) {
 //     this.socket.on("live_events", callback);
 //   }

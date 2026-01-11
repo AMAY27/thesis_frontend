@@ -11,6 +11,7 @@ import './AlertManagement.css'
 import notification from "../../axios/notification";
 import { saveAlert, getAlerts, deleteAlert } from "./indexDBServices";
 
+
 const AlertManagement = () => {
   const { clickedNavItem } = useNavContext();
   const navigate = useNavigate();
@@ -184,13 +185,51 @@ const AlertManagement = () => {
               </select>
           </div>
       </GlobalForm> : 
-      <div className="left-container">
-        {!isMobile &&
+      <div className="container">
+        {/* {!isMobile &&
           <div className="btn-div">
             <button onClick={handleAddAlertClicked}>Add Alert</button>
           </div>
-        }
-        <table className="alert-table">
+        } */}
+        <div className="alert-manager-info">
+          <div>
+            <div style={{fontSize: "25px", }}>
+              Alert Manager
+            </div>
+            <div 
+              style={{ 
+                paddingInline: "20rem", 
+                paddingBlock: "20px",
+                textAlign: "center", 
+                lineHeight: '1.6',
+                border: '1px solid #62b2c0',
+                marginTop: '1rem',
+                borderRadius: '15px',
+              }}
+            >
+              <img src="./megaphone-2374502.svg" alt="" style={{
+                width: "120px",
+                height: "100px",
+                borderRadius: "80px",
+              }}/>
+              <p>
+                The Sound Secure Alert Manager allows you to create, view, and manage alerts based on specific sound events detected by the system. Customize your alert preferences to stay informed about important occurrences.
+              </p>
+              <div className="btn-div">
+                <button 
+                  onClick={handleAddAlertClicked}
+                  style={{
+                    whiteSpace:"nowrap",
+                    width:"fit-content"
+                  }}
+                >
+                    Add Alert
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <table className="alert-table">
         {!isMobile && <colgroup>
           <col style={{ width: '20%', fontWeight: 'bolder' }} />
           <col style={{ width: '15%' }} />
@@ -209,7 +248,12 @@ const AlertManagement = () => {
               ))
           }
           </tbody>
-        </table>
+        </table> */}
+        <div className="alert-card-list">
+          {alerts.map((alert, index) => (
+            <AlertCard key={index} {...alert} />
+          ))}
+        </div>
       </div>}
       
       {isMobile && <button className={`alert-add-btn ${mobileAlertClicked ? 'alert-btn-disabled' : ''}` } onClick={handleMobileAlertCLicked}>+</button>}

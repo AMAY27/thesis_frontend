@@ -1,47 +1,47 @@
-import { useNavContext } from "../../global-context/NavContext";
-import { useNavigate } from "react-router-dom";
-import "./MobileNav.css";
+import { useNavContext } from '../../global-context/NavContext';
+import { useNavigate } from 'react-router-dom';
+import './MobileNav.css';
 
 const MobileNav = () => {
-    const { setClickedNavItem, clickedNavItem, setIsMobileNavClicked } = useNavContext();
-    const navigate = useNavigate();
+  const { setClickedNavItem, clickedNavItem, setIsMobileNavClicked } = useNavContext();
+  const navigate = useNavigate();
 
-    const handleNavigation = (navItem: string) => {
-        setClickedNavItem(navItem);
-        setIsMobileNavClicked(false);
-        navigate(`/${navItem}`);
-    }
+  const handleNavigation = (navItem: string) => {
+    setClickedNavItem(navItem);
+    setIsMobileNavClicked(false);
+    navigate(`/${navItem}`);
+  };
 
-    const navItems = [
-        {item:"alerts", title:"Alerts"}, 
-        {item: "livestream", title:"Live Stream"}, 
-        {item: "customevents", title:"Custom Events"}
-    ];
+  const navItems = [
+    { item: 'alerts', title: 'Alerts' },
+    { item: 'livestream', title: 'Live Stream' },
+    { item: 'customevents', title: 'Custom Events' },
+  ];
   return (
     <div className="mobnav">
-        <div className="mobnav-head">
-            <>
-                <h2>Sound Secure</h2>
-            </>
-            <>
-                <h4 onClick={() => setIsMobileNavClicked(false)}>X</h4>
-            </>
-        </div>
-        <div className="mobnavlist">
-            {navItems.map((navItem) => {
-                return (
-                    <div
-                        key={navItem.item}
-                        className={`mobnavitems ${clickedNavItem === navItem.item ? "active" : ""}`}
-                        onClick={() => handleNavigation(navItem.item)}
-                    >
-                        {navItem.title}
-                    </div>
-                )
-            })}
-        </div>
+      <div className="mobnav-head">
+        <>
+          <h2>Sound Secure</h2>
+        </>
+        <>
+          <h4 onClick={() => setIsMobileNavClicked(false)}>X</h4>
+        </>
+      </div>
+      <div className="mobnavlist">
+        {navItems.map((navItem) => {
+          return (
+            <div
+              key={navItem.item}
+              className={`mobnavitems ${clickedNavItem === navItem.item ? 'active' : ''}`}
+              onClick={() => handleNavigation(navItem.item)}
+            >
+              {navItem.title}
+            </div>
+          );
+        })}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default MobileNav
+export default MobileNav;

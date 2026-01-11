@@ -1,19 +1,19 @@
-.alert-calendar{
+.alert-calendar {
   /* background-color: #DCE7E9; */
   display: flex;
   flex-direction: row;
   justify-content: center;
   /* align-items: center; */
-  font-family: "Inter", serif;
+  font-family: 'Inter', serif;
   /* height: 100%; */
 }
 
-.alert-details{
+.alert-details {
   margin: 1.5rem;
   /* background: #CBD4C2; */
 }
 
-.custom-event-details-header{
+.custom-event-details-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +30,7 @@ button {
   border-radius: 5px;
   color: white;
 }
-  
+
 #header {
   padding: 10px;
   color: #d36c6c;
@@ -40,7 +40,7 @@ button {
   justify-content: space-between;
 }
 #header button {
-  background-color:#62B2C0;
+  background-color: #62b2c0;
   margin-right: 5px;
 }
 #container {
@@ -54,14 +54,14 @@ button {
   border-radius: 1rem;
 }
 
-@media screen and (max-width:480px){
-  .alert-calendar{
+@media screen and (max-width: 480px) {
+  .alert-calendar {
     flex-direction: column;
   }
-  .alert-details{
+  .alert-details {
     margin: 0.5rem;
   }
-  #container{
+  #container {
     padding: 0;
     width: 265px;
   }
@@ -87,7 +87,7 @@ button {
     cursor: pointer;
     box-sizing: border-box;
     margin: 5px;
-    box-shadow: 0px 0px 3px #CBD4C2;
+    box-shadow: 0px 0px 3px #cbd4c2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,29 +95,29 @@ button {
   }
 
   #calendar .highlight {
-    background-color: #62B2C0;
+    background-color: #62b2c0;
     color: white;
   }
 
-  #header{
+  #header {
     font-size: larger;
     /* width: 100%; */
   }
 
-  #header div{
+  #header div {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  #header div button{
+  #header div button {
     padding-inline: 4px;
   }
 }
 #weekdays {
-    width: 100%;
-    display: flex;
-    color: #247BA0;
+  width: 100%;
+  display: flex;
+  color: #247ba0;
 }
 #weekdays div {
   width: 100px;
@@ -126,7 +126,7 @@ button {
 }
 .padding {
   cursor: default !important;
-  background-color: #FFFCFF !important;
+  background-color: #fffcff !important;
   box-shadow: none !important;
 }
 #calendar {
@@ -143,7 +143,7 @@ button {
   box-sizing: border-box;
   background-color: white;
   margin: 5px;
-  box-shadow: 0px 0px 3px #CBD4C2;
+  box-shadow: 0px 0px 3px #cbd4c2;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -151,7 +151,7 @@ button {
 }
 
 .highlight {
-  background-color: #62B2C0;
+  background-color: #62b2c0;
   color: white;
 }
 /* .day:hover {
@@ -159,5 +159,5 @@ button {
 } */
 
 .day + #currentDay {
-  background-color:#e8f4fa;
+  background-color: #e8f4fa;
 }
